@@ -20,7 +20,7 @@ export class TestModComponent implements OnInit {
 
   testPost() {
     // Call the service and send to the backend
-    console.log('Inside True statement');
+    console.log('Inside testPost statement');
 
     this.testModService.testPost({pVal: 'Hi'}).subscribe(data => {
       if (data === 'ERROR') {
