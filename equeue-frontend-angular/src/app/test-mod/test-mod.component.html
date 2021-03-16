@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <h5 id="ic-test-mod-heading" class="pageName">Test Module</h5>
+    <!-- <button type="button" class="close" aria-hidden="true">
+        <fa-icon [icon]="'question-circle'"></fa-icon>
+    </button> -->
+</div>
+<div class="modal-body">
+  <div class="form-group row" style="height: 40px">
+    <label class="col-sm-5 form-control-label" style="text-align: right">Test Post</label>
+    <div class="col-sm-4">
+      <label class="col-sm-1 form-control-label" style="text-align: center">Return Value</label>
+      <label class="col-sm-1 form-control-label" style="text-align: center"> : </label>
+      <input type="text" class="col-sm-1 form-control-label" name="post" id="field_post" [(ngModel)]="output" disabled/>
+    </div>
+    <div class="col-sm-4">
+      <button type="button" class="btn-primary" (click)="testPost()">
+        Submit
+      </button>
+    </div>
+  </div>
+
+</div>
