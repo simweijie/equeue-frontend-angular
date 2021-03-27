@@ -29,6 +29,7 @@
     "@types/googlemaps": "^3.39.12",
     "@types/ol": "^6.4.2",
     "@types/proj4": "^2.5.0",
+    "cors": "^2.8.5",
     "ngx-google-places-autocomplete": "^2.0.5",
     "ol": "^6.5.0",
     "proj4": "^2.7.2",

@@ -10,6 +10,15 @@ type EntityArrayResponseType = HttpResponse<ITestMod[]>;
   providedIn: 'root'
 })
 export class TestModService {
+  httpOptions: HttpHeaders = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+      'key': 'x-api-key',
+      'value': 'Pbo1e5P62c9YPYYbmyT8a703Fst9Eb4YaGipoMRd'
+  });
 
   constructor(private http: HttpClient) { }
 
@@ -17,21 +26,30 @@ export class TestModService {
     console.log('req: ');
     console.log(req);
 
-    let httpOptions: HttpHeaders = new HttpHeaders();
-    httpOptions = httpOptions.append('Content-Type', 'application/json');
+    // let httpOptions: HttpHeaders = new HttpHeaders(
+    //   {'Content-Type': 'application/json',
+    //   'Access-Control-Allow-Origin': '*',
+    //   'Access-Control-Allow-Credentials': 'true',
+    //   'Access-Control-Allow-Headers': 'Content-Type',
+    //   'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+    //   'key': 'x-api-key',
+    //   'value': 'Pbo1e5P62c9YPYYbmyT8a703Fst9Eb4YaGipoMRd'}
+    //   );
+    // httpOptions = httpOptions.append('Content-Type', 'application/json');
+    // httpOptions = httpOptions.append('x-api-key', 'Pbo1e5P62c9YPYYbmyT8a703Fst9Eb4YaGipoMRd');
 
-    return this.http.post('http://www.url.com/login/', req, { headers: httpOptions, observe: 'response' }).pipe(map(
+    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/query-customer-with-uin', { headers: this.httpOptions, observe: 'response' }).pipe(map(
       response => {
-        if (response.status === 200) {
+        if (response === 200) {
           console.log('response is 200');
-          return response.body;
-        } else if (response.status === 403) {
+          return response;
+        } else if (response === 403) {
           console.log('Access Denied - 403');
           return 'Error 403';
         } else {
           console.log('Error - ');
-          console.log(response.status);
-          return response.statusText;
+          console.log(response);
+          return response;
         }
       })).pipe(catchError(error => of('ERROR')));
   }
