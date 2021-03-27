@@ -20,7 +20,30 @@ export class TestModService {
     let httpOptions: HttpHeaders = new HttpHeaders();
     httpOptions = httpOptions.append('Content-Type', 'application/json');
 
-    return this.http.post('/testPost', req, { headers: httpOptions, observe: 'response' }).pipe(map(
+    return this.http.post('http://www.url.com/login/', req, { headers: httpOptions, observe: 'response' }).pipe(map(
+      response => {
+        if (response.status === 200) {
+          console.log('response is 200');
+          return response.body;
+        } else if (response.status === 403) {
+          console.log('Access Denied - 403');
+          return 'Error 403';
+        } else {
+          console.log('Error - ');
+          console.log(response.status);
+          return response.statusText;
+        }
+      })).pipe(catchError(error => of('ERROR')));
+  }
+
+  testDelete(req?: any){
+    console.log('req: ');
+    console.log(req);
+
+    let httpOptions: HttpHeaders = new HttpHeaders();
+    httpOptions = httpOptions.append('Content-Type', 'application/json');
+
+    return this.http.delete('http://www.url.com/deleteOpeningHours/' + req, { headers: httpOptions, observe: 'response' }).pipe(map(
       response => {
         if (response.status === 200) {
           console.log('response is 200');
