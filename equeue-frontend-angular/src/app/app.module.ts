@@ -15,18 +15,28 @@ import {OlMapComponent} from './ol-map/ol-map.component';
 // import ngx-translate and the http loader
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+// import { HomeComponent, HomeModule } from './home';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { HomeComponent } from './home/home.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    MainComponent,
+    HomeComponent,
     TestModComponent,
     MapComponent, ShowButtonComponent,
-    OlMapComponent
+    OlMapComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    NgbModule,
+    // HomeModule,
     GooglePlaceModule,
     // TranslateModule.forRoot({
     //   loader: {
@@ -49,7 +59,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     })
   ],
   providers: [AppStateService],
-  bootstrap: [AppComponent]
+  // bootstrap: [AppComponent]
+  bootstrap: [MainComponent]
 })
 export class AppModule { }
 
