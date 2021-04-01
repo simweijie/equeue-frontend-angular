@@ -1,0 +1,80 @@
+<mat-expansion-panel [expanded]='true'>
+  <mat-expansion-panel-header style="background-color: #416F97;">
+    <mat-panel-title style="color: white;">
+      Staff Information
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <br>
+  <div>
+    <div style="width:98%" align="center">
+      <br>
+      <table mat-table [dataSource]="dataSource" class="record" id="table" style="width: 100%;">
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="staffName">
+          <th mat-header-cell *matHeaderCellDef style="text-align: center"> Name </th>
+          <td mat-cell *matCellDef="let rows">{{rows.staffName}} </td>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="branchId">
+          <th mat-header-cell *matHeaderCellDef style="text-align: center"> Branch Id </th>
+          <td mat-cell *matCellDef="let rows">{{rows.branchId}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="clinic">
+          <th mat-header-cell *matHeaderCellDef style="text-align: center"> Clinic </th>
+          <td mat-cell *matCellDef="let rows">{{rows.clinic}} </td>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="mobileNo">
+          <th mat-header-cell *matHeaderCellDef style="text-align: center"> Mobile No </th>
+          <td mat-cell *matCellDef="let rows">{{rows.mobileNo}} </td>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="occupation">
+          <th mat-header-cell *matHeaderCellDef style="text-align: center"> Occupation </th>
+          <td mat-cell *matCellDef="let rows"> {{rows.occupation}} </td>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="btnEdit">
+          <th mat-header-cell *matHeaderCellDef style="text-align: center"> Action </th>
+          <td mat-cell *matCellDef="let rows">
+            <button type="submit" class="buttonLinks" [routerLink]="['/edit-staff', rows.staffId, 'edit']">Edit / </button>&nbsp;
+            <button type="button" class="buttonLinks" *ngIf="rows.status==='A'" (click)="removeConfirmation(rows.staffId, rows.staffName)">Remove</button>
+            <button type="button" class="buttonLinks" *ngIf="rows.status==='P'" (click)="acceptConfirmation(rows.staffId, rows.staffName)">Remove</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let rows; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+</mat-expansion-panel>
+
+<!-- POPUP MODAL CONFIRMATION FOR DELETION OF RECORD. -->
+<ng-template #deleteConfirmation>
+  <div class="modal-body text-center">
+    <p>Confirm remove staff {{staffName}}?</p>
+    <button type="button" class="btn-ipStyle2" (click)="confirmDelete()" >Yes</button>&nbsp;
+    <button type="button" class="btn-ipStyle2" (click)="decline()" >No</button>
+  </div>
+</ng-template>
+
+<!-- POPUP MODAL CONFIRMATION FOR ACCEPT OF RECORD. -->
+<ng-template #acceptConfirmation>
+  <div class="modal-body text-center">
+    <p>Confirm accept staff {{staffName}}?</p>
+    <button type="button" class="btn-ipStyle2" (click)="confirmAccept()" >Yes</button>&nbsp;
+    <button type="button" class="btn-ipStyle2" (click)="declineAccept()" >No</button>
+  </div>
+</ng-template>

@@ -16,8 +16,7 @@ export class TestModService {
       'Access-Control-Allow-Credentials': 'true',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-      'key': 'x-api-key',
-      'value': 'Pbo1e5P62c9YPYYbmyT8a703Fst9Eb4YaGipoMRd'
+      'x-api-key': 'Pbo1e5P62c9YPYYbmyT8a703Fst9Eb4YaGipoMRd'
   });
 
   constructor(private http: HttpClient) { }
@@ -38,18 +37,18 @@ export class TestModService {
     // httpOptions = httpOptions.append('Content-Type', 'application/json');
     // httpOptions = httpOptions.append('x-api-key', 'Pbo1e5P62c9YPYYbmyT8a703Fst9Eb4YaGipoMRd');
 
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/query-customer-with-uin', { headers: this.httpOptions, observe: 'response' }).pipe(map(
+    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/query-customer-with-uin', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
       response => {
-        if (response === 200) {
+        if (response.status === 200) {
           console.log('response is 200');
-          return response;
-        } else if (response === 403) {
+          return response.body;
+        } else if (response.status === 403) {
           console.log('Access Denied - 403');
           return 'Error 403';
         } else {
           console.log('Error - ');
-          console.log(response);
-          return response;
+          console.log(response.body);
+          return response.body;
         }
       })).pipe(catchError(error => of('ERROR')));
   }
