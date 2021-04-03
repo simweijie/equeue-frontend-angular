@@ -31,7 +31,7 @@
           <select class="col-sm-2 form-control optionPlaceholder" [(ngModel)]="district" name="district" *ngIf="districtList">
             <option [ngValue]="undefined" hidden><span class="optionPlaceholder">Please Select</span></option>
             <!--                <option [ngValue]="null"></option>-->
-            <option [ngValue]="rows.id" *ngFor="let rows of districtList">{{rows.id}}
+            <option [ngValue]="rows.id" *ngFor="let rows of districtList">{{rows.value}}
             </option>
           </select>
           <!--            <div *ngIf="noticeColourError">-->
