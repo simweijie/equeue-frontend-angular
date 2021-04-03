@@ -1,8 +1,46 @@
+
 <h3 class="masthead title" style="display:block;"><b><strong>Welcome to eQueue </strong></b></h3>
 <br>
+<div class="container">
+    <div class="card" style="align-content: center; border-style: none ;">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+    <!-- <footer>
+        <div class="footer doneBy"><b><strong>NUS-ISS Team 8</strong></b></div>
+    </footer> -->
 
-<router-outlet></router-outlet>
+<div class="ml-sm-auto ml-md-auto">
+<ic-footer></ic-footer>
+</div>
 
-<footer>
-    <div class="footer doneBy"><b><strong>NUS-ISS Team 8</strong></b></div>
-</footer>
+
+
+
+<div id="myNav" class="overlay">
+
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  
+    <div class="overlay-content">
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Clients</a>
+      <a href="#">Contact</a>
+    </div>
+  
+  </div>
+
+   <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+
+    <script>
+        /* Open */
+    function openNav() {
+    document.getElementById("myNav").style.display = "block";
+    }
+
+    /* Close */
+    function closeNav() {
+    document.getElementById("myNav").style.display = "none";
+    }
+    </script> 
+
