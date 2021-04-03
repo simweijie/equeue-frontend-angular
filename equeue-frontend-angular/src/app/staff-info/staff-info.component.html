@@ -46,9 +46,9 @@
         <ng-container matColumnDef="btnEdit">
           <th mat-header-cell *matHeaderCellDef style="text-align: center"> Action </th>
           <td mat-cell *matCellDef="let rows">
-            <button type="submit" class="buttonLinks" (click)="editStaff(rows.staffId)">Edit / </button>&nbsp;
+            <button type="button" class="buttonLinks" (click)="editStaff(rows.staffId)">Edit / </button>&nbsp;
             <button type="button" class="buttonLinks" *ngIf="rows.status==='A'" (click)="removeConfirmation(rows.staffId, rows.staffName)">Remove</button>
-            <button type="button" class="buttonLinks" *ngIf="rows.status==='P'" (click)="acceptConfirmation(rows.staffId, rows.staffName)">Remove</button>
+            <button type="button" class="buttonLinks" *ngIf="rows.status==='P'" (click)="acceptConfirmation(rows.staffId, rows.staffName)">Accept</button>
           </td>
         </ng-container>
 

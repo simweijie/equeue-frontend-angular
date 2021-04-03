@@ -28,6 +28,11 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { StaffInfoEditComponent } from './staff-info-edit/staff-info-edit.component';
 import {ModalModule} from "ngx-bootstrap/modal";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatSliderModule} from "@angular/material/slider";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -48,8 +53,13 @@ import {ModalModule} from "ngx-bootstrap/modal";
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
+    MatCheckboxModule,
     MatExpansionModule,
     MatPaginatorModule, MatTableModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
     // HomeModule,
     GooglePlaceModule,
     // TranslateModule.forRoot({

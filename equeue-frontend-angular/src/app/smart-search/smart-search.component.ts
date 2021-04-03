@@ -59,7 +59,7 @@ export class SmartSearchComponent implements OnInit {
       // let popup = L.popup()
       //   .setLatLng(latLong)
       //   .setContent('I am Barath.')
-      //   .openOn(mymap);
+      //   .openOn(this.mymap);
     });
     this.watchPosition();
 
