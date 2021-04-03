@@ -20,10 +20,14 @@ export class SmartSearchComponent implements OnInit {
   mGroupList: any;
 
   districtList: Array<object> = [
-    {id: 'North'},
-    {id: 'South'},
+    {id: 'N', value: 'North'},
+    {id: 'NE', value: 'North-East'},
     {id: 'East'},
-    {id: 'West'}
+    {id: 'SE', value: 'South-East'},
+    {id: 'S', value: 'South'},
+    {id: 'SW', value: 'South-West'},
+    {id: 'West'},
+    {id: 'NW', value: 'North-West'}
   ];
 
   constructor(

@@ -46,6 +46,12 @@ export class StaffInfoComponent implements OnInit {
   cNo: any;
   fName: any;
 
+  sampleData: Array<object> = [
+    {staffName: 'D1', branchId: 'Doctor', clinic: 'Hello Clinic', mobileNo: '92029102', occupation: 'Doctor', status: 'I'},
+    {staffName: 'D2', branchId: 'Doctor', clinic: 'Hello Clinic', mobileNo: '92029102', occupation: 'Doctor', status: 'A'},
+    {staffName: 'D3', branchId: 'Doctor', clinic: 'Hello Clinic', mobileNo: '92029102', occupation: 'Doctor', status: 'P'}
+  ];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -58,6 +64,7 @@ export class StaffInfoComponent implements OnInit {
     this.staffInfoService.retrieveStaffInfo({staffId: this.adminId}).subscribe(
       data => {
         console.log(data);
+        this.dataSource = new MatTableDataSource<any>(this.sampleData);
         // if (data === null) {
         //   this._error.next(this.error500);
         // } else {
@@ -133,11 +140,11 @@ export class StaffInfoComponent implements OnInit {
 
   editStaff(staffId: any) {
     this.staffId = staffId;
-    this.modalAcceptRef = this.modalService.show(this.modalAccept);
+    this.modalEditRef = this.modalService.show(this.modalEdit);
   }
 
   update() {
-    this.staffInfoService.deleteStaff({staffId: this.adminId}).subscribe(
+    this.staffInfoService.updateStaff({staffId: this.adminId}).subscribe(
       data => {
         console.log(data);
         this.modalEditRef.hide();

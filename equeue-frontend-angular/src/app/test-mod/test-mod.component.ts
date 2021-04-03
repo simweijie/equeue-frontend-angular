@@ -118,10 +118,11 @@ export class TestModComponent implements OnInit {
     console.log('Inside testPost statement');
 
     this.testModService.testPost({ username : 'customer1@hotmail.com', password : 'passw0rd123' }).subscribe(data => {
-      if (data === 'ERROR') {
+      console.log(data);
+      if (data === null || data === 'ERROR') {
         this.output = 'Hello';
       } else {
-        this.output = data;
+        this.output = data.toString();
       }
     });
   }
