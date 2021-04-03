@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {SmartSearchService} from "../shared/services/smart-search.service";
+import {SmartSearchService} from '../shared/services/smart-search.service';
 
 declare  const L: any;
 
@@ -17,8 +17,14 @@ export class SmartSearchComponent implements OnInit {
   mGroup: any;
   district: any;
   pCode: any;
-  districtList: any;
   mGroupList: any;
+
+  districtList: Array<object> = [
+    {id: 'North'},
+    {id: 'South'},
+    {id: 'East'},
+    {id: 'West'}
+  ];
 
   constructor(
     private smartSearchServic: SmartSearchService
@@ -54,42 +60,22 @@ export class SmartSearchComponent implements OnInit {
     this.watchPosition();
 
     this.isDataAvailable = false;
-    this.smartSearchServic.retrieveCodeValue().subscribe(
+    this.smartSearchServic.retrieveClinicList().subscribe(
       data => {
-        // this.isOverlayVisible = false;
-        this.isDataAvailable = true;
-        if (data === null) {
-          // this._error.next(this.error500);
-        } else {
-          // this.ctMaster = data;
-          // console.log('This is the ctMaster Value: ');
-          // console.log(this.ctMaster);
+        console.log(data);
+        // if (data === null) {
+        //   // this._error.next(this.error500);
+        // } else {
+        //   this.mGroupList = data;
+        //   console.log('This is the mGroupList Value: ');
+        //   console.log(this.mGroupList);
           // console.log(this.ctMaster.ctCtry);
           // this.countryList = this.ctMaster.ctCtry;
           // this.countryMap = new Map<string, string>();
           // for (let entry of this.countryList) {
           //   this.countryMap.set(entry.cdValue, entry.cdDescription);
           // }
-          // console.log(this.ctMaster.ctColour);
-          // this.colourList = this.ctMaster.ctColour;
-          // this.colourMap = new Map<string, string>();
-          // for (let entry of this.colourList) {
-          //   this.colourMap.set(entry.cdValue, entry.cdDescription);
-          // }
-          //
-          // console.log(this.ctMaster.ctImmStat);
-          // this.immStatList = this.ctMaster.ctImmStat;
-          // this.immStatMap = new Map<string, string>();
-          // for (let entry of this.immStatList) {
-          //   this.immStatMap.set(entry.cdValue, entry.cdDescription);
-          // }
-          // console.log(this.ctMaster.ctNalty);
-          // this.nationalityList = this.ctMaster.ctNalty;
-          // this.nationalityMap = new Map<string, string>();
-          // for (let entry of this.nationalityList) {
-          //   this.nationalityMap.set(entry.cdValue, entry.cdDescription);
-          // }
-        }
+        // }
       });
   }
 

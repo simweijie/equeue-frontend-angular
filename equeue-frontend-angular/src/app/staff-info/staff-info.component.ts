@@ -18,12 +18,33 @@ export class StaffInfoComponent implements OnInit {
   modalAcceptRef: BsModalRef;
   @ViewChild('acceptConfirmation') modalAccept: TemplateRef<any>;
 
+  modalEditRef: BsModalRef;
+  @ViewChild('editStaffRecord') modalEdit: TemplateRef<any>;
+
   displayedColumns: string[] = ['staffName', 'branchId', 'clinic', 'mobileNo', 'occupation', 'btnEdit'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   adminId: string;
   staffName: string;
   staffId: any;
+
+  occupationList: Array<object> = [
+    {id: 'D', value: 'Doctor'},
+    {id: 'N', value: 'Nurse'},
+    {id: 'C', value: 'Clerk'}
+  ];
+  branchError: boolean = false;
+  clinicError: boolean = false;
+  occupationError: boolean = false;
+  clinicList: any;
+  branchList: any;
+  clinic: any;
+  branch: any;
+  occupation: any;
+  email: any;
+  address: any;
+  cNo: any;
+  fName: any;
 
   constructor(
     private router: Router,
@@ -34,8 +55,9 @@ export class StaffInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getId();
-    this.staffInfoService.retrieveStaffInfo(this.adminId).subscribe(
+    this.staffInfoService.retrieveStaffInfo({staffId: this.adminId}).subscribe(
       data => {
+        console.log(data);
         // if (data === null) {
         //   this._error.next(this.error500);
         // } else {
@@ -74,32 +96,67 @@ export class StaffInfoComponent implements OnInit {
     this.modalDelRef = this.modalService.show(this.modalDel);
   }
 
-  acceptConfirmation(staffId: any, staffName: any) {
-    this.staffId = staffId;
-    this.staffName = staffName;
-    this.modalAcceptRef = this.modalService.show(this.modalAccept);
-  }
-
   confirmDelete() {
-    this.staffInfoService.deleteStaff(this.adminId).subscribe(
+    this.staffInfoService.deleteStaff({staffId: this.adminId}).subscribe(
       data => {
-
+        console.log(data);
+        this.modalDelRef.hide();
+        this.staffId = null;
       });
   }
 
   // CLOSE CONFIRMATION MODAL
   decline() {
     this.modalDelRef.hide();
+    this.staffId = null;
+  }
+
+  acceptConfirmation(staffId: any, staffName: any) {
+    this.staffId = staffId;
+    this.staffName = staffName;
+    this.modalAcceptRef = this.modalService.show(this.modalAccept);
   }
 
   confirmAccept() {
-      this.staffInfoService.acceptStaff(this.adminId).subscribe(
+      this.staffInfoService.acceptStaff({staffId: this.adminId}).subscribe(
         data => {
-
+          console.log(data);
+          this.modalAcceptRef.hide();
+          this.staffId = null;
         });
   }
 
   declineAccept() {
     this.modalAcceptRef.hide();
+    this.staffId = null;
+  }
+
+  editStaff(staffId: any) {
+    this.staffId = staffId;
+    this.modalAcceptRef = this.modalService.show(this.modalAccept);
+  }
+
+  update() {
+    this.staffInfoService.deleteStaff({staffId: this.adminId}).subscribe(
+      data => {
+        console.log(data);
+        this.modalEditRef.hide();
+        this.staffId = null;
+      });
+  }
+
+  cancel() {
+    this.modalEditRef.hide();
+    this.staffId = null;
+  }
+
+  clear() {
+    this.fName = null;
+    this.cNo = null;
+    this.address = null;
+    this.email = null;
+    this.occupation = null;
+    this.clinic = null;
+    this.branch = null;
   }
 }

@@ -21,18 +21,6 @@ export class TestModService {
     console.log('req: ');
     console.log(req);
 
-    // let httpOptions: HttpHeaders = new HttpHeaders(
-    //   {'Content-Type': 'application/json',
-    //   'Access-Control-Allow-Origin': '*',
-    //   'Access-Control-Allow-Credentials': 'true',
-    //   'Access-Control-Allow-Headers': 'Content-Type',
-    //   'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-    //   'key': 'x-api-key',
-    //   'value': 'Pbo1e5P62c9YPYYbmyT8a703Fst9Eb4YaGipoMRd'}
-    //   );
-    // httpOptions = httpOptions.append('Content-Type', 'application/json');
-    // httpOptions = httpOptions.append('x-api-key', 'Pbo1e5P62c9YPYYbmyT8a703Fst9Eb4YaGipoMRd');
-
     return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/query-customer-with-uin', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
       response => {
         if (response.status === 200) {
@@ -53,10 +41,7 @@ export class TestModService {
     console.log('req: ');
     console.log(req);
 
-    let httpOptions: HttpHeaders = new HttpHeaders();
-    httpOptions = httpOptions.append('Content-Type', 'application/json');
-
-    return this.http.delete('http://www.url.com/deleteOpeningHours/' + req, { headers: httpOptions, observe: 'response' }).pipe(map(
+    return this.http.delete('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/deleteOpeningHours/' + req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
       response => {
         if (response.status === 200) {
           console.log('response is 200');

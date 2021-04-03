@@ -1,8 +1,3 @@
-<!--<h3 class="masthead title" style="display:block;"><b><strong>Welcome to eQueue </strong></b></h3>-->
-<!--<br>-->
-
-<!--<router-outlet></router-outlet>-->
-
 <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
   <li [ngbNavItem]="1">
     <a ngbNavLink>Smart Search</a>
@@ -25,13 +20,18 @@
     <ng-template ngbNavContent>
       <div class="form-group row">
         <div class="col-sm-6">
-          <label class="col-sm-2 form-control-label" style="text-align: right">Notice Colour<span
+          * Please select one of the search criteria.
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <label class="col-sm-2 form-control-label" style="text-align: right">District<span
             style="color: red; font-weight: bold;">*</span></label>
           <label class="col-sm-1 form-control-label" style="text-align: center">:</label>
-          <select class="col-sm-2 form-control optionPlaceholder" [(ngModel)]="district" name="noticeColour" *ngIf="districtList">
+          <select class="col-sm-2 form-control optionPlaceholder" [(ngModel)]="district" name="district" *ngIf="districtList">
             <option [ngValue]="undefined" hidden><span class="optionPlaceholder">Please Select</span></option>
             <!--                <option [ngValue]="null"></option>-->
-            <option [ngValue]="noticeColour.cdValue" *ngFor="let noticeColour of districtList">{{noticeColour.cdDescription}}
+            <option [ngValue]="rows.id" *ngFor="let rows of districtList">{{rows.id}}
             </option>
           </select>
           <!--            <div *ngIf="noticeColourError">-->
@@ -41,10 +41,10 @@
           <label class="col-sm-2 form-control-label" style="text-align: right">Medical Group<span
             style="color: red; font-weight: bold;">*</span></label>
           <label class="col-sm-1 form-control-label" style="text-align: center">:</label>
-          <select class="col-sm-2 form-control optionPlaceholder" [(ngModel)]="mGroup" name="noticeColour" *ngIf="mGroupList">
+          <select class="col-sm-2 form-control optionPlaceholder" [(ngModel)]="mGroup" name="clinic" *ngIf="mGroupList">
             <option [ngValue]="undefined" hidden><span class="optionPlaceholder">Please Select</span></option>
             <!--                <option [ngValue]="null"></option>-->
-            <option [ngValue]="noticeColour.cdValue" *ngFor="let noticeColour of mGroupList">{{noticeColour.cdDescription}}
+            <option [ngValue]="rows.id" *ngFor="let rows of mGroupList">{{rows.name}}
             </option>
           </select>
           <!--            <div *ngIf="noticeColourError">-->
@@ -67,10 +67,3 @@
 <div [ngbNavOutlet]="nav" class="mt-2"></div>
 <div id="map"></div>
 <pre>Active: {{ active }}</pre>
-
-
-
-
-<footer>
-  <div class="footer doneBy"><b><strong>NUS-ISS Team 8</strong></b></div>
-</footer>
