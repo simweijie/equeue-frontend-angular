@@ -8,10 +8,6 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {AgmCoreModule} from '@agm/core';
 import { GooglePlaceModule} from 'ngx-google-places-autocomplete';
-import {ShowButtonComponent} from './show-button/show-button.component';
-import {MapComponent} from './map/map.component';
-import {AppStateService} from './state/appstate.service';
-import {OlMapComponent} from './ol-map/ol-map.component';
 // import ngx-translate and the http loader
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -26,7 +22,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { StaffInfoEditComponent } from './staff-info-edit/staff-info-edit.component';
 import {ModalModule} from "ngx-bootstrap/modal";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatSliderModule} from "@angular/material/slider";
@@ -40,12 +35,9 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MainComponent,
     HomeComponent,
     TestModComponent,
-    MapComponent, ShowButtonComponent,
-    OlMapComponent,
     RegistrationComponent,
     SmartSearchComponent,
-    StaffInfoComponent,
-    StaffInfoEditComponent
+    StaffInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +75,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
       apiKey: 'AIzaSyDmLBT2T5u8ZT3mOheCgFkSv_7OCx8R1tI'
     })
   ],
-  providers: [AppStateService],
+  // providers: [AppStateService],
   // bootstrap: [AppComponent]
   bootstrap: [MainComponent]
 })
