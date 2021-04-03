@@ -20,6 +20,14 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { MainComponent } from './main/main.component';
+import { SmartSearchComponent } from './smart-search/smart-search.component';
+import { StaffInfoComponent } from './staff-info/staff-info.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { StaffInfoEditComponent } from './staff-info-edit/staff-info-edit.component';
+import {ModalModule} from "ngx-bootstrap/modal";
 
 @NgModule({
   declarations: [
@@ -29,13 +37,19 @@ import { MainComponent } from './main/main.component';
     TestModComponent,
     MapComponent, ShowButtonComponent,
     OlMapComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    SmartSearchComponent,
+    StaffInfoComponent,
+    StaffInfoEditComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
+    MatExpansionModule,
+    MatPaginatorModule, MatTableModule,
     // HomeModule,
     GooglePlaceModule,
     // TranslateModule.forRoot({
@@ -54,6 +68,7 @@ import { MainComponent } from './main/main.component';
         deps: [HttpClient]
       }
     }),
+    ModalModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDmLBT2T5u8ZT3mOheCgFkSv_7OCx8R1tI'
     })

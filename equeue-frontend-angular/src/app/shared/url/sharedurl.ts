@@ -1,8 +1,8 @@
 export class sharedURL {
-    registerCustomer: string;
+  registerCustomer: string;
 
-    constructor() {
-        this.registerCustomer = '/registration';
-    }
-   
+  constructor() {
+    this.registerCustomer = '/registration';
+  }
+
 }

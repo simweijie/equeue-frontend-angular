@@ -1,0 +1,69 @@
+<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+  <li [ngbNavItem]="1">
+    <a ngbNavLink>Smart Search</a>
+    <ng-template ngbNavContent>
+      <div class="form-group row">
+        <div class="col-sm-5">
+          <label class="col-sm-2 form-control-label" style="text-align: center">Postal Code</label>
+          <label class="col-sm-1 form-control-label" style="text-align: center"> : </label>
+          <input type="text" class="col-sm-3 form-control-label" name="pCode" id="field_pCode" [(ngModel)]="pCode" disabled/>
+          &nbsp;
+          <button type="button" class="btn-primary col-sm-1" (click)="searchPCode()">
+            Search
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </li>
+  <li [ngbNavItem]="2">
+    <a ngbNavLink>Smart Filter Search</a>
+    <ng-template ngbNavContent>
+      <div class="form-group row">
+        <div class="col-sm-6">
+          * Please select one of the search criteria.
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <label class="col-sm-2 form-control-label" style="text-align: right">District<span
+            style="color: red; font-weight: bold;">*</span></label>
+          <label class="col-sm-1 form-control-label" style="text-align: center">:</label>
+          <select class="col-sm-2 form-control optionPlaceholder" [(ngModel)]="district" name="district" *ngIf="districtList">
+            <option [ngValue]="undefined" hidden><span class="optionPlaceholder">Please Select</span></option>
+            <!--                <option [ngValue]="null"></option>-->
+            <option [ngValue]="rows.id" *ngFor="let rows of districtList">{{rows.id}}
+            </option>
+          </select>
+          <!--            <div *ngIf="noticeColourError">-->
+          <!--              <span class="red-error">Required field!</span>-->
+          <!--            </div>-->
+
+          <label class="col-sm-2 form-control-label" style="text-align: right">Medical Group<span
+            style="color: red; font-weight: bold;">*</span></label>
+          <label class="col-sm-1 form-control-label" style="text-align: center">:</label>
+          <select class="col-sm-2 form-control optionPlaceholder" [(ngModel)]="mGroup" name="clinic" *ngIf="mGroupList">
+            <option [ngValue]="undefined" hidden><span class="optionPlaceholder">Please Select</span></option>
+            <!--                <option [ngValue]="null"></option>-->
+            <option [ngValue]="rows.id" *ngFor="let rows of mGroupList">{{rows.name}}
+            </option>
+          </select>
+          <!--            <div *ngIf="noticeColourError">-->
+          <!--              <span class="red-error">Required field!</span>-->
+          <!--            </div>-->
+
+<!--          <label class="col-sm-2 form-control-label" style="text-align: center">Medical Group</label>-->
+<!--          <label class="col-sm-1 form-control-label" style="text-align: center"> : </label>-->
+<!--          <input type="text" class="col-sm-2 form-control-label" name="pCode" id="field_mGroup" [(ngModel)]="mGroup" disabled/>-->
+          &nbsp;
+          <button type="button" class="btn-primary col-sm-1" (click)="searchFilter()">
+            Search
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </li>
+</ul>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
+<div id="map"></div>
+<pre>Active: {{ active }}</pre>

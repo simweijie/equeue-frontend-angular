@@ -1,0 +1,12 @@
+agm-map {
+  height: 300px;
+}
+
+p {
+  font-family: Lato;
+}
+
+#map{
+  height: 60vh;
+  width: 80vh;
+}
