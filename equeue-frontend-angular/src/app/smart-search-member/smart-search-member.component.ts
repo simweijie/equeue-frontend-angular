@@ -6,11 +6,15 @@ import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 declare  const L: any;
 
 @Component({
-  selector: 'app-smart-search',
-  templateUrl: './smart-search.component.html',
-  styleUrls: ['./smart-search.component.css']
+  selector: 'app-smart-search-member',
+  templateUrl: './smart-search-member.component.html',
+  styleUrls: ['./smart-search-member.component.css']
 })
-export class SmartSearchComponent implements OnInit {
+export class SmartSearchMemberComponent implements OnInit {
+
+  modalChangeRef: BsModalRef;
+  @ViewChild('changeConfirmation') modalChange: TemplateRef<any>;
+
   isDataAvailable: boolean = true;
   active = 1;
   curMarker: any;
@@ -36,6 +40,7 @@ export class SmartSearchComponent implements OnInit {
   // private _filterResults: { clicicId?: string; clicicName?: string; currentOperation?: string; queueLength?: string };
   filterList: any;
   clinicId: any;
+  patientId: any;
 
   constructor(
     private router: Router,
@@ -45,6 +50,7 @@ export class SmartSearchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getPatientId();
     // this._filterResults = new class {
     //   clicicId?: string;
     //   clinicName?: string;
@@ -137,7 +143,7 @@ export class SmartSearchComponent implements OnInit {
             for (let entry of this.filterList) {
               const latLong = [entry.lat, entry.long];
               let listOfMarkers = L.marker(latLong).addTo(this.mymap);
-              listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="addQueue(entry.clinicId)">Join Queue</button>');
+              listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="changeConfirmation(entry.clinicId)">Join Queue</button>');
             }
           }
         });
@@ -161,19 +167,45 @@ export class SmartSearchComponent implements OnInit {
             for (let entry of this.filterList) {
               const latLong = [entry.lat, entry.long];
               let listOfMarkers = L.marker(latLong).addTo(this.mymap);
-              listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="addQueue(entry.clinicId)">Join Queue</button>');
+              listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="changeConfirmation(entry.clinicId)">Join Queue</button>');
             }
           }
         });
     }
   }
 
-  addQueue(clinicId: any) {
-    console.log('addQueue - clinicId:');
-    console.log(clinicId);
+  getPatientId() {
+    // this.activatedRoute.queryParams.subscribe(params => {
+    //   this.adminId = params['adminId'];
+    // });
+    this.patientId = this.activatedRoute.snapshot.paramMap.get('patientId');
+    console.log('getPatientId - patientId:');
+    console.log(this.patientId);
+  }
+
+  changeConfirmation(clinicId: any) {
     this.clinicId = clinicId;
-    if (this.clinicId !== null || this.clinicId !== '') {
-      this.router.navigate(['/patient-login', { clinicId: this.clinicId }]);
+    this.modalChangeRef = this.modalService.show(this.modalChange);
+  }
+
+  changeQueue() {
+    console.log('addQueue - clinicId:');
+    console.log(this.clinicId);
+    if ((this.clinicId !== null || this.clinicId !== '') && (this.patientId !== null || this.patientId !== '')) {
+      this.smartSearchService.changeQueue({branchId: this.clinicId, customerId: this.patientId}).subscribe(
+        data => {
+          console.log(data);
+          if (data !== 'ERROR') {
+            this.router.navigate(['/patient']);
+          } else {
+            alert('Unable to join the queue. Please refresh page or try again later!');
+          }
+        });
     }
+  }
+
+  decline() {
+    this.modalChangeRef.hide();
+    this.clinicId = '';
   }
 }

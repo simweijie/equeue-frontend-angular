@@ -15,7 +15,7 @@
         <!-- ID Column -->
         <ng-container matColumnDef="staffName">
           <th mat-header-cell *matHeaderCellDef style="text-align: center"> Name </th>
-          <td mat-cell *matCellDef="let rows">{{rows.staffName}} </td>
+          <td mat-cell *matCellDef="let rows">{{rows.name}} </td>
         </ng-container>
 
         <!-- Progress Column -->
@@ -27,28 +27,28 @@
         <!-- Name Column -->
         <ng-container matColumnDef="clinic">
           <th mat-header-cell *matHeaderCellDef style="text-align: center"> Clinic </th>
-          <td mat-cell *matCellDef="let rows">{{rows.clinic}} </td>
+          <td mat-cell *matCellDef="let rows">{{rows.clinicName}} </td>
         </ng-container>
 
         <!-- Color Column -->
         <ng-container matColumnDef="mobileNo">
           <th mat-header-cell *matHeaderCellDef style="text-align: center"> Mobile No </th>
-          <td mat-cell *matCellDef="let rows">{{rows.mobileNo}} </td>
+          <td mat-cell *matCellDef="let rows">{{rows.contactNo}} </td>
         </ng-container>
 
         <!-- Color Column -->
         <ng-container matColumnDef="occupation">
           <th mat-header-cell *matHeaderCellDef style="text-align: center"> Occupation </th>
-          <td mat-cell *matCellDef="let rows"> {{rows.occupation}} </td>
+          <td mat-cell *matCellDef="let rows"> {{rows.job}} </td>
         </ng-container>
 
         <!-- Color Column -->
         <ng-container matColumnDef="btnEdit">
           <th mat-header-cell *matHeaderCellDef style="text-align: center"> Action </th>
           <td mat-cell *matCellDef="let rows">
-            <button type="button" class="buttonLinks" (click)="editStaff(rows.staffId)">Edit / </button>&nbsp;
-            <button type="button" class="buttonLinks" *ngIf="rows.status==='A'" (click)="removeConfirmation(rows.staffId, rows.staffName)">Remove</button>
-            <button type="button" class="buttonLinks" *ngIf="rows.status==='P'" (click)="acceptConfirmation(rows.staffId, rows.staffName)">Accept</button>
+            <button type="button" class="buttonLinks" *ngIf="rows.status!=='I'" (click)="editStaff(rows.id)">Edit </button>&nbsp;
+            <button type="button" class="buttonLinks" *ngIf="rows.status==='A'" (click)="removeConfirmation(rows.id, rows.staffName)"> Remove</button>
+            <button type="button" class="buttonLinks" *ngIf="rows.status==='P'" (click)="acceptConfirmation(rows.id, rows.staffName)"> Accept</button>
           </td>
         </ng-container>
 

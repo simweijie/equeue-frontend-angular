@@ -1,4 +1,3 @@
-
 <h3 class="masthead title" style="display:block;"><b><strong>Welcome to eQueue </strong></b></h3>
 <br>
 <mat-drawer-container class="example-container" autosize>
@@ -18,21 +17,22 @@
   </mat-drawer>
 
   <div class="example-sidenav-content">
-    <button type="button" mat-button (click)="drawer.toggle()">
-    </button>
-  </div>
-
-</mat-drawer-container>
-<div class="container">
-    <div class="card" style="align-content: center; border-style: none ;">
+    <button type="button" mat-button class="btn-primary" style="height: 20px; width: 10px" (click)="drawer.toggle()"></button>
+    <div class="container">
+      <div class="card" style="align-content: center; border-style: none ;">
         <router-outlet>
 
         </router-outlet>
+      </div>
     </div>
-</div>
-<footer>
+  </div>
+
+  <footer>
     <div class="footer doneBy"><b><strong>NUS-ISS Team 8</strong></b></div>
-</footer>
+  </footer>
+</mat-drawer-container>
+
+
 
 <!--<div class="ml-sm-auto ml-md-auto">-->
 <!--  <ic-footer></ic-footer>-->

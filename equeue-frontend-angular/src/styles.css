@@ -1,3 +1,257 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css" ;
 @import "./assets/css/equeue.css" ;
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+.spinnerMiddle {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}
+
+.overlay {
+  background-color:#EFEFEF;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  /*  top: 0px;
+    left: 0px; */
+  opacity: .4; /* in FireFox */
+  filter: alpha(opacity=40); /* in IE */
+  pointer-events: none;
+}
+
+.red-asterisk {
+  color: red;
+}
+
+.red-error {
+  color: red;
+  font-size: small;
+}
+
+.black-legend {
+  color: black;
+}
+
+.backgroundColor{
+  background-color: #d3e5ff;
+}
+
+.pageName{
+  color: white;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.modal-header{
+  background-color: #185994;
+  /*max-height: 25px;*/
+  /*padding: 0.2rem 0.2rem;*/
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.modal-body{
+  background-color: #d3e5ff;
+  border: none;
+}
+
+.accordionTitleBackground{
+  background-color: #4c70a5;
+}
+
+.accordionTitle{
+  color: white;
+  font-size: 15px;
+}
+
+.nameinputMaxWidth{
+  max-width: 500px;
+}
+
+.numberinputMaxWidth{
+  max-width: 150px;
+}
+
+label{
+  font-size: 15px;
+  font-weight: 400;
+}
+
+/* You can add global styles to this file, and also import other style files */
+
+.mat-step-header .mat-step-icon
+{
+  background-color: #808080;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+}
+
+.mat-step-header .mat-step-icon-selected
+{
+  background-color: #005BAD;
+  color: #fff;
+}
+
+* {
+  font-family: 'Roboto';
+  margin:0;
+  padding:0;
+}
+
+.btn-ipStyle2 {
+  display: inline-block;
+  min-height: 35px;
+  min-width: 95px;
+  text-align: center;
+  border-radius: 40px;
+  border: 1px solid #005BAD;
+  background-color: #005BAD;
+  font-size: .87rem;
+  color: white;
+  text-transform: capitalize;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.btn-ipStyle2:disabled,
+.btn-ipStyle2[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+input[type=radio] {
+  margin: 10px 5px 0 20px;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  /* border-radius: 5px; */
+  width: 150px;
+  position: relative;
+  margin: 0 0 0 0;
+  vertical-align: middle;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #3071a9;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -6px;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #367ebd;
+}
+
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #3071a9;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+
+input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent;
+}
+
+input[type=range]::-ms-fill-lower {
+  background: #2a6495;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+
+input[type=range]::-ms-fill-upper {
+  background: #3071a9;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+
+input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+input[type=range]:focus::-ms-fill-lower {
+  background: #3071a9;
+}
+
+input[type=range]:focus::-ms-fill-upper {
+  background: #367ebd;
+}
+
+input[type=range]:hover {
+  cursor: pointer;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px;
+  padding-left: 15px;
+  border: 1px solid #005BAD;
+}
+
+table {
+  border: 1px solid #005BAD;
+}
+
+/*.modal.show .modal-dialog {*/
+/*  width: 500px !important;*/
+/*  height: 500px !important;*/
+/*  margin: 0;*/
+/*}*/
+
+/*.modal-content {*/
+/*  width: 500px !important;*/
+/*  height: 500px !important;*/
+/*}*/

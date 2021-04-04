@@ -4,6 +4,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {ActivatedRoute, Router} from '@angular/router';
 import {StaffInfoService} from '../shared/services/staff-info.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {IStaff} from "../shared/modals/staff.model";
+import {Subject} from "rxjs";
+import {debounceTime} from "rxjs/operators";
 
 @Component({
   selector: 'app-staff-info',
@@ -11,6 +14,12 @@ import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
   styleUrls: ['./staff-info.component.css']
 })
 export class StaffInfoComponent implements OnInit {
+
+  // Toast message
+  private _success = new Subject<string>();
+  private _error = new Subject<string>();
+  successMessage: string;
+  errorMessage: string;
 
   modalDelRef: BsModalRef;
   @ViewChild('deleteConfirmation') modalDel: TemplateRef<any>;
@@ -24,7 +33,7 @@ export class StaffInfoComponent implements OnInit {
   displayedColumns: string[] = ['staffName', 'branchId', 'clinic', 'mobileNo', 'occupation', 'btnEdit'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  adminId: string;
+  adminId: string | null;
   staffName: string;
   staffId: any;
 
@@ -47,21 +56,37 @@ export class StaffInfoComponent implements OnInit {
   fName: any;
 
   sampleData: Array<object> = [
-    {staffName: 'D1', branchId: 'Doctor', clinic: 'Hello Clinic', mobileNo: '92029102', occupation: 'Doctor', status: 'I'},
-    {staffName: 'D2', branchId: 'Doctor', clinic: 'Hello Clinic', mobileNo: '92029102', occupation: 'Doctor', status: 'A'},
-    {staffName: 'D3', branchId: 'Doctor', clinic: 'Hello Clinic', mobileNo: '92029102', occupation: 'Doctor', status: 'P'}
+    {id: '1', name: 'D1', branchId: 'B8', clinicName: 'Hello Clinic', contactNo: '92029102', job: 'D', status: 'I'},
+    {id: '2', name: 'D2', branchId: 'B2', clinicName: 'Hello Clinic', contactNo: '92029102', job: 'D', status: 'A'},
+    {id: '3', name: 'D3', branchId: 'B1', clinicName: 'Hello Clinic', contactNo: '92029102', job: 'D', status: 'P'}
   ];
+  private _staffInfo: IStaff;
+  private statusD: string | Object | null | string;
+  private statusA: string | Object | null | string;
+  private statusU: string | Object | null | string;
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private staffInfoService: StaffInfoService,
     private modalService: BsModalService
   ) { }
 
   ngOnInit(): void {
+    this._staffInfo = new class implements IStaff {
+      id?: string;
+      email?: string;
+      name?: string;
+      addr?: string;
+      contactNo?: string;
+      job?: string;
+      status?: string;
+      isAdmin?: string;
+      branchId?: string;
+      password?: string;
+    };
     this.getId();
-    this.staffInfoService.retrieveStaffInfo({staffId: this.adminId}).subscribe(
+    this.staffInfoService.listOfStaffInClinic({staffId: this.adminId}).subscribe(
       data => {
         console.log(data);
         this.dataSource = new MatTableDataSource<any>(this.sampleData);
@@ -89,10 +114,20 @@ export class StaffInfoComponent implements OnInit {
         //   }
         // }
       });
+
+    this._success.subscribe((message) => this.successMessage = message);
+    this._success.pipe(
+      debounceTime(40000)
+    ).subscribe(() => this.successMessage = '');
+
+    this._error.subscribe((message) => this.errorMessage = message);
   }
 
   getId(): void {
-    // this.adminId = this.route.snapshot.paramMap.get('id').toString();
+    // this.activatedRoute.queryParams.subscribe(params => {
+    //   this.adminId = params['adminId'];
+    // });
+    this.adminId = this.activatedRoute.snapshot.paramMap.get('adminId');
     console.log('adminId');
     console.log(this.adminId);
   }
@@ -104,18 +139,26 @@ export class StaffInfoComponent implements OnInit {
   }
 
   confirmDelete() {
-    this.staffInfoService.deleteStaff({staffId: this.adminId}).subscribe(
+    console.log('this.staffId: ' + this.staffId)
+    this.staffInfoService.deleteStaff({id: this.staffId}).subscribe(
       data => {
         console.log(data);
+        this.statusD = data;
+        if (this.statusD === 'Success') {
+          this._success.next(`Successfully removed staff: ` + this.staffName);
+          this.staffId = '';
+          this.staffName = '';
+        } else {
+          this._error.next(`Unable to remove staff!`);
+        }
         this.modalDelRef.hide();
-        this.staffId = null;
       });
   }
 
   // CLOSE CONFIRMATION MODAL
   decline() {
     this.modalDelRef.hide();
-    this.staffId = null;
+    this.staffId = '';
   }
 
   acceptConfirmation(staffId: any, staffName: any) {
@@ -125,17 +168,25 @@ export class StaffInfoComponent implements OnInit {
   }
 
   confirmAccept() {
-      this.staffInfoService.acceptStaff({staffId: this.adminId}).subscribe(
+    console.log('this.staffId: ' + this.staffId)
+      this.staffInfoService.acceptStaff({id: this.staffId}).subscribe(
         data => {
           console.log(data);
+          this.statusA = data;
+          if (this.statusA === 'Success') {
+            this._success.next(`Successfully accepted staff: ` + this.staffName);
+            this.staffId = '';
+            this.staffName = '';
+          } else {
+            this._error.next(`Unable to accept staff!`);
+          }
           this.modalAcceptRef.hide();
-          this.staffId = null;
         });
   }
 
   declineAccept() {
     this.modalAcceptRef.hide();
-    this.staffId = null;
+    this.staffId = '';
   }
 
   editStaff(staffId: any) {
@@ -144,17 +195,36 @@ export class StaffInfoComponent implements OnInit {
   }
 
   update() {
-    this.staffInfoService.updateStaff({staffId: this.adminId}).subscribe(
-      data => {
-        console.log(data);
-        this.modalEditRef.hide();
-        this.staffId = null;
-      });
+    this._staffInfo.id = this.staffId;
+    this._staffInfo.name = this.fName;
+    this._staffInfo.contactNo = this.cNo;
+    this._staffInfo.addr = this.address;
+    this._staffInfo.email = this.email;
+    this._staffInfo.job = this.occupation;
+    this._staffInfo.clinicId = this.clinic;
+    this._staffInfo.branchId = this.branch;
+    if (this.staffId !== null || this.staffId !== '') {
+      this.staffInfoService.updateStaff(this._staffInfo).subscribe(
+        data => {
+          console.log(data);
+          this.statusU = data;
+          if (this.statusU === 'Success') {
+            this._success.next(`Successfully updated staff: ` + this.staffId);
+            this.staffId = '';
+          } else {
+            this._error.next(`Unable to update staff!`);
+          }
+          this.modalEditRef.hide();
+        });
+    } else {
+      this.modalEditRef.hide();
+      this._error.next(`Staff Id is not detected!`);
+    }
   }
 
   cancel() {
     this.modalEditRef.hide();
-    this.staffId = null;
+    this.staffId = '';
   }
 
   clear() {

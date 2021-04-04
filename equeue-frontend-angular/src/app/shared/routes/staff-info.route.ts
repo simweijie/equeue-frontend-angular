@@ -3,8 +3,8 @@ import { HttpResponse } from '@angular/common/http';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {StaffInfoEditComponent} from '../../staff-info-edit/staff-info-edit.component';
 import {StaffInfoService} from '../services/staff-info.service';
+import {StaffInfoComponent} from '../../staff-info/staff-info.component';
 
 @Injectable({providedIn: 'root'})
 export class StaffInfoResolve implements Resolve<any> {
@@ -20,7 +20,7 @@ export class StaffInfoResolve implements Resolve<any> {
 export const staffInfoRoute: Routes = [
   {
     path: 'status/:id/edit',
-    component: StaffInfoEditComponent,
+    component: StaffInfoComponent,
     resolve: {
       ruleAdmin: StaffInfoResolve
     }

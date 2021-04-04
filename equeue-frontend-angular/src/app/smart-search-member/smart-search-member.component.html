@@ -4,10 +4,10 @@
     <ng-template ngbNavContent>
       <div class="form-group row">
         <div class="col-sm">
-<!--          <label class="col-sm-2 form-control-label" style="text-align: center">Postal Code</label>-->
-<!--          <label class="col-sm-1 form-control-label" style="text-align: center"> : </label>-->
-<!--          <input type="text" class="col-sm-3 form-control-label" name="pCode" id="field_pCode" [(ngModel)]="pCode" disabled/>-->
-<!--          &nbsp;-->
+          <!--          <label class="col-sm-2 form-control-label" style="text-align: center">Postal Code</label>-->
+          <!--          <label class="col-sm-1 form-control-label" style="text-align: center"> : </label>-->
+          <!--          <input type="text" class="col-sm-3 form-control-label" name="pCode" id="field_pCode" [(ngModel)]="pCode" disabled/>-->
+          <!--          &nbsp;-->
           <button type="button" class="btn-primary" style="min-width: 100px; max-width: 100px" (click)="searchGP()">
             GP Search
           </button>
@@ -63,3 +63,12 @@
 <!--  Active: {{ active }}-->
   <div id="map"></div>
 </pre>
+
+<!-- POPUP MODAL CONFIRMATION FOR CHANGE QUEUE. -->
+<ng-template #changeConfirmation>
+  <div class="modal-body text-center">
+    <p>Do you confirm to change clinic to get a new queue number?</p>
+    <button type="button" class="btn-ipStyle2" (click)="changeQueue()" >Yes</button>&nbsp;
+    <button type="button" class="btn-ipStyle2" (click)="decline()" >No</button>
+  </div>
+</ng-template>

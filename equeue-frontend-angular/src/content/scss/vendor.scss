@@ -1,0 +1,19 @@
+/* after changing this file run 'npm run webpack:build' */
+// $fa-font-path: '~font-awesome/fonts';
+
+/***************************
+put Sass variables here:
+eg $input-color: red;
+****************************/
+// Override Boostrap variables
+@import "bootstrap-variables";
+// Import Bootstrap source files from node_modules
+@import '~bootstrap/scss/bootstrap';
+// @import '~font-awesome/scss/font-awesome';
+
+@import '~primeng/resources/primeng.min.css';
+@import '~primeng/resources/themes/omega/theme.css';
+
+/* jhipster-needle-scss-add-vendor JHipster will add new css style */
+
+/*<!--iconnect-needle-scss-import - iConnect will add scss/css import here-->*/

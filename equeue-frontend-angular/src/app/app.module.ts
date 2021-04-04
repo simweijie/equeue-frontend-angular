@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TestModComponent } from './test-mod/test-mod.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AgmCoreModule} from '@agm/core';
 import { GooglePlaceModule} from 'ngx-google-places-autocomplete';
 // import ngx-translate and the http loader
@@ -22,12 +22,26 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ModalModule} from "ngx-bootstrap/modal";
-import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {MatSliderModule} from "@angular/material/slider";
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {MatCheckboxModule} from "@angular/material/checkbox";
+import {ModalModule} from 'ngx-bootstrap/modal';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { PatientLoginComponent } from './patient-login/patient-login.component';
+import { PatientQueueComponent } from './patient-queue/patient-queue.component';
+import {ToastModule} from 'primeng/toast';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {MessagesModule} from 'primeng/messages';
+import {PaginatorModule} from 'primeng/paginator';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {MatRadioModule} from '@angular/material/radio';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import { SmartSearchMemberComponent } from './smart-search-member/smart-search-member.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +51,10 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     TestModComponent,
     RegistrationComponent,
     SmartSearchComponent,
-    StaffInfoComponent
+    StaffInfoComponent,
+    PatientLoginComponent,
+    PatientQueueComponent,
+    SmartSearchMemberComponent
   ],
   imports: [
     BrowserModule,
@@ -52,17 +69,21 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatSliderModule,
     MatSlideToggleModule,
     MatSnackBarModule,
+    MatInputModule,
+    MatIconModule,
+    MatTooltipModule,
+    ReactiveFormsModule,
+    MatRadioModule,
+    MatRadioModule,
+    RadioButtonModule, InputTextareaModule,
+    PaginatorModule, ConfirmDialogModule,
+    MessagesModule,
     // HomeModule,
+    FontAwesomeModule,
     GooglePlaceModule,
-    // TranslateModule.forRoot({
-    //   loader: {
-    //     provide: TranslateLoader,
-    //     useFactory: HttpLoaderFactory,
-    //     deps: [HttpClient]
-    //   }
-    // }),
     FormsModule,
     HttpClientModule,
+    ToastModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

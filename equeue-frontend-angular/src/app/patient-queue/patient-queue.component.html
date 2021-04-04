@@ -1,0 +1,201 @@
+<h2>Current Patient Queue</h2>
+<mat-accordion [multi]="true">
+  <mat-expansion-panel [expanded]='true'>
+    <mat-expansion-panel-header style="background-color: #416F97;">
+      <mat-panel-title style="color: white;">
+        Consultation Room
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <br>
+    <div>
+      <div style="width:98%" align="center">
+        <br>
+        <table mat-table [dataSource]="dataSourceConsulation" class="record" id="tableConsulation" style="width: 100%;">
+
+          <!-- ID Column -->
+<!--          <ng-container matColumnDef="no">-->
+<!--            <th mat-header-cell *matHeaderCellDef style="text-align: center"> No. </th>-->
+<!--            <td mat-cell *matCellDef="let rows">{{count(1)}}</td>-->
+<!--          </ng-container>-->
+
+          <!-- Progress Column -->
+          <ng-container matColumnDef="patientName">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Patient Name </th>
+            <td mat-cell *matCellDef="let rows">{{rows.patientName}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="mobile">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Mobile </th>
+            <td mat-cell *matCellDef="let rows">{{rows.mobileNo}} </td>
+          </ng-container>
+
+          <!-- Color Column -->
+          <ng-container matColumnDef="btnEdit">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Action </th>
+            <td mat-cell *matCellDef="let rows">
+              <button type="button" class="btn-primary" (click)="queue(rows.patientId)">Queue </button>&nbsp;
+              <button type="button" class="btn-primary" (click)="medicalPayment(rows.patientId)">Medical & Payment </button>&nbsp;
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedConsulation"></tr>
+          <tr mat-row *matRowDef="let rows; columns: displayedConsulation;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]='true'>
+    <mat-expansion-panel-header style="background-color: #416F97;">
+      <mat-panel-title style="color: white;">
+        Medication & Payment
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <br>
+    <div>
+      <div style="width:98%" align="center">
+        <br>
+        <table mat-table [dataSource]="dataSourceMedicalPayment" class="record" id="tableMedicalPayment" style="width: 100%;">
+
+          <!-- ID Column -->
+<!--          <ng-container matColumnDef="no">-->
+<!--            <th mat-header-cell *matHeaderCellDef style="text-align: center"> No. </th>-->
+<!--            <td mat-cell *matCellDef="let rows">{{count(2)}}</td>-->
+<!--          </ng-container>-->
+
+          <!-- Progress Column -->
+          <ng-container matColumnDef="patientName">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Patient Name </th>
+            <td mat-cell *matCellDef="let rows">{{rows.patientName}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="mobile">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Mobile </th>
+            <td mat-cell *matCellDef="let rows">{{rows.mobileNo}} </td>
+          </ng-container>
+
+          <!-- Color Column -->
+          <ng-container matColumnDef="btnEdit">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Action </th>
+            <td mat-cell *matCellDef="let rows">
+              <button type="button" class="btn-primary" (click)="consult(rows.patientId)">Consult </button>&nbsp;
+              <button type="button" class="btn-primary" (click)="completed(rows.patientId)">Completed </button>&nbsp;
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedMedicalPayment"></tr>
+          <tr mat-row *matRowDef="let rows; columns: displayedMedicalPayment; let i = index"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]='true'>
+    <mat-expansion-panel-header style="background-color: #416F97;">
+      <mat-panel-title style="color: white;">
+        Queue
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <br>
+    <div>
+      <div style="width:98%" align="center">
+        <br>
+        <table mat-table [dataSource]="dataSourceQueue" class="record" id="tableQueue" style="width: 100%;">
+
+          <!-- ID Column -->
+<!--          <ng-container matColumnDef="no">-->
+<!--            <th mat-header-cell *matHeaderCellDef style="text-align: center"> No. </th>-->
+<!--            <td mat-cell *matCellDef="let rows">{{count(3)}}</td>-->
+<!--          </ng-container>-->
+
+          <!-- Progress Column -->
+          <ng-container matColumnDef="patientName">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Patient Name </th>
+            <td mat-cell *matCellDef="let rows">{{rows.patientName}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="mobile">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Mobile </th>
+            <td mat-cell *matCellDef="let rows">{{rows.mobileNo}} </td>
+          </ng-container>
+
+          <!-- Color Column -->
+          <ng-container matColumnDef="btnEdit">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Action </th>
+            <td mat-cell *matCellDef="let rows">
+              <button type="button" class="btn-primary" (click)="consult(rows.patientId)">Consult </button>&nbsp;
+              <button type="button" class="btn-primary" (click)="missedQueue(rows.patientId)">Completed </button>&nbsp;
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedQueue"></tr>
+          <tr mat-row *matRowDef="let rows; columns: displayedQueue; let i = index"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]='true'>
+    <mat-expansion-panel-header style="background-color: #416F97;">
+      <mat-panel-title style="color: white;">
+        Missed Queue
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <br>
+    <div>
+      <div style="width:98%" align="center">
+        <br>
+        <table mat-table [dataSource]="dataSourceMissedQueue" class="record" id="tableMissedQueue" style="width: 100%;">
+
+          <!-- ID Column -->
+<!--          <ng-container matColumnDef="no">-->
+<!--            <th mat-header-cell *matHeaderCellDef style="text-align: center"> No. </th>-->
+<!--            <td mat-cell *matCellDef="let rows">{{count(4)}}</td>-->
+<!--          </ng-container>-->
+
+          <!-- Progress Column -->
+          <ng-container matColumnDef="patientName">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Patient Name </th>
+            <td mat-cell *matCellDef="let rows">{{rows.patientName}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="mobile">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Mobile </th>
+            <td mat-cell *matCellDef="let rows">{{rows.mobileNo}} </td>
+          </ng-container>
+
+          <!-- Color Column -->
+          <ng-container matColumnDef="btnEdit">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Action </th>
+            <td mat-cell *matCellDef="let rows">
+              <button type="button" class="btn-primary" (click)="rejoinQueue(rows.patientId)">Consult </button>&nbsp;
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedMissedQueue"></tr>
+          <tr mat-row *matRowDef="let rows; columns: displayedMissedQueue; let i = index"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

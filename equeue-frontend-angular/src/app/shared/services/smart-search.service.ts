@@ -23,18 +23,15 @@ export class SmartSearchService {
         if (response.status === 200) {
           console.log('response is 200');
           return response.body;
-        } else if (response.status === 403) {
-          console.log('Access Denied - 403');
-          return 'Error 403';
         } else {
           console.log('Error - ');
           console.log(response.body);
-          return response.body;
+          return 'ERROR';
         }
       })).pipe(catchError(error => of('ERROR')));
   }
 
-  searchByPCode(req?: any){
+  searchByGP(req?: any){
     console.log('req: ');
     console.log(req);
 
@@ -43,13 +40,10 @@ export class SmartSearchService {
         if (response.status === 200) {
           console.log('response is 200');
           return response.body;
-        } else if (response.status === 403) {
-          console.log('Access Denied - 403');
-          return 'Error 403';
         } else {
           console.log('Error - ');
           console.log(response.body);
-          return response.body;
+          return 'ERROR';
         }
       })).pipe(catchError(error => of('ERROR')));
   }
@@ -63,13 +57,27 @@ export class SmartSearchService {
         if (response.status === 200) {
           console.log('response is 200');
           return response.body;
-        } else if (response.status === 403) {
-          console.log('Access Denied - 403');
-          return 'Error 403';
         } else {
           console.log('Error - ');
           console.log(response.body);
+          return 'ERROR';
+        }
+      })).pipe(catchError(error => of('ERROR')));
+  }
+
+  changeQueue(req?: any){
+    console.log('req: ');
+    console.log(req);
+
+    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/change-queue', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
+      response => {
+        if (response.status === 200) {
+          console.log('response is 200');
           return response.body;
+        } else {
+          console.log('Error - ');
+          console.log(response.body);
+          return 'ERROR';
         }
       })).pipe(catchError(error => of('ERROR')));
   }

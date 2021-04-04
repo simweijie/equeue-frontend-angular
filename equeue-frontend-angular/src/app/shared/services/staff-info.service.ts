@@ -17,7 +17,7 @@ export class StaffInfoService {
   });
   constructor(private http: HttpClient) { }
 
-  retrieveStaffInfo(req?: any){
+  listOfStaffInClinic(req?: any){
     console.log('req: ');
     console.log(req);
 
@@ -26,13 +26,10 @@ export class StaffInfoService {
         if (response.status === 200) {
           console.log('response is 200');
           return response.body;
-        } else if (response.status === 403) {
-          console.log('Access Denied - 403');
-          return 'Error 403';
         } else {
           console.log('Error - ');
           console.log(response.body);
-          return response.body;
+          return 'ERROR';
         }
       })).pipe(catchError(error => of('ERROR')));
   }
@@ -46,13 +43,10 @@ export class StaffInfoService {
         if (response.status === 200) {
           console.log('response is 200');
           return response.body;
-        } else if (response.status === 403) {
-          console.log('Access Denied - 403');
-          return 'Error 403';
         } else {
           console.log('Error - ');
-          console.log(response.status);
-          return response.statusText;
+          console.log(response.body);
+          return 'ERROR';
         }
       })).pipe(catchError(error => of('ERROR')));
   }
@@ -66,13 +60,10 @@ export class StaffInfoService {
         if (response.status === 200) {
           console.log('response is 200');
           return response.body;
-        } else if (response.status === 403) {
-          console.log('Access Denied - 403');
-          return 'Error 403';
         } else {
           console.log('Error - ');
           console.log(response.body);
-          return response.body;
+          return 'ERROR';
         }
       })).pipe(catchError(error => of('ERROR')));
   }
@@ -86,13 +77,10 @@ export class StaffInfoService {
         if (response.status === 200) {
           console.log('response is 200');
           return response.body;
-        } else if (response.status === 403) {
-          console.log('Access Denied - 403');
-          return 'Error 403';
         } else {
           console.log('Error - ');
           console.log(response.body);
-          return response.body;
+          return 'ERROR';
         }
       })).pipe(catchError(error => of('ERROR')));
   }
