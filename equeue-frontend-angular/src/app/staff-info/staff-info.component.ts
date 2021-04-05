@@ -4,9 +4,10 @@ import {MatPaginator} from '@angular/material/paginator';
 import {ActivatedRoute, Router} from '@angular/router';
 import {StaffInfoService} from '../shared/services/staff-info.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
-import {IStaff} from "../shared/modals/staff.model";
-import {Subject} from "rxjs";
-import {debounceTime} from "rxjs/operators";
+import {IStaff} from '../shared/modals/staff.model';
+import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
+import {CommonService} from '../shared/services/common.service';
 
 @Component({
   selector: 'app-staff-info',
@@ -30,10 +31,10 @@ export class StaffInfoComponent implements OnInit {
   modalEditRef: BsModalRef;
   @ViewChild('editStaffRecord') modalEdit: TemplateRef<any>;
 
-  displayedColumns: string[] = ['staffName', 'branchId', 'clinic', 'mobileNo', 'occupation', 'btnEdit'];
+  displayedColumns: string[] = ['name', 'branchName', 'clinic', 'mobileNo', 'occupation', 'btnEdit'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  adminId: string | null;
+  id: string | null;
   staffName: string;
   staffId: any;
 
@@ -56,9 +57,9 @@ export class StaffInfoComponent implements OnInit {
   fName: any;
 
   sampleData: Array<object> = [
-    {id: '1', name: 'D1', branchId: 'B8', clinicName: 'Hello Clinic', contactNo: '92029102', job: 'D', status: 'I'},
-    {id: '2', name: 'D2', branchId: 'B2', clinicName: 'Hello Clinic', contactNo: '92029102', job: 'D', status: 'A'},
-    {id: '3', name: 'D3', branchId: 'B1', clinicName: 'Hello Clinic', contactNo: '92029102', job: 'D', status: 'P'}
+    {id: '1', name: 'D1', branchName: 'B8', clinicName: 'Hello Clinic', contactNo: '92029102', job: 'D', status: 'I'},
+    {id: '2', name: 'D2', branchName: 'B2', clinicName: 'Hello Clinic', contactNo: '92029102', job: 'D', status: 'A'},
+    {id: '3', name: 'D3', branchName: 'B1', clinicName: 'Hello Clinic', contactNo: '92029102', job: 'D', status: 'P'}
   ];
   private _staffInfo: IStaff;
   private statusD: string | Object | null | string;
@@ -69,7 +70,8 @@ export class StaffInfoComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private staffInfoService: StaffInfoService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private commonService: CommonService
   ) { }
 
   ngOnInit(): void {
@@ -86,7 +88,7 @@ export class StaffInfoComponent implements OnInit {
       password?: string;
     };
     this.getId();
-    this.staffInfoService.listOfStaffInClinic({staffId: this.adminId}).subscribe(
+    this.staffInfoService.listOfStaffInClinic({staffId: this.id}).subscribe(
       data => {
         console.log(data);
         this.dataSource = new MatTableDataSource<any>(this.sampleData);
@@ -115,6 +117,21 @@ export class StaffInfoComponent implements OnInit {
         // }
       });
 
+    this.commonService.retrieveBranchList().subscribe(
+      data => {
+        console.log(data);
+        if (data !== 'ERROR') {
+          this.branchList = data;
+        }
+      });
+    this.commonService.retrieveClinicList().subscribe(
+      data => {
+        console.log(data);
+        if (data !== 'ERROR') {
+          this.clinicList = data;
+        }
+      });
+
     this._success.subscribe((message) => this.successMessage = message);
     this._success.pipe(
       debounceTime(40000)
@@ -127,9 +144,9 @@ export class StaffInfoComponent implements OnInit {
     // this.activatedRoute.queryParams.subscribe(params => {
     //   this.adminId = params['adminId'];
     // });
-    this.adminId = this.activatedRoute.snapshot.paramMap.get('adminId');
-    console.log('adminId');
-    console.log(this.adminId);
+    this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    console.log('id');
+    console.log(this.id);
   }
 
   removeConfirmation(staffId: any, staffName: any) {
@@ -139,7 +156,7 @@ export class StaffInfoComponent implements OnInit {
   }
 
   confirmDelete() {
-    console.log('this.staffId: ' + this.staffId)
+    console.log('this.staffId: ' + this.staffId);
     this.staffInfoService.deleteStaff({id: this.staffId}).subscribe(
       data => {
         console.log(data);
@@ -159,6 +176,7 @@ export class StaffInfoComponent implements OnInit {
   decline() {
     this.modalDelRef.hide();
     this.staffId = '';
+    this.staffName = '';
   }
 
   acceptConfirmation(staffId: any, staffName: any) {
@@ -187,6 +205,7 @@ export class StaffInfoComponent implements OnInit {
   declineAccept() {
     this.modalAcceptRef.hide();
     this.staffId = '';
+    this.staffName = '';
   }
 
   editStaff(staffId: any) {

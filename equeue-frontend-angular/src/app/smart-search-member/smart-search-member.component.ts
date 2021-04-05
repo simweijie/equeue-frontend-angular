@@ -2,6 +2,7 @@ import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {SmartSearchService} from '../shared/services/smart-search.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {CommonService} from '../shared/services/common.service';
 
 declare  const L: any;
 
@@ -46,7 +47,8 @@ export class SmartSearchMemberComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private smartSearchService: SmartSearchService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private commonService: CommonService
   ) { }
 
   ngOnInit(): void {
@@ -96,7 +98,7 @@ export class SmartSearchMemberComponent implements OnInit {
 
     this.isDataAvailable = false;
     // Get the medical group list
-    this.smartSearchService.retrieveClinicList().subscribe(
+    this.commonService.retrieveClinicList().subscribe(
       data => {
         console.log(data);
         if (data !== 'ERROR') {
