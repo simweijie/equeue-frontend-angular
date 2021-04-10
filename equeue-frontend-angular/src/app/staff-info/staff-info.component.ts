@@ -4,7 +4,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {ActivatedRoute, Router} from '@angular/router';
 import {StaffInfoService} from '../shared/services/staff-info.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
-import {IStaff} from '../shared/modals/staff.model';
+import {IStaff, Staff} from '../shared/modals/staff.model';
 import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {CommonService} from '../shared/services/common.service';
@@ -38,16 +38,32 @@ export class StaffInfoComponent implements OnInit {
   staffName: string;
   staffId: any;
 
-  occupationList: Array<object> = [
+  occupationList: any = [
     {id: 'D', value: 'Doctor'},
     {id: 'N', value: 'Nurse'},
     {id: 'C', value: 'Clerk'}
   ];
+
+  // clinicList: any = [
+  //   {id: '4', value: 'CLINIC'},
+  //   {id: '5', value: 'CLINIC2'}
+  // ];
+
+  // branchList: any = [
+  //   {id: '4', value: 'BRANCH'}
+  // ];
+  //
+  // branchListEdit: any = [
+  //   {id: '4', value: 'BRANCH'}
+  // ];
+
   branchError: boolean = false;
   clinicError: boolean = false;
   occupationError: boolean = false;
   clinicList: any;
   branchList: any;
+  branchListEdit: any;
+  hide = false;
   clinic: any;
   branch: any;
   occupation: any;
@@ -57,14 +73,21 @@ export class StaffInfoComponent implements OnInit {
   fName: any;
 
   sampleData: Array<object> = [
-    {id: '1', name: 'D1', branchName: 'B8', clinicName: 'Hello Clinic', contactNo: '92029102', job: 'D', status: 'I'},
-    {id: '2', name: 'D2', branchName: 'B2', clinicName: 'Hello Clinic', contactNo: '92029102', job: 'D', status: 'A'},
-    {id: '3', name: 'D3', branchName: 'B1', clinicName: 'Hello Clinic', contactNo: '92029102', job: 'D', status: 'P'}
+    {id: '3', email: 'branch2staff@hotmail.com', name: 'branch2staff', addr: 'WORKER STREET UPDATED', contactNo: '01234567', job: 'D', status: 'I', isAdmin: 'Y', branchId: '4', clinicId: '4'},
+    {id: '3', email: 'branch2staff@hotmail.com', name: 'branch2staff', addr: 'WORKER STREET UPDATED', contactNo: '01234567', job: 'D', status: 'A', isAdmin: 'Y', branchId: '4', clinicId: '4'},
+    {id: '3', email: 'branch2staff@hotmail.com', name: 'branch2staff', addr: 'WORKER STREET UPDATED', contactNo: '01234567', job: 'D', status: 'P', isAdmin: 'Y', branchId: '4', clinicId: '4'}
   ];
   private _staffInfo: IStaff;
+  private _staffInfoEdit: IStaff;
   private statusD: string | Object | null | string;
   private statusA: string | Object | null | string;
   private statusU: string | Object | null | string;
+  private statusEdit: any;
+  private isAdmin: any;
+  private branchMap: Map<string, string>;
+  private branchMap2: Map<string, string>;
+  private clinicMap: Map<string, string>;
+  private occupationMap: Map<string, string>;
 
   constructor(
     private router: Router,
@@ -87,11 +110,29 @@ export class StaffInfoComponent implements OnInit {
       branchId?: string;
       password?: string;
     };
+    this._staffInfoEdit = new class implements IStaff {
+      id?: string;
+      email?: string;
+      name?: string;
+      addr?: string;
+      contactNo?: string;
+      job?: string;
+      status?: string;
+      isAdmin?: string;
+      branchId?: string;
+      password?: string;
+    };
     this.getId();
     this.staffInfoService.listOfStaffInClinic({staffId: this.id}).subscribe(
       data => {
         console.log(data);
-        this.dataSource = new MatTableDataSource<any>(this.sampleData);
+        // this.dataSource = new MatTableDataSource<any>(this.sampleData);
+        if (data === 'ERROR') {
+          return;
+        }
+        // @ts-ignore
+        this.dataSource = new MatTableDataSource<any>(data);
+
         // if (data === null) {
         //   this._error.next(this.error500);
         // } else {
@@ -117,11 +158,20 @@ export class StaffInfoComponent implements OnInit {
         // }
       });
 
+    this.occupationMap = new Map<string, string>();
+    for (let entry of this.occupationList) {
+      this.occupationMap.set(entry.id, entry.value);
+    }
+
     this.commonService.retrieveBranchList().subscribe(
       data => {
         console.log(data);
         if (data !== 'ERROR') {
           this.branchList = data;
+          this.branchMap = new Map<string, string>();
+          for (let entry of this.branchList) {
+            this.branchMap.set(entry.id, entry.value);
+          }
         }
       });
     this.commonService.retrieveClinicList().subscribe(
@@ -129,6 +179,10 @@ export class StaffInfoComponent implements OnInit {
         console.log(data);
         if (data !== 'ERROR') {
           this.clinicList = data;
+          this.clinicMap = new Map<string, string>();
+          for (let entry of this.clinicList) {
+            this.clinicMap.set(entry.id, entry.value);
+          }
         }
       });
 
@@ -157,18 +211,16 @@ export class StaffInfoComponent implements OnInit {
 
   confirmDelete() {
     console.log('this.staffId: ' + this.staffId);
-    this.staffInfoService.deleteStaff({id: this.staffId}).subscribe(
+    this.staffInfoService.deleteStaffWithId({id: this.staffId}).subscribe(
       data => {
         console.log(data);
         this.statusD = data;
         if (this.statusD === 'Success') {
           this._success.next(`Successfully removed staff: ` + this.staffName);
-          this.staffId = '';
-          this.staffName = '';
         } else {
           this._error.next(`Unable to remove staff!`);
         }
-        this.modalDelRef.hide();
+        this.decline();
       });
   }
 
@@ -186,20 +238,18 @@ export class StaffInfoComponent implements OnInit {
   }
 
   confirmAccept() {
-    console.log('this.staffId: ' + this.staffId)
-      this.staffInfoService.acceptStaff({id: this.staffId}).subscribe(
-        data => {
-          console.log(data);
-          this.statusA = data;
-          if (this.statusA === 'Success') {
-            this._success.next(`Successfully accepted staff: ` + this.staffName);
-            this.staffId = '';
-            this.staffName = '';
-          } else {
-            this._error.next(`Unable to accept staff!`);
-          }
-          this.modalAcceptRef.hide();
-        });
+    console.log('this.staffId: ' + this.staffId);
+    this.staffInfoService.activatePendingStaff({id: this.staffId}).subscribe(
+      data => {
+        console.log(data);
+        this.statusA = data;
+        if (this.statusA === 'Success') {
+          this._success.next(`Successfully accepted staff: ` + this.staffName);
+        } else {
+          this._error.next(`Unable to accept staff!`);
+        }
+        this.declineAccept();
+      });
   }
 
   declineAccept() {
@@ -208,32 +258,45 @@ export class StaffInfoComponent implements OnInit {
     this.staffName = '';
   }
 
-  editStaff(staffId: any) {
-    this.staffId = staffId;
+  editStaff(staff: Staff) {
+    console.log('staff: ' + staff);
+    this.staffId = staff.id;
+    this.fName = staff.name;
+    this.cNo = staff.contactNo;
+    this.address = staff.addr;
+    this.email = staff.email;
+    this.occupation = staff.job;
+    this.clinic = staff.clinicId;
+    this.branch = staff.branchId;
+    this.statusEdit = staff.status;
+    this.isAdmin = staff.isAdmin;
+    // console.log('_staffInfoEdit: ' + this._staffInfoEdit);
     this.modalEditRef = this.modalService.show(this.modalEdit);
   }
 
   update() {
-    this._staffInfo.id = this.staffId;
-    this._staffInfo.name = this.fName;
-    this._staffInfo.contactNo = this.cNo;
-    this._staffInfo.addr = this.address;
-    this._staffInfo.email = this.email;
-    this._staffInfo.job = this.occupation;
-    this._staffInfo.clinicId = this.clinic;
-    this._staffInfo.branchId = this.branch;
-    if (this.staffId !== null || this.staffId !== '') {
-      this.staffInfoService.updateStaff(this._staffInfo).subscribe(
+    console.log('this.staffId: ' + this._staffInfoEdit.id);
+    // this._staffInfo.id = this.staffId;
+    // this._staffInfo.name = this.fName;
+    // this._staffInfo.contactNo = this.cNo;
+    // this._staffInfo.addr = this.address;
+    // this._staffInfo.email = this.email;
+    // this._staffInfo.job = this.occupation;
+    // this._staffInfo.clinicId = this.clinic;
+    // this._staffInfo.branchId = this.branch;
+    // this._staffInfo.status = this.statusEdit;
+    // this._staffInfo.isAdmin = this.isAdmin;
+    if (this._staffInfoEdit.id !== null || this._staffInfoEdit.id !== '') {
+      this.staffInfoService.updateStaff(this._staffInfoEdit).subscribe(
         data => {
           console.log(data);
           this.statusU = data;
           if (this.statusU === 'Success') {
             this._success.next(`Successfully updated staff: ` + this.staffId);
-            this.staffId = '';
           } else {
             this._error.next(`Unable to update staff!`);
           }
-          this.modalEditRef.hide();
+          this.cancel();
         });
     } else {
       this.modalEditRef.hide();
@@ -243,7 +306,22 @@ export class StaffInfoComponent implements OnInit {
 
   cancel() {
     this.modalEditRef.hide();
+    // this._staffInfoEdit = new class implements IStaff {
+    //   id?: string;
+    //   email?: string;
+    //   name?: string;
+    //   addr?: string;
+    //   contactNo?: string;
+    //   job?: string;
+    //   status?: string;
+    //   isAdmin?: string;
+    //   branchId?: string;
+    //   password?: string;
+    // };
     this.staffId = '';
+    this.isAdmin = null;
+    this.statusEdit = null;
+    this.clear();
   }
 
   clear() {
@@ -254,5 +332,16 @@ export class StaffInfoComponent implements OnInit {
     this.occupation = null;
     this.clinic = null;
     this.branch = null;
+  }
+  listOfBranchesWithClinicId(id: any) {
+    console.log('listOfBranchesWithClinicId: ' + id);
+    this.commonService.listOfBranchesWithClinicId({clinicId: id}).subscribe(
+      data => {
+        console.log(data);
+        if (data !== 'ERROR') {
+          this.branchListEdit = data;
+          this.hide = true;
+      }
+    });
   }
 }

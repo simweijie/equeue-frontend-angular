@@ -1,4 +1,6 @@
 <h2>Current Patient Queue</h2>
+<ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+<ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
 <mat-accordion [multi]="true">
   <mat-expansion-panel [expanded]='true'>
     <mat-expansion-panel-header style="background-color: #416F97;">
@@ -36,8 +38,8 @@
           <ng-container matColumnDef="btnEdit">
             <th mat-header-cell *matHeaderCellDef style="text-align: center"> Action </th>
             <td mat-cell *matCellDef="let rows">
-              <button type="button" class="btn-primary" (click)="queue(rows.patientId)">Queue </button>&nbsp;
-              <button type="button" class="btn-primary" (click)="medicalPayment(rows.patientId)">Medical & Payment </button>&nbsp;
+              <button type="button" class="btn-primary" (click)="queue(rows.branchId, rows.patientId, rows.status, rows.patientName)">Queue </button>&nbsp;
+              <button type="button" class="btn-primary" (click)="medicalPayment(rows.branchId, rows.patientId, rows.status, rows.patientName)">Medical & Payment </button>&nbsp;
             </td>
           </ng-container>
 
@@ -86,8 +88,8 @@
           <ng-container matColumnDef="btnEdit">
             <th mat-header-cell *matHeaderCellDef style="text-align: center"> Action </th>
             <td mat-cell *matCellDef="let rows">
-              <button type="button" class="btn-primary" (click)="consult(rows.patientId)">Consult </button>&nbsp;
-              <button type="button" class="btn-primary" (click)="completed(rows.patientId)">Completed </button>&nbsp;
+              <button type="button" class="btn-primary" (click)="consult(rows.branchId, rows.patientId, rows.status, rows.patientName)">Consult </button>&nbsp;
+              <button type="button" class="btn-primary" (click)="completed(rows.branchId, rows.patientId, rows.status, rows.patientName)">Completed </button>&nbsp;
             </td>
           </ng-container>
 
@@ -136,8 +138,8 @@
           <ng-container matColumnDef="btnEdit">
             <th mat-header-cell *matHeaderCellDef style="text-align: center"> Action </th>
             <td mat-cell *matCellDef="let rows">
-              <button type="button" class="btn-primary" (click)="consult(rows.patientId)">Consult </button>&nbsp;
-              <button type="button" class="btn-primary" (click)="missedQueue(rows.patientId)">Completed </button>&nbsp;
+              <button type="button" class="btn-primary" (click)="consult(rows.branchId, rows.patientId, rows.status, rows.patientName)">Consult </button>&nbsp;
+              <button type="button" class="btn-primary" (click)="missedQueue(rows.branchId, rows.patientId, rows.status, rows.patientName)">Missed Queue </button>&nbsp;
             </td>
           </ng-container>
 
@@ -186,7 +188,7 @@
           <ng-container matColumnDef="btnEdit">
             <th mat-header-cell *matHeaderCellDef style="text-align: center"> Action </th>
             <td mat-cell *matCellDef="let rows">
-              <button type="button" class="btn-primary" (click)="rejoinQueue(rows.patientId)">Consult </button>&nbsp;
+              <button type="button" class="btn-primary" (click)="rejoinQueue(rows.branchId, rows.patientId, rows.status, rows.patientName)">Rejoin Queue </button>&nbsp;
             </td>
           </ng-container>
 

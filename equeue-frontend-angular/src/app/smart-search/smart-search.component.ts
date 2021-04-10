@@ -134,7 +134,7 @@ export class SmartSearchComponent implements OnInit {
       this.smartSearchService.searchByGP({lat: this.curLat, long: this.curLong}).subscribe(
         data => {
           console.log(data);
-          if (data === null) {
+          if (data !== null || data !== 'ERROR') {
             this.filterList = data;
             for (let entry of this.filterList) {
               const latLong = [entry.lat, entry.long];
@@ -158,7 +158,7 @@ export class SmartSearchComponent implements OnInit {
       this.smartSearchService.searchByDistrictOrMGroup({district: this.district, clinic: this.mGroup}).subscribe(
         data => {
           console.log(data);
-          if (data !== null) {
+          if (data !== null || data !== 'ERROR') {
             this.filterList = data;
             for (let entry of this.filterList) {
               const latLong = [entry.lat, entry.long];
