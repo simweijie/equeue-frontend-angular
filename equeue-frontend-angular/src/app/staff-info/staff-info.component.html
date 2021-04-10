@@ -9,6 +9,8 @@
   <br>
   <div>
     <div style="width:98%" align="center">
+      <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+      <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
       <br>
       <table mat-table [dataSource]="dataSource" class="record" id="table" style="width: 100%;">
 

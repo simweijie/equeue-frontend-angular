@@ -1,4 +1,6 @@
 <h2>Current Patient Queue</h2>
+<ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+<ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
 <mat-accordion [multi]="true">
   <mat-expansion-panel [expanded]='true'>
     <mat-expansion-panel-header style="background-color: #416F97;">

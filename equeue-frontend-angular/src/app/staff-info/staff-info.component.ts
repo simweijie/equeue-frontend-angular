@@ -340,7 +340,7 @@ export class StaffInfoComponent implements OnInit {
         console.log(data);
         if (data !== 'ERROR') {
           this.branchListEdit = data;
-            this.hide = true;
+          this.hide = true;
       }
     });
   }
