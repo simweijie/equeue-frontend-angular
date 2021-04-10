@@ -34,11 +34,11 @@ export class StaffInfoService {
       })).pipe(catchError(error => of('ERROR')));
   }
 
-  deleteStaff(req?: any){
+  deleteStaffWithId(req?: any){
     console.log('req: ');
     console.log(req);
 
-    return this.http.delete('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/query-customer-with-uin' + req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
+    return this.http.delete('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/delete-staff-with-id' + req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
       response => {
         if (response.status === 200) {
           console.log('response is 200');
@@ -51,11 +51,11 @@ export class StaffInfoService {
       })).pipe(catchError(error => of('ERROR')));
   }
 
-  acceptStaff(req?: any){
+  activatePendingStaff(req?: any){
     console.log('req: ');
     console.log(req);
 
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/query-customer-with-uin', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
+    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/activate-pending-staff', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
       response => {
         if (response.status === 200) {
           console.log('response is 200');

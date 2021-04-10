@@ -4,7 +4,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {PatientQueueService} from '../shared/services/patient-queue.service';
-import {MatAccordion} from "@angular/material/expansion";
+import {MatAccordion} from '@angular/material/expansion';
+import {debounceTime} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-patient-queue',
@@ -12,6 +14,12 @@ import {MatAccordion} from "@angular/material/expansion";
   styleUrls: ['./patient-queue.component.css']
 })
 export class PatientQueueComponent implements OnInit {
+
+  // Toast message
+  private _success = new Subject<string>();
+  private _error = new Subject<string>();
+  successMessage: string;
+  errorMessage: string;
 
   displayedConsulation: string[] = ['patientName', 'mobile', 'btnEdit'];
   dataSourceConsulation: MatTableDataSource<any>;
@@ -29,9 +37,9 @@ export class PatientQueueComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   sampleData: Array<object> = [
-    {patientId: 'P1', patientName: 'Patient 1', mobileNo: '98765431'},
-    {patientId: 'P2', patientName: 'Patient 2', mobileNo: '98765432'},
-    {patientId: 'P3', patientName: 'Patient 3', mobileNo: '98765433'}
+    {patientId: 'P1', patientName: 'Patient 1', mobileNo: '98765431', branchId: '1', status: 'C'},
+    {patientId: 'P2', patientName: 'Patient 2', mobileNo: '98765432', branchId: '1', status: 'C'},
+    {patientId: 'P3', patientName: 'Patient 3', mobileNo: '98765433', branchId: '1', status: 'C'}
   ];
 
   // i = 0;
@@ -57,6 +65,13 @@ export class PatientQueueComponent implements OnInit {
     this.queueList();
     this.medicalPaymentList();
     this.missedQueueList();
+
+    this._success.subscribe((message) => this.successMessage = message);
+    this._success.pipe(
+      debounceTime(40000)
+    ).subscribe(() => this.successMessage = '');
+
+    this._error.subscribe((message) => this.errorMessage = message);
   }
 
   getStaffId() {
@@ -196,51 +211,75 @@ export class PatientQueueComponent implements OnInit {
       });
   }
 
-  queue(patientId: any) {
-    this.patientQueueService.queue({patientId: patientId}).subscribe(
+  queue(branch: any, patientId: any, currStatus: any, patientName: any) {
+    this.patientQueueService.updateQueueStatus({newStatus: 'Q', branchId: branch, customerId: patientId, currentStatus: currStatus}).subscribe(
       data => {
         console.log(data);
-
+        if (data === '200') {
+          this._success.next(`Successfully changed patient: ` + patientName + ' status.');
+        } else {
+          this._error.next(`Unable to change patient:` + patientName + ' status!');
+        }
       });
   }
 
-  medicalPayment(patientId: any) {
-    this.patientQueueService.medicalPayment({patientId: patientId}).subscribe(
+  medicalPayment(branch: any, patientId: any, currStatus: any, patientName: any) {
+    this.patientQueueService.updateQueueStatus({newStatus: 'P', branchId: branch, customerId: patientId, currentStatus: currStatus}).subscribe(
       data => {
         console.log(data);
-
+        if (data === '200') {
+          this._success.next(`Successfully changed patient: ` + patientName + ' status.');
+        } else {
+          this._error.next(`Unable to change patient:` + patientName + ' status!');
+        }
       });
   }
 
-  consult(patientId: any) {
-    this.patientQueueService.consult({patientId: patientId}).subscribe(
+  consult(branch: any, patientId: any, currStatus: any, patientName: any) {
+    this.patientQueueService.updateQueueStatus({newStatus: 'D', branchId: branch, customerId: patientId, currentStatus: currStatus}).subscribe(
       data => {
         console.log(data);
-
+        if (data === '200') {
+          this._success.next(`Successfully changed patient: ` + patientName + ' status.');
+        } else {
+          this._error.next(`Unable to change patient:` + patientName + ' status!');
+        }
       });
   }
 
-  completed(patientId: any) {
-    this.patientQueueService.completed({patientId: patientId}).subscribe(
+  completed(branch: any, patientId: any, currStatus: any, patientName: any) {
+    this.patientQueueService.updateQueueStatus({newStatus: 'C', branchId: branch, customerId: patientId, currentStatus: currStatus}).subscribe(
       data => {
         console.log(data);
-
+        if (data === '200') {
+          this._success.next(`Successfully changed patient: ` + patientName + ' status.');
+        } else {
+          this._error.next(`Unable to change patient:` + patientName + ' status!');
+        }
       });
   }
 
-  missedQueue(patientId: any) {
-    this.patientQueueService.missedQueue({patientId: patientId}).subscribe(
+  missedQueue(branch: any, patientId: any, currStatus: any, patientName: any) {
+    this.patientQueueService.updateQueueStatus({newStatus: 'M', branchId: branch, customerId: patientId, currentStatus: currStatus}).subscribe(
       data => {
         console.log(data);
-
+        if (data === '200') {
+          this._success.next(`Successfully changed patient: ` + patientName + ' status.');
+        } else {
+          this._error.next(`Unable to change patient:` + patientName + ' status!');
+        }
       });
   }
 
-  rejoinQueue(patientId: any) {
-    this.patientQueueService.rejoinQueue({patientId: patientId}).subscribe(
+  rejoinQueue(branch: any, patientId: any, currStatus: any, patientName: any) {
+    this.patientQueueService.updateQueueStatus({newStatus: 'Q', branchId: branch, customerId: patientId, currentStatus: currStatus}).subscribe(
       data => {
         console.log(data);
-
+        if (data === '200') {
+          this._success.next(`Successfully changed patient: ` + patientName + ' status.');
+        } else {
+          this._error.next(`Unable to change patient:` + patientName + ' status!');
+        }
       });
   }
 

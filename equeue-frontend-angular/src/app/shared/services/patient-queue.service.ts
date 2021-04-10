@@ -82,15 +82,15 @@ export class PatientQueueService {
       })).pipe(catchError(error => of('ERROR')));
   }
 
-  queue(req?: any){
+  updateQueueStatus(req?: any){
     console.log('req: ');
     console.log(req);
 
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/list-of-clinics', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
+    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/update-queue-status ', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
       response => {
         if (response.status === 200) {
           console.log('response is 200');
-          return response.body;
+          return response.status;
         } else {
           console.log('Error - ');
           console.log(response.body);
@@ -98,91 +98,4 @@ export class PatientQueueService {
         }
       })).pipe(catchError(error => of('ERROR')));
   }
-
-  medicalPayment(req?: any){
-    console.log('req: ');
-    console.log(req);
-
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/list-of-clinics', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
-      response => {
-        if (response.status === 200) {
-          console.log('response is 200');
-          return response.body;
-        } else {
-          console.log('Error - ');
-          console.log(response.body);
-          return 'ERROR';
-        }
-      })).pipe(catchError(error => of('ERROR')));
-  }
-
-  consult(req?: any){
-    console.log('req: ');
-    console.log(req);
-
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/list-of-clinics', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
-      response => {
-        if (response.status === 200) {
-          console.log('response is 200');
-          return response.body;
-        } else {
-          console.log('Error - ');
-          console.log(response.body);
-          return 'ERROR';
-        }
-      })).pipe(catchError(error => of('ERROR')));
-  }
-
-  completed(req?: any){
-    console.log('req: ');
-    console.log(req);
-
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/list-of-clinics', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
-      response => {
-        if (response.status === 200) {
-          console.log('response is 200');
-          return response.body;
-        } else {
-          console.log('Error - ');
-          console.log(response.body);
-          return 'ERROR';
-        }
-      })).pipe(catchError(error => of('ERROR')));
-  }
-
-  missedQueue(req?: any){
-    console.log('req: ');
-    console.log(req);
-
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/list-of-clinics', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
-      response => {
-        if (response.status === 200) {
-          console.log('response is 200');
-          return response.body;
-        } else {
-          console.log('Error - ');
-          console.log(response.body);
-          return 'ERROR';
-        }
-      })).pipe(catchError(error => of('ERROR')));
-  }
-
-  rejoinQueue(req?: any){
-    console.log('req: ');
-    console.log(req);
-
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/list-of-clinics', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
-      response => {
-        if (response.status === 200) {
-          console.log('response is 200');
-          return response.body;
-        } else {
-          console.log('Error - ');
-          console.log(response.body);
-          return 'ERROR';
-        }
-      })).pipe(catchError(error => of('ERROR')));
-  }
-
-
 }
