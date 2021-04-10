@@ -2,60 +2,71 @@
 <form name="editForm" role="form" #editForm="ngForm">
     <h3 class="font-bold pl-0 my-4" ><strong>Patient Registration Process</strong></h3>
     <div class="px-3">
+        <div class="text-center">
+            <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+            <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
+        </div>
         <div class="form-group row">
             <label for="name"  class="col-sm-2 col-form-label" >Full Name:* </label>
             <div class="col-sm-5">
-                <input type="name" class="form-control" id="name" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1" 
-                maxlength="66" autofocus autocomplete="off" required placeholder="Full Name">
+                <input type="text" class="form-control" name="name" id="name" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="name" 
+                maxlength="66" autofocus autocomplete="off" required>
             </div>
         </div>
         <div class="form-group row">
-            <label for="nric"  class="col-sm-2 col-form-label" >NRIC: </label>
+            <label for="uin"  class="col-sm-2 col-form-label" >NRIC: </label>
             <div class="col-sm-5">
-                <input type="nric" class="form-control" id="nric" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9" 
-                maxlength="9" autofocus autocomplete="off"  placeholder="NRIC">
+                <input type="text" class="form-control" name="uin" id="uin" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="uin" 
+                maxlength="9" autofocus autocomplete="off">
             </div>
         </div>
         <div class="form-group row">
-            <label for="mobileno"  class="col-sm-2 col-form-label" >Mobile No:* </label>
+            <label for="contactNo"  class="col-sm-2 col-form-label" >Contact No:* </label>
             <div class="col-sm-5">
-                <input type="mobileno" class="form-control" id="mobileno" class="uppercase" pattern="^[0-9-/]*$" minlength="9" 
-                maxlength="9" autofocus autocomplete="off" required placeholder="Mobile No">
+                <input type="text" class="form-control" name="contactNo" id="contactNo" class="uppercase" pattern="^[0-9-/]*$" minlength="9"  [(ngModel)]="contactNo" 
+                maxlength="9" autofocus autocomplete="off" required>
             </div>
         </div>
         <div class="form-group row">
-            <label for="address"  class="col-sm-2 col-form-label" >Address: </label>
+            <label for="addr"  class="col-sm-2 col-form-label" >Address: </label>
             <div class="col-sm-5">
-                <input type="address" class="form-control" id="address" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1" 
-                maxlength="99" autofocus autocomplete="off"  placeholder="Address">
+                <input type="text" class="form-control" name="addr" id="addr" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="addr" 
+                maxlength="99" autofocus autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="postal"  class="col-sm-2 col-form-label" >Postal Code: </label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="postal" id="postal" class="uppercase" pattern="^[0-9-/]*$" minlength="6"  [(ngModel)]="postal" 
+                maxlength="6" autofocus autocomplete="off">
             </div>
         </div>
         <div class="form-group row">
             <label for="email"  class="col-sm-2 col-form-label" >Email:* </label>
             <div class="col-sm-5">
-                <input type="email" class="form-control" id="email" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1" 
-                maxlength="66" autofocus autocomplete="off" required  placeholder="Email">
+                <input type="text" class="form-control" name="email" id="email" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="email" 
+                maxlength="66" autofocus autocomplete="off" required>
             </div>
         </div>
         <div class="form-group row">
-            <label for="drugallergies"  class="col-sm-2 col-form-label" >Drug Allergies: </label>
+            <label for="drugAllergy"  class="col-sm-2 col-form-label" >Drug Allergies: </label>
             <div class="col-sm-5">
-                <input type="drugallergies" class="form-control" id="drugallergies" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1" 
-                maxlength="99" autofocus autocomplete="off"   placeholder="Drug Allergies">
+                <input type="text" class="form-control" name="drugAllergy" id="drugAllergy" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="drugAllergy" 
+                maxlength="99" autofocus autocomplete="off">
             </div>
         </div>
         <div class="form-group row">
             <label for="password"  class="col-sm-2 col-form-label" >Password:* </label>
             <div class="col-sm-5">
-                <input type="password" class="form-control" id="password" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9" 
-                maxlength="32" autofocus autocomplete="off" required  placeholder="Password">
+                <input type="text" class="form-control" name="password" id="password" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="password" 
+                maxlength="32" autofocus autocomplete="off" required>
             </div>
         </div>
         <div class="form-group row">
             <label for="confirmpassword"  class="col-sm-2 col-form-label" >Confirm Password:* </label>
             <div class="col-sm-5">
-                <input type="confirmpassword" class="form-control" id="confirmpassword" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9" 
-                maxlength="32" autofocus autocomplete="off" required  placeholder="Confirm Password">
+                <input type="text" class="form-control"  name="confirmpassword" id="confirmpassword" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="confirmPassword" 
+                maxlength="32" autofocus autocomplete="off" required>
             </div>
         </div>
            

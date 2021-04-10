@@ -4,25 +4,32 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { Registration } from '../shared/modals/registration.model';
+import { RegistrationStaff } from '../shared/modals/registration-staff.model';
+import { CommonService } from '../shared/services/common.service';
 import { RegistrationService } from '../shared/services/registration.service';
 
 @Component({
-    selector: 'ic-registration',
-    templateUrl: './registration.component.html',
-    styleUrls: ['registration.component.css']
+    selector: 'ic-registration-staff',
+    templateUrl: './registration-staff.component.html',
+    // styleUrls: ['registration.component.css']
 })
-export class RegistrationComponent implements OnInit {
-    registration: Registration;
+export class RegistrationStaffComponent implements OnInit {
+    registrationStaff: RegistrationStaff;
     name: any;
-    uin:any;
+    // uin:any;
     addr: any;
     postal: any;
     email: any;
     password: any;
     confirmPassword: any;
     contactNo: any;
-    drugAllergy: any;
+    occupation: any;
+    clinic: any;
+    branch: any;
+    branchList: any;
+    clinicList: any
+    clinicDisplay: string;
+    branchDisplay: string;
 
     private signUpStatus: string | Object | null | string;
     private _success = new Subject<string>();
@@ -32,15 +39,32 @@ export class RegistrationComponent implements OnInit {
     // errorMessage: string[] = new Array<string>();
     errorFlag: boolean;
     
-    constructor(private router: Router, private RegistrationService: RegistrationService) {
-        this.registration = new Registration();
+    constructor(private router: Router, private RegistrationService: RegistrationService, private commonService: CommonService) {
+        this.registrationStaff = new RegistrationStaff();
         this.errorFlag = false;
+        this.clinicDisplay = '';
+        this.branchDisplay = '';
     }
 
     loadAll() {}
 
     ngOnInit() {
-      console.log("here at registration hello");
+      console.log("here at registrationStaff hello");
+      this.commonService.retrieveBranchList().subscribe(
+        data => {
+          console.log(data);
+          if (data !== 'ERROR') {
+            this.branchList = data;
+          }
+        });
+      this.commonService.retrieveClinicList().subscribe(
+        data => {
+          console.log(data);
+          if (data !== 'ERROR') {
+            this.clinicList = data;
+          }
+        });
+
       this._success.subscribe((message) => this.successMessage = message);
       this._success.pipe(
         debounceTime(40000)
@@ -51,35 +75,36 @@ export class RegistrationComponent implements OnInit {
 
 
     onSignUp(editForm: NgForm){
-        console.log("here at registration, start");
+        console.log("here at registrationStaff, start");
         if (this.name !== null && this.name !== '' && this.name !== undefined &&
-            // this.uin !== null && this.uin !== '' && this.uin !== undefined &&
-            // this.addr !== null && this.addr !== '' && this.addr !== undefined &&
-            // this.postal !== null && this.postal !== '' && this.postal !== undefined &&
+            this.addr !== null && this.addr !== '' && this.addr !== undefined &&
+            this.postal !== null && this.postal !== '' && this.postal !== undefined &&
             this.email !== null && this.email !== '' && this.email !== undefined &&
             this.contactNo !== null && this.contactNo !== '' && this.contactNo !== undefined &&
-            // this.drugAllergy !== null && this.drugAllergy !== '' && this.drugAllergy !== undefined &&
+            this.occupation !== null && this.occupation !== '' && this.occupation !== undefined &&
             this.password !== null && this.password !== '' && this.password !== undefined &&
             this.confirmPassword !== null && this.confirmPassword !== '' && this.confirmPassword !== undefined 
+            && !this.checkIfClinicSelected() && !this.checkIfbranchSelected()
         ) { 
             this.checkPassword();
             console.log(" sf 8");
             if (this.errorFlag === false) {
-                this.registration.name = this.name;
-                this.registration.uin = this.uin;
-                this.registration.addr = this.addr;
-                this.registration.postal = this.postal;
-                this.registration.email = this.email;
-                this.registration.contactNo = this.contactNo;
-                this.registration.drugAllergy = this.drugAllergy;
+                this.registrationStaff.name = this.name;
+                this.registrationStaff.addr = this.addr;
+                this.registrationStaff.postal = this.postal;
+                this.registrationStaff.email = this.email;
+                this.registrationStaff.contactNo = this.contactNo;
+                this.registrationStaff.occupation = this.occupation;
+                this.registrationStaff.clinic = this.clinic;
+                this.registrationStaff.branch = this.branch;
                 console.log(" sf 10");
-                console.log("this.registration is : " + this.registration);
-                this.RegistrationService.customerSignUp(this.registration).subscribe(
+                console.log("this.registrationStaff is : " + this.registrationStaff);
+                this.RegistrationService.registerStaffToExistingClinic(this.registrationStaff).subscribe(
                     data => {
                     console.log(data);
                     this.signUpStatus = data;
                     if (this.signUpStatus === 'Success') {
-                        this._success.next(`You are successfully registered with eQueue ` + this.registration);
+                        this._success.next(`You are successfully registered with eQueue ` + this.registrationStaff);
                         console.log(" sf 11");
                         // routed to login page to sign in
                         this.router.navigate(['/patient-login/:clinicId']);
@@ -107,7 +132,7 @@ export class RegistrationComponent implements OnInit {
         console.log("this.password is : " + this.password);
         console.log("this.cmfpassword is : " + this.confirmPassword);
         if (this.password === this.confirmPassword) {
-            this.registration.password = this.password;
+            this.registrationStaff.password = this.password;
             this.errorFlag = false;
             console.log(" sf 5");
         } else if (this.password != this.confirmPassword) {
@@ -146,6 +171,35 @@ export class RegistrationComponent implements OnInit {
         console.log("end of checks");
     }
 
+    checkIfClinicSelected() {
+        console.log("currently at checkifclinicselected()");
+        if (this.clinic === this.clinicDisplay) {
+            return false;
+        } else if (this.clinic !== null) {
+            return false;
+        } else if (this.clinic === null || this.clinic === undefined) {
+            return true;
+        }
+        else {
+            console.log("shouldnt be here at checkifclinicselected");
+            return true;
+        }
+    }
+
+    checkIfbranchSelected() {
+        console.log("currently at checkifbranchselected()");
+        if (this.branch === this.branchDisplay) {
+            return false;
+        } else if (this.branch !== null) {
+            return false;
+        } else if (this.branch === null || this.branch === undefined) {
+            return true;
+        }
+        else {
+            console.log("shouldnt be here at checkifbranchselected");
+            return true;
+        }
+    }
 
 
     onCancel() {
@@ -156,13 +210,12 @@ export class RegistrationComponent implements OnInit {
     onClear(){
         console.log("registration on clearing");
         this.name = null;
-        this.uin = null;
         this.addr = null;
         this.postal = null;
         this.email = null;
         this.password = null;
         this.confirmPassword = null;
         this.contactNo = null;
-        this.drugAllergy = null;
+        this.occupation = null;
     }
 }

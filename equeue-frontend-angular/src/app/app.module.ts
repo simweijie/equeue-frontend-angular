@@ -15,6 +15,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { RegistrationStaffComponent } from './registration/registration-staff.component';
+import { RegistrationClinicComponent } from './registration/registration-clinic.component';
 import { MainComponent } from './main/main.component';
 import { SmartSearchComponent } from './smart-search/smart-search.component';
 import { StaffInfoComponent } from './staff-info/staff-info.component';
@@ -42,6 +44,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { SmartSearchMemberComponent } from './smart-search-member/smart-search-member.component';
+import { StaffLoginComponent } from './staff-login/staff-login.component';
+import { PatientViewDetailsComponent } from './patient-view-details/patient-view-details.component';
 
 @NgModule({
   declarations: [
@@ -50,11 +54,15 @@ import { SmartSearchMemberComponent } from './smart-search-member/smart-search-m
     HomeComponent,
     TestModComponent,
     RegistrationComponent,
+    RegistrationStaffComponent,
+    RegistrationClinicComponent,
     SmartSearchComponent,
     StaffInfoComponent,
     PatientLoginComponent,
     PatientQueueComponent,
-    SmartSearchMemberComponent
+    SmartSearchMemberComponent,
+    StaffLoginComponent,
+    PatientViewDetailsComponent
   ],
   imports: [
     BrowserModule,
