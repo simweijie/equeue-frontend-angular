@@ -255,3 +255,9 @@ table {
 /*  width: 500px !important;*/
 /*  height: 500px !important;*/
 /*}*/
+
+.refresh {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

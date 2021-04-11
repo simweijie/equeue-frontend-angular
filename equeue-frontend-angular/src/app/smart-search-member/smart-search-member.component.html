@@ -72,3 +72,12 @@
     <button type="button" class="btn-ipStyle2" (click)="decline()" >No</button>
   </div>
 </ng-template>
+
+<!-- POPUP MODAL CONFIRMATION FOR NEW QUEUE. -->
+<ng-template #newConfirmation>
+  <div class="modal-body text-center">
+    <p>Do you confirm to join the new queue number?</p>
+    <button type="button" class="btn-ipStyle2" (click)="newQueue()" >Yes</button>&nbsp;
+    <button type="button" class="btn-ipStyle2" (click)="decline()" >No</button>
+  </div>
+</ng-template>

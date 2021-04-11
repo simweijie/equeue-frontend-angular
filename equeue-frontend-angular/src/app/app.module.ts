@@ -1,3 +1,4 @@
+import './vendor.ts';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -46,6 +47,9 @@ import {MatIconModule} from '@angular/material/icon';
 import { SmartSearchMemberComponent } from './smart-search-member/smart-search-member.component';
 import { StaffLoginComponent } from './staff-login/staff-login.component';
 import { PatientViewDetailsComponent } from './patient-view-details/patient-view-details.component';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 
 @NgModule({
   declarations: [
@@ -108,7 +112,11 @@ import { PatientViewDetailsComponent } from './patient-view-details/patient-view
   // bootstrap: [AppComponent]
   bootstrap: [MainComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    // library.add(fas, far);
+  }
+}
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {

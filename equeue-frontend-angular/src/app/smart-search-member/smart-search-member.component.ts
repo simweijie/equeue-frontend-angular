@@ -16,6 +16,9 @@ export class SmartSearchMemberComponent implements OnInit {
   modalChangeRef: BsModalRef;
   @ViewChild('changeConfirmation') modalChange: TemplateRef<any>;
 
+  modalNewRef: BsModalRef;
+  @ViewChild('newConfirmation') modalNew: TemplateRef<any>;
+
   isDataAvailable: boolean = true;
   active = 1;
   curMarker: any;
@@ -31,17 +34,18 @@ export class SmartSearchMemberComponent implements OnInit {
   districtList: Array<object> = [
     {id: 'N', value: 'North'},
     {id: 'NE', value: 'North-East'},
-    {id: 'East', value: 'East'},
+    {id: 'E', value: 'East'},
     {id: 'SE', value: 'South-East'},
     {id: 'S', value: 'South'},
     {id: 'SW', value: 'South-West'},
-    {id: 'West', value: 'West'},
+    {id: 'W', value: 'West'},
     {id: 'NW', value: 'North-West'}
   ];
   // private _filterResults: { clicicId?: string; clicicName?: string; currentOperation?: string; queueLength?: string };
   filterList: any;
   clinicId: any;
   patientId: any;
+  private state: string | null;
 
   constructor(
     private router: Router,
@@ -137,7 +141,7 @@ export class SmartSearchMemberComponent implements OnInit {
   searchGP() {
     console.log('searchGp');
     if (this.curLat !== 0 && this.curLong !== 0) {
-      this.smartSearchService.searchByGP({lat: this.curLat, long: this.curLong}).subscribe(
+      this.smartSearchService.searchByGP({latt: this.curLat, longt: this.curLong}).subscribe(
         data => {
           console.log(data);
           if (data !== null || data !== 'ERROR') {
@@ -145,7 +149,11 @@ export class SmartSearchMemberComponent implements OnInit {
             for (let entry of this.filterList) {
               const latLong = [entry.lat, entry.long];
               let listOfMarkers = L.marker(latLong).addTo(this.mymap);
-              listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="changeConfirmation(entry.clinicId)">Join Queue</button>');
+              if(this.state === 'C') {
+                listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="changeConfirmation(entry.clinicId)">Join Queue</button>');
+              } else if (this.state === 'N') {
+                listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="newConfirmation(entry.clinicId)">Join Queue</button>');
+              }
             }
           }
         });
@@ -169,7 +177,11 @@ export class SmartSearchMemberComponent implements OnInit {
             for (let entry of this.filterList) {
               const latLong = [entry.lat, entry.long];
               let listOfMarkers = L.marker(latLong).addTo(this.mymap);
-              listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="changeConfirmation(entry.clinicId)">Join Queue</button>');
+              if(this.state === 'C') {
+                listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="changeConfirmation(entry.clinicId)">Join Queue</button>');
+              } else if (this.state === 'N') {
+                listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="newConfirmation(entry.clinicId)">Join Queue</button>');
+              }
             }
           }
         });
@@ -181,6 +193,7 @@ export class SmartSearchMemberComponent implements OnInit {
     //   this.adminId = params['adminId'];
     // });
     this.patientId = this.activatedRoute.snapshot.paramMap.get('patientId');
+    this.state = this.activatedRoute.snapshot.paramMap.get('state');
     console.log('getPatientId - patientId:');
     console.log(this.patientId);
   }
@@ -190,24 +203,48 @@ export class SmartSearchMemberComponent implements OnInit {
     this.modalChangeRef = this.modalService.show(this.modalChange);
   }
 
+  newConfirmation(clinicId: any) {
+    this.clinicId = clinicId;
+    this.modalNewRef = this.modalService.show(this.modalNew);
+  }
+
   changeQueue() {
     console.log('addQueue - clinicId:');
     console.log(this.clinicId);
     if ((this.clinicId !== null || this.clinicId !== '') && (this.patientId !== null || this.patientId !== '')) {
-      this.smartSearchService.changeQueue({branchId: this.clinicId, customerId: this.patientId}).subscribe(
+      this.smartSearchService.leaveQueue({branchId: this.clinicId, customerId: this.patientId}).subscribe(
         data => {
           console.log(data);
           if (data !== null || data !== 'ERROR') {
-            this.router.navigate(['/patient']);
+            this.newQueue();
+          } else {
+            alert('Unable to join the queue. Please refresh page or try again later!');
+            this.decline();
+          }
+        });
+    }
+  }
+
+  newQueue() {
+    console.log('addQueue - clinicId:');
+    console.log(this.clinicId);
+    if ((this.clinicId !== null || this.clinicId !== '') && (this.patientId !== null || this.patientId !== '')) {
+      this.smartSearchService.joinQueue({branchId: this.clinicId, customerId: this.patientId}).subscribe(
+        data => {
+          console.log(data);
+          if (data !== null || data !== 'ERROR') {
+            console.log('Successfully Joined');
           } else {
             alert('Unable to join the queue. Please refresh page or try again later!');
           }
+          this.decline();
         });
     }
   }
 
   decline() {
     this.modalChangeRef.hide();
+    this.modalNewRef.hide();
     this.clinicId = '';
   }
 }

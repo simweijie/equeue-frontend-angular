@@ -27,11 +27,11 @@ export class SmartSearchComponent implements OnInit {
   districtList: Array<object> = [
     {id: 'N', value: 'North'},
     {id: 'NE', value: 'North-East'},
-    {id: 'East', value: 'East'},
+    {id: 'E', value: 'East'},
     {id: 'SE', value: 'South-East'},
     {id: 'S', value: 'South'},
     {id: 'SW', value: 'South-West'},
-    {id: 'West', value: 'West'},
+    {id: 'W', value: 'West'},
     {id: 'NW', value: 'North-West'}
   ];
   // private _filterResults: { clicicId?: string; clicicName?: string; currentOperation?: string; queueLength?: string };
@@ -131,7 +131,7 @@ export class SmartSearchComponent implements OnInit {
   searchGP() {
     console.log('searchGp');
     if (this.curLat !== 0 && this.curLong !== 0) {
-      this.smartSearchService.searchByGP({lat: this.curLat, long: this.curLong}).subscribe(
+      this.smartSearchService.searchByGP({latt: this.curLat, longt: this.curLong}).subscribe(
         data => {
           console.log(data);
           if (data !== null || data !== 'ERROR') {
@@ -139,7 +139,7 @@ export class SmartSearchComponent implements OnInit {
             for (let entry of this.filterList) {
               const latLong = [entry.lat, entry.long];
               let listOfMarkers = L.marker(latLong).addTo(this.mymap);
-              listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="addQueue(entry.clinicId)">Join Queue</button>');
+              listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="addQueue(entry.branchId)">Join Queue</button>');
             }
           }
         });

@@ -14,62 +14,11 @@ export class PatientQueueService {
 
   constructor(private http: HttpClient) { }
 
-  queueList(req?: any){
+  getBranchQueue(req?: any){
     console.log('req: ');
     console.log(req);
 
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/list-of-clinics', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
-      response => {
-        if (response.status === 200) {
-          console.log('response is 200');
-          return response.body;
-        } else {
-          console.log('Error - ');
-          console.log(response.body);
-          return 'ERROR';
-        }
-      })).pipe(catchError(error => of('ERROR')));
-  }
-
-  consulationRmList(req?: any){
-    console.log('req: ');
-    console.log(req);
-
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/list-of-clinics', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
-      response => {
-        if (response.status === 200) {
-          console.log('response is 200');
-          return response.body;
-        } else {
-          console.log('Error - ');
-          console.log(response.body);
-          return 'ERROR';
-        }
-      })).pipe(catchError(error => of('ERROR')));
-  }
-
-  medicalPaymentList(req?: any){
-    console.log('req: ');
-    console.log(req);
-
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/list-of-clinics', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
-      response => {
-        if (response.status === 200) {
-          console.log('response is 200');
-          return response.body;
-        } else {
-          console.log('Error - ');
-          console.log(response.body);
-          return 'ERROR';
-        }
-      })).pipe(catchError(error => of('ERROR')));
-  }
-
-  missedQueueList(req?: any){
-    console.log('req: ');
-    console.log(req);
-
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/list-of-clinics', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
+    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/get-branch-queue ', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
       response => {
         if (response.status === 200) {
           console.log('response is 200');

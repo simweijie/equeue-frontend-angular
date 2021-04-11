@@ -48,11 +48,28 @@ export class SmartSearchService {
       })).pipe(catchError(error => of('ERROR')));
   }
 
-  changeQueue(req?: any){
+  leaveQueue(req?: any){
     console.log('req: ');
     console.log(req);
 
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/change-queue', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
+    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/leave-queue', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
+      response => {
+        if (response.status === 200) {
+          console.log('response is 200');
+          return response.body;
+        } else {
+          console.log('Error - ');
+          console.log(response.body);
+          return 'ERROR';
+        }
+      })).pipe(catchError(error => of('ERROR')));
+  }
+
+  joinQueue(req?: any){
+    console.log('req: ');
+    console.log(req);
+
+    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/join-queue', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
       response => {
         if (response.status === 200) {
           console.log('response is 200');
