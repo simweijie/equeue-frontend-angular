@@ -141,6 +141,20 @@ export class TestModComponent implements OnInit {
     });
   }
 
+  testGeoCode(): void {
+    // deleteOpeningHours
+    // Call the service and send to the backend
+    console.log('Inside testDelete statement');
+
+    this.testModService.testGeoCode('750491').subscribe(data => {
+      if (data === 'ERROR') {
+        this.outputD = 'G Hello';
+      } else {
+        this.outputD = data;
+      }
+    });
+  }
+
   // public onMapReady(event: any) {
   //   console.log('Map Ready');
   // }
