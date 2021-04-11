@@ -73,9 +73,9 @@ export class StaffInfoComponent implements OnInit {
   fName: any;
 
   sampleData: Array<object> = [
-    {id: '3', email: 'branch2staff@hotmail.com', name: 'branch2staff', addr: 'WORKER STREET UPDATED', contactNo: '01234567', job: 'D', status: 'I', isAdmin: 'Y', branchId: '4', clinicId: '4'},
-    {id: '3', email: 'branch2staff@hotmail.com', name: 'branch2staff', addr: 'WORKER STREET UPDATED', contactNo: '01234567', job: 'D', status: 'A', isAdmin: 'Y', branchId: '4', clinicId: '4'},
-    {id: '3', email: 'branch2staff@hotmail.com', name: 'branch2staff', addr: 'WORKER STREET UPDATED', contactNo: '01234567', job: 'D', status: 'P', isAdmin: 'Y', branchId: '4', clinicId: '4'}
+    {id: '3', email: 'branch2staff@hotmail.com', name: 'branch2staff', addr: 'WORKER STREET UPDATED', contactNo: '01234567', job: 'D', status: 'I', isAdmin: 'Y', branchId: '4', branchName: 'tampines', clinicId: '4', clinicName: 'QM Dental'},
+    {id: '3', email: 'branch2staff@hotmail.com', name: 'branch2staff', addr: 'WORKER STREET UPDATED', contactNo: '01234567', job: 'D', status: 'A', isAdmin: 'Y', branchId: '4', branchName: 'tampines', clinicId: '4', clinicName: 'QM Dental'},
+    {id: '3', email: 'branch2staff@hotmail.com', name: 'branch2staff', addr: 'WORKER STREET UPDATED', contactNo: '01234567', job: 'D', status: 'P', isAdmin: 'Y', branchId: '4', branchName: 'tampines', clinicId: '4', clinicName: 'QM Dental'}
   ];
   private _staffInfo: IStaff;
   private _staffInfoEdit: IStaff;
