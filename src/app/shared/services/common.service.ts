@@ -18,14 +18,14 @@ export class CommonService {
     console.log('req: ');
     console.log(req);
 
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/list-of-clinics', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
+    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/list-of-clinics', { headers: this.httpOptions, observe: 'response' }).pipe(map(
       response => {
-        if (response.status === 200) {
+        if (response === 200) {
           console.log('response is 200');
-          return response.body;
+          return response;
         } else {
           console.log('Error - ');
-          console.log(response.body);
+          console.log(response);
           return 'ERROR';
         }
       })).pipe(catchError(error => of('ERROR')));
@@ -35,14 +35,14 @@ export class CommonService {
     console.log('req: ');
     console.log(req);
 
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/list-of-branches', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
+    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/list-of-branches', { headers: this.httpOptions, observe: 'response' }).pipe(map(
       response => {
-        if (response.status === 200) {
+        if (response === 200) {
           console.log('response is 200');
-          return response.body;
+          return response;
         } else {
           console.log('Error - ');
-          console.log(response.body);
+          console.log(response);
           return 'ERROR';
         }
       })).pipe(catchError(error => of('ERROR')));
