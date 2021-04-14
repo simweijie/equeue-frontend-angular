@@ -8,6 +8,7 @@ import { debounceTime } from 'rxjs/operators';
 import { RegistrationClinic } from '../shared/modals/registration-clinic.model';
 import { CommonService } from '../shared/services/common.service';
 import { RegistrationService } from '../shared/services/registration.service';
+import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
     selector: 'ic-registration-clinic',
@@ -29,19 +30,42 @@ export class RegistrationClinicComponent implements OnInit {
     clinicName: any;
     branchTelephone: any;
     clinicAddr: any;
-    openingHourMonStart: Time;
-    openingHourMonEnd: Time;
 
     private signUpStatus: string | Object | null | string;
     private _success = new Subject<string>();
     private _error = new Subject<string>();
     successMessage: string;
     errorMessage: string;
-    // errorMessage: string[] = new Array<string>();
     errorFlag: boolean;
-    checked: boolean;
+    checked: boolean
+ 
+    form = this.fb.group({
+      clinicOpeningHours: this.fb.array([])
+    });
+
+    startTime: Array<string> = [ 
+        "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00",
+        "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00",
+        "20:00", "21:00", "22:00", "23:00"
+    ]
+
+    endTime: Array<string> = [ 
+        "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00",
+        "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00",
+        "20:00", "21:00", "22:00", "23:00"
+    ]
+
+    dayOfWeek: Array<object> =[
+        {id: "1", value: "Monday"},
+        {id: "2", value: "Tuesday"},
+        {id: "3", value: "Wednesday"},
+        {id: "4", value: "Thursday"},
+        {id: "5", value: "Friday"},
+        {id: "6", value: "Saturday"}, 
+        {id: "7", value: "Sunday"},
+    ]
     
-    constructor(private router: Router, private RegistrationService: RegistrationService, private commonService: CommonService) {
+    constructor(private router: Router, private RegistrationService: RegistrationService, private commonService: CommonService, private fb:FormBuilder) {
         this.registrationClinic = new RegistrationClinic();
         this.errorFlag = false;
     }
@@ -50,6 +74,8 @@ export class RegistrationClinicComponent implements OnInit {
 
     ngOnInit() {
       console.log("here at registrationClinic hello");
+      this.checked = false;
+      console.log("ngonit this.checked is : "+ this.checked);
 
       this._success.subscribe((message) => this.successMessage = message);
       this._success.pipe(
@@ -57,9 +83,28 @@ export class RegistrationClinicComponent implements OnInit {
       ).subscribe(() => this.successMessage = '');
   
       this._error.subscribe((message) => this.errorMessage = message);
+      this.addOpeningHour();
     }
+   
+      get clinicOpeningHours(){
+        return this.form.controls["clinicOpeningHours"] as FormArray;
+      }
 
+      addOpeningHour(){
+        const openingHourForm = this.fb.group({
+          openingHourDayOfWeek: ['', Validators.required],
+          openingHourStartTime: ['', Validators.required],
+          openingHourEndTime: ['', Validators.required]
+        });
 
+    
+        this.clinicOpeningHours.push(openingHourForm);
+      }
+
+      deleteOpeningHour(openingHourIndex: number) {
+        this.clinicOpeningHours.removeAt(openingHourIndex);
+      }
+      
     onSignUp(editForm: NgForm){
         console.log("here at registrationClinic, start");
         if (this.name !== null && this.name !== '' && this.name !== undefined &&
@@ -156,36 +201,6 @@ export class RegistrationClinicComponent implements OnInit {
         console.log("end of checks");
     }
 
-    // checkIfClinicSelected() {
-    //     console.log("currently at checkifclinicselected()");
-    //     if (this.clinic === this.clinicDisplay) {
-    //         return false;
-    //     } else if (this.clinic !== null) {
-    //         return false;
-    //     } else if (this.clinic === null || this.clinic === undefined) {
-    //         return true;
-    //     }
-    //     else {
-    //         console.log("shouldnt be here at checkifclinicselected");
-    //         return true;
-    //     }
-    // }
-
-    // checkIfbranchSelected() {
-    //     console.log("currently at checkifbranchselected()");
-    //     if (this.branch === this.branchDisplay) {
-    //         return false;
-    //     } else if (this.branch !== null) {
-    //         return false;
-    //     } else if (this.branch === null || this.branch === undefined) {
-    //         return true;
-    //     }
-    //     else {
-    //         console.log("shouldnt be here at checkifbranchselected");
-    //         return true;
-    //     }
-    // }
-
 
     onCancel() {
         console.log("registration on cancelling, go back home page");
@@ -194,6 +209,9 @@ export class RegistrationClinicComponent implements OnInit {
 
     onClear(){
         console.log("registration on clearing");
+        this.clinicName = null;
+        this.branchTelephone = null;
+        this.clinicAddr = null;
         this.name = null;
         this.addr = null;
         this.postal = null;
@@ -208,7 +226,11 @@ export class RegistrationClinicComponent implements OnInit {
         if (e.target.checked) {
           this.checked = e.target.checked;
         } else {
-          this.checked = false;
+          this.checked = false;        
         }
+      }
+
+      addBranch(){
+        
       }
 }
