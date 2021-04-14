@@ -38,7 +38,7 @@ jobs:
       - name: Zip dist
         run: |
               cd dist/equeue-frontend-angular/
-              tar -czvf ../../equeue-frontend-angular.tar.gz ./
+              zip -r ../../equeue-frontend-angular.zip ./
               cd ..
               cd ..
 
@@ -51,4 +51,4 @@ jobs:
       
       - name: Copy zip to S3
         run: |
-          aws s3 cp equeue-frontend-angular.tar.gz s3://mybucket/equeue-frontend-angular.tar.gz
+          aws s3 cp equeue-frontend-angular.zip s3://nus-iss-equeue-nginx/equeue-frontend-angular.zip
