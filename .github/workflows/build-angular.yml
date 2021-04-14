@@ -1,0 +1,54 @@
+# modified from https://www.codementor.io/@ponnamkarthik3/github-actions-deploy-angular-to-server-15yrmsrval
+
+name: "Build Angular"
+
+# Trigger when commits are pushed to the main branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: "Build Angular"
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code
+      # Marketplace: https://github.com/marketplace/actions/checkout
+      - name: "Setup - Checkout"
+        uses: actions/checkout@v2.1.0
+
+      - uses: actions/setup-node@v2 #this installs node and npm for us
+        with:
+          node-version: '12.x'
+
+      - uses: actions/cache@v1 # this allows for re-using node_modules caching, making builds a bit faster.
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: NPM Install
+        run: npm install
+      - name: NPM Install Angular
+        run: npm install -g @angular/cli > /dev/null
+      - name: NPM build Angular Production
+        run: ng build --prod
+      - name: Zip dist
+        run: |
+              cd dist/equeue-frontend-angular/
+              tar -czvf ../../equeue-frontend-angular.tar.gz ./
+              cd ..
+              cd ..
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      
+      - name: Copy zip to S3
+        run: |
+          aws s3 cp equeue-frontend-angular.tar.gz s3://mybucket/equeue-frontend-angular.tar.gz
