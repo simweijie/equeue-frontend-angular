@@ -3,6 +3,7 @@ import {SmartSearchService} from '../shared/services/smart-search.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {CommonService} from '../shared/services/common.service';
+import {GlobalConstants} from "../shared/global-constants";
 
 declare  const L: any;
 
@@ -46,6 +47,7 @@ export class SmartSearchMemberComponent implements OnInit {
   clinicId: any;
   patientId: any;
   private state: string | null;
+  headerName: any;
 
   constructor(
     private router: Router,
@@ -192,10 +194,16 @@ export class SmartSearchMemberComponent implements OnInit {
     // this.activatedRoute.queryParams.subscribe(params => {
     //   this.adminId = params['adminId'];
     // });
-    this.patientId = this.activatedRoute.snapshot.paramMap.get('patientId');
-    this.state = this.activatedRoute.snapshot.paramMap.get('state');
+    // this.patientId = GlobalConstants.login.id;
+    this.state = GlobalConstants.serachType;
     console.log('getPatientId - patientId:');
     console.log(this.patientId);
+    console.log(this.state);
+    if (this.state === 'N') {
+      this.headerName = 'Get Queue No';
+    } else {
+      this.headerName = 'Change Clinic';
+    }
   }
 
   changeConfirmation(clinicId: any) {

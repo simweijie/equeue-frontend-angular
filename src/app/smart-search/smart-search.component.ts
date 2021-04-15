@@ -3,6 +3,7 @@ import {SmartSearchService} from '../shared/services/smart-search.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {CommonService} from '../shared/services/common.service';
+import {GlobalConstants} from '../shared/global-constants';
 
 declare  const L: any;
 
@@ -175,7 +176,12 @@ export class SmartSearchComponent implements OnInit {
     console.log(clinicId);
     this.clinicId = clinicId;
     if (this.clinicId !== null || this.clinicId !== '') {
-      this.router.navigate(['/patient-login', { clinicId: this.clinicId }]);
+      GlobalConstants.clinicId = this.clinicId;
+      this.router.navigate(['/patient-login']);
     }
+  }
+
+  login() {
+    this.router.navigate(['/patient-login']);
   }
 }

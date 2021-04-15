@@ -8,6 +8,7 @@ import {MatAccordion} from '@angular/material/expansion';
 import {debounceTime, takeWhile} from 'rxjs/operators';
 import {interval, Subject, Subscription} from 'rxjs';
 import {IPatientQueue, PatientQueue} from '../shared/modals/patient-queue.model';
+import {GlobalConstants} from '../shared/global-constants';
 
 @Component({
   selector: 'app-patient-queue',
@@ -101,7 +102,7 @@ export class PatientQueueComponent implements OnInit {
     // this.activatedRoute.queryParams.subscribe(params => {
     //   this.adminId = params['adminId'];
     // });
-    this.staffId = this.activatedRoute.snapshot.paramMap.get('staffId');
+    this.staffId = GlobalConstants.login.id;
     console.log('getStaffId - staffId:');
     console.log(this.staffId);
   }

@@ -22,7 +22,7 @@ const routes: Routes = [
   {path: 'registration-staff', component: RegistrationStaffComponent},
   {path: 'registration-clinic', component: RegistrationClinicComponent},
   {path: 'smart-search', component: SmartSearchComponent},
-  // {path: 'staff-info/:adminId', component: StaffInfoComponent},
+  // {path: 'staff-info/:staffId', component: StaffInfoComponent},
   // {path: 'patient-login/:clinicId', component: PatientLoginComponent},
   {path: 'staff-info', component: StaffInfoComponent},
   {path: 'patient-login', component: PatientLoginComponent},
@@ -33,7 +33,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash : true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

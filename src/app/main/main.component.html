@@ -8,20 +8,20 @@
     <div class="row-cols-3" *ngIf="job==='S' || job==='D'">
       <a href="#">Services</a>
     </div>
-    <div class="row-cols-3" *ngIf="job===null">
+    <div class="row-cols-3" *ngIf="job===null || job===undefined">
       <a href="#">Clients</a>
     </div>
-    <div class="row-cols-3" *ngIf="job===null">
+    <div class="row-cols-3" *ngIf="job===null || job===undefined">
       <a href="#">Contact</a>
     </div>
   </mat-drawer>
 
   <div class="example-sidenav-content">
-    <button type="button" mat-button class="btn-primary" style="height: 20px; width: 10px" (click)="drawer.toggle()" *ngIf="job!==null"></button>
+    <button type="button" mat-button class="btn-primary" style="height: 20px; width: 10px" (click)="drawer.toggle()" *ngIf="job!==null && job!==undefined && job!==''"></button>
     <div class="container">
       <div class="card" style="align-content: center; border-style: none ;">
-        <router-outlet>
-          <button type="button" class="btn-primary refresh" style="min-width: 20px; min-height: 20px;" (click)="login()" *ngIf="job===null">Login</button>&nbsp;
+        <router-outlet><button type="button" class="btn-primary refresh" style="min-width: 20px; min-height: 20px;" (click)="logout()" *ngIf="job!==null && job!==undefined && job!==''">Logout</button>&nbsp;
+
         </router-outlet>
       </div>
     </div>

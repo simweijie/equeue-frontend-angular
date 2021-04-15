@@ -1,32 +1,41 @@
 <div>
-    <div class="modal-body text-center">
+    <div class="main-body text-center">
       <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
       <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
       <div class="form-group row">
-        <div class="col-sm-5">
-          <label class="col-sm-2 form-control-label" style="text-align: center">Username</label>
-          <label class="col-sm-1 form-control-label" style="text-align: center"> : </label>
-          <input type="text" class="col-sm-3 form-control-label" name="username" id="field_username" [(ngModel)]="username"/>
+        <div class="col-sm">
+          <label class="col-sm-2 form-control-label" style="text-align: left">Username</label>
+          <label class="col-sm-1 form-control-label" style="text-align: left"> : </label>
+          <input type="text" class="col-sm-2 form-control-label" name="username" id="field_username" [(ngModel)]="username"/>
         </div>
-        <div class="col-sm-5">
-          <label class="col-sm-2 form-control-label" style="text-align: center">Password</label>
-          <label class="col-sm-1 form-control-label" style="text-align: center"> : </label>
-          <input type="text" class="col-sm-3 form-control-label" name="password" id="field_password" [(ngModel)]="password"/>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm">
+          <label class="col-sm-2 form-control-label" style="text-align: left">Password</label>
+          <label class="col-sm-1 form-control-label" style="text-align: left"> : </label>
+          <input type="password" class="col-sm-2 form-control-label" name="password" id="field_password" [(ngModel)]="password"/>
         </div>
-        <div class="col-sm-5">
+      </div>
+      <div class="form-group row">
+        <div class="col-sm">
           <button type="button" class="buttonLinks" (click)="forgot()">Forgot Username or Password?</button>
         </div>
-        <div class="col-sm-5">
-          <button type="button" class="btn-primary col-sm-1" (click)="clear()">Clear</button>&nbsp;
-          <button type="button" class="btn-primary col-sm-1" (click)="loginFunction()">Login</button>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm">
+          <button type="button" class="btn-primary col-sm-2" (click)="return()">Cancel</button>&nbsp;
+          <button type="button" class="btn-primary col-sm-2" (click)="clear()">Clear</button>&nbsp;
+          <button type="button" class="btn-primary col-sm-2" (click)="loginFunction()">Login</button>
         </div>
-        <div>
-          <label class="col-sm-2 form-control-label" style="text-align: center">New to eQueue?</label>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm">
+          <label class="col-sm form-control-label" style="text-align: center">New to eQueue?</label>
         </div>
-        <div>
-          <div class="col-sm-5">
-            <button type="button" class="btn-primary col-sm-1" (click)="signUp()">New Patient</button>
-          </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm">
+          <button type="button" class="btn-primary col-sm-2" (click)="signUp()">New Patient</button>
         </div>
       </div>
     </div>
@@ -36,14 +45,18 @@
 <!-- POPUP MODAL CONFIRMATION FOR FORGOT. -->
 <ng-template #forgotModal>
   <div class="modal-body text-center">
-    <div class="col-sm-5">
-      <label class="col-sm-2 form-control-label" style="text-align: center">Mobile No</label>
-      <label class="col-sm-1 form-control-label" style="text-align: center"> : </label>
-      <input type="text" class="col-sm-3 form-control-label" name="username" id="field_mobile" [(ngModel)]="mobile"/>
+    <div class="form-group row">
+      <div class="col-sm">
+        <label for="field_mobile" class="col-sm-3 form-control-label" style="text-align: center">Mobile No</label>
+        <label class="col-sm-1 form-control-label" style="text-align: center"> : </label>
+        <input type="text" class="col-sm-4 form-control-label" name="field_mobile" id="field_mobile" [(ngModel)]="mobile" minlength="8" maxlength="8" pattern="^[0-9]*$" />
+      </div>
     </div>
-    <div class="col-sm-5">
-      <button type="button" class="btn-primary col-sm-1" (click)="cancel()">Cancel</button>&nbsp;
-      <button type="button" class="btn-primary col-sm-1" (click)="forgotPassword()">Submit</button>
+    <div class="form-group row">
+      <div class="col-sm">
+        <button type="button" class="btn-primary col-sm-2" (click)="cancel()">Cancel</button>&nbsp;
+        <button type="button" class="btn-primary col-sm-2" (click)="forgotPassword()">Submit</button>
+      </div>
     </div>
   </div>
 </ng-template>

@@ -6,6 +6,8 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 import {Subject} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {debounceTime} from 'rxjs/operators';
+import {GlobalConstants} from '../shared/global-constants';
+import {Login} from "../shared/modals/login.modal";
 
 @Component({
   selector: 'app-patient-login',
@@ -28,6 +30,7 @@ export class PatientLoginComponent implements OnInit {
   modalForgotRef: BsModalRef;
   @ViewChild('forgotModal') modalForgot: TemplateRef<any>;
   private status: string | Object | null | string;
+  private loginInfo: Login;
 
   constructor(
     private router: Router,
@@ -37,7 +40,9 @@ export class PatientLoginComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private translate: TranslateService,
     private messageService: MessageService,
-  ) { }
+  ) {
+    this.loginInfo = new Login();
+  }
 
   ngOnInit(): void {
     this.getId();
@@ -54,7 +59,8 @@ export class PatientLoginComponent implements OnInit {
     // this.activatedRoute.queryParams.subscribe(params => {
     //   this.clinicId = params['clinicId'];
     // });
-    this.clinicId = this.activatedRoute.snapshot.paramMap.get('clinicId');
+    // this.clinicId = this.activatedRoute.snapshot.paramMap.get('clinicId');
+    this.clinicId = GlobalConstants.clinicId;
     console.log('clinicId');
     console.log(this.clinicId);
   }
@@ -87,14 +93,17 @@ export class PatientLoginComponent implements OnInit {
       this.patientLoginService.loginFunction({username: this.username, password: this.password}).subscribe(
         data => {
           console.log(data);
-          this.status = data;
-          if (this.status === 'Success') {
+          // @ts-ignore
+          this.loginInfo = data;
+          if (this.loginInfo.id !== null) {
             if (this.clinicId !== null || this.clinicId !== '') {
-              this.router.navigate(['/patient', { clinicId: this.clinicId }]);
+              GlobalConstants.clinicId = this.clinicId;
+              GlobalConstants.login = this.loginInfo;
+              GlobalConstants.username = this.username;
+              this.router.navigate(['/patient-view-details']);
             } else {
-              this.router.navigate(['/patient']);
+              this.router.navigate(['/patient-view-details']);
             }
-
           } else {
             this._error.next(`Incorrect Username or Password!`);
           }
@@ -109,10 +118,11 @@ export class PatientLoginComponent implements OnInit {
   }
 
   signUp() {
-    if (this.clinicId !== null || this.clinicId !== '') {
-      this.router.navigate(['/patient-register', { clinicId: this.clinicId }]);
-    } else {
-      this.router.navigate(['/patient-register']);
-    }
+    GlobalConstants.clinicId = this.clinicId;
+    this.router.navigate(['/registration']);
+  }
+
+  return() {
+    this.router.navigate(['/']);
   }
 }

@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { Registration } from '../shared/modals/registration.model';
 import { RegistrationService } from '../shared/services/registration.service';
+import {GlobalConstants} from "../shared/global-constants";
 
 @Component({
     selector: 'ic-registration',
@@ -31,6 +32,7 @@ export class RegistrationComponent implements OnInit {
     errorMessage: string;
     // errorMessage: string[] = new Array<string>();
     errorFlag: boolean;
+  private clinicId: string | null;
     
     constructor(private router: Router, private RegistrationService: RegistrationService) {
         this.registration = new Registration();
@@ -47,7 +49,14 @@ export class RegistrationComponent implements OnInit {
       ).subscribe(() => this.successMessage = '');
   
       this._error.subscribe((message) => this.errorMessage = message);
+      this.getId();
     }
+
+  getId() {
+    this.clinicId = GlobalConstants.clinicId;
+    console.log('clinicId');
+    console.log(this.clinicId);
+  }
 
 
     onSignUp(editForm: NgForm){

@@ -52,6 +52,10 @@
   border-top-right-radius: 0px;
 }
 
+.main-body{
+  border: none;
+}
+
 .modal-body{
   background-color: #d3e5ff;
   border: none;

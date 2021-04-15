@@ -8,6 +8,7 @@ import {IStaff, Staff} from '../shared/modals/staff.model';
 import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {CommonService} from '../shared/services/common.service';
+import {GlobalConstants} from "../shared/global-constants";
 
 @Component({
   selector: 'app-staff-info',
@@ -34,7 +35,7 @@ export class StaffInfoComponent implements OnInit {
   displayedColumns: string[] = ['name', 'branchName', 'clinic', 'mobileNo', 'occupation', 'btnEdit'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  id: string | null;
+  id: string | undefined;
   staffName: string;
   staffId: any;
 
@@ -198,7 +199,7 @@ export class StaffInfoComponent implements OnInit {
     // this.activatedRoute.queryParams.subscribe(params => {
     //   this.adminId = params['adminId'];
     // });
-    this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.id = GlobalConstants.login.id;
     console.log('id');
     console.log(this.id);
   }
