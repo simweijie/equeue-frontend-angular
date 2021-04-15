@@ -28,8 +28,10 @@ export class RegistrationClinicComponent implements OnInit {
     clinic: any;
     branch: any;
     clinicName: any;
+    branchName: any;
     branchTelephone: any;
     clinicAddr: any;
+    pCode: any;
 
     private signUpStatus: string | Object | null | string;
     private _success = new Subject<string>();
@@ -37,35 +39,39 @@ export class RegistrationClinicComponent implements OnInit {
     successMessage: string;
     errorMessage: string;
     errorFlag: boolean;
-    checked: boolean
+    checked: boolean;
  
     form = this.fb.group({
       clinicOpeningHours: this.fb.array([])
     });
 
-    startTime: Array<string> = [ 
+    branchForm = this.fb.group({
+      branchInfo: this.fb.array([])
+    });
+
+    startTime: Array<string> = [
         "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00",
         "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00",
         "20:00", "21:00", "22:00", "23:00"
-    ]
+    ];
 
-    endTime: Array<string> = [ 
+    endTime: Array<string> = [
         "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00",
         "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00",
         "20:00", "21:00", "22:00", "23:00"
-    ]
+    ];
 
-    dayOfWeek: Array<object> =[
+    dayOfWeek: Array<object> = [
         {id: "1", value: "Monday"},
         {id: "2", value: "Tuesday"},
         {id: "3", value: "Wednesday"},
         {id: "4", value: "Thursday"},
         {id: "5", value: "Friday"},
-        {id: "6", value: "Saturday"}, 
-        {id: "7", value: "Sunday"},
-    ]
+        {id: "6", value: "Saturday"},
+        {id: "7", value: "Sunday"}
+    ];
     
-    constructor(private router: Router, private RegistrationService: RegistrationService, private commonService: CommonService, private fb:FormBuilder) {
+    constructor(private router: Router, private RegistrationService: RegistrationService, private commonService: CommonService, private fb: FormBuilder) {
         this.registrationClinic = new RegistrationClinic();
         this.errorFlag = false;
     }
@@ -81,30 +87,47 @@ export class RegistrationClinicComponent implements OnInit {
       this._success.pipe(
         debounceTime(40000)
       ).subscribe(() => this.successMessage = '');
-  
+
       this._error.subscribe((message) => this.errorMessage = message);
-      this.addOpeningHour();
+      this.addBranch();
     }
-   
-      get clinicOpeningHours(){
-        return this.form.controls["clinicOpeningHours"] as FormArray;
-      }
 
-      addOpeningHour(){
-        const openingHourForm = this.fb.group({
-          openingHourDayOfWeek: ['', Validators.required],
-          openingHourStartTime: ['', Validators.required],
-          openingHourEndTime: ['', Validators.required]
-        });
+    get clinicOpeningHours(){
+      return this.form.controls["clinicOpeningHours"] as FormArray;
+    }
 
-    
-        this.clinicOpeningHours.push(openingHourForm);
-      }
+    addOpeningHour(){
+      const openingHourForm = this.fb.group({
+        openingHourDayOfWeek: ['', Validators.required],
+        openingHourStartTime: ['', Validators.required],
+        openingHourEndTime: ['', Validators.required]
+      });
+      this.clinicOpeningHours.push(openingHourForm);
+    }
 
-      deleteOpeningHour(openingHourIndex: number) {
-        this.clinicOpeningHours.removeAt(openingHourIndex);
-      }
-      
+    deleteOpeningHour(openingHourIndex: number) {
+      this.clinicOpeningHours.removeAt(openingHourIndex);
+    }
+
+    get branchInfo(){
+      return this.branchForm.controls["branchInfo"] as FormArray;
+    }
+
+    addBranch(){
+      const branchInfoForm = this.fb.group({
+        branchName: ['', Validators.required],
+        branchTele: ['', Validators.required],
+        branchPcode: ['', Validators.required],
+        branchAddr: ['', Validators.required]
+        // branchOpening: ['', Validators.required]
+      });
+      this.branchInfo.push(branchInfoForm);
+    }
+
+    deleteBranch(branchIndex: number) {
+      this.branchInfo.removeAt(branchIndex);
+    }
+
     onSignUp(editForm: NgForm){
         console.log("here at registrationClinic, start");
         if (this.name !== null && this.name !== '' && this.name !== undefined &&
@@ -114,8 +137,8 @@ export class RegistrationClinicComponent implements OnInit {
             this.contactNo !== null && this.contactNo !== '' && this.contactNo !== undefined &&
             this.occupation !== null && this.occupation !== '' && this.occupation !== undefined &&
             this.password !== null && this.password !== '' && this.password !== undefined &&
-            this.confirmPassword !== null && this.confirmPassword !== '' && this.confirmPassword !== undefined 
-        ) { 
+            this.confirmPassword !== null && this.confirmPassword !== '' && this.confirmPassword !== undefined
+        ) {
             this.checkPassword();
             console.log(" sf 8");
             if (this.errorFlag === false) {
@@ -144,7 +167,7 @@ export class RegistrationClinicComponent implements OnInit {
                     }
                     });
             }
-            else { 
+            else {
                 console.log(" sf 9");
                 this._error.next(`Unable to register with eQueue. Passwords input are different. Please ensure both passwords are exactly the same.`);
             }
@@ -152,9 +175,6 @@ export class RegistrationClinicComponent implements OnInit {
             this.checkRequiredFields();
         }
         console.log(" sf 13");
-        
-        
-        
     }
 
     checkPassword() {
@@ -201,36 +221,31 @@ export class RegistrationClinicComponent implements OnInit {
         console.log("end of checks");
     }
 
-
     onCancel() {
-        console.log("registration on cancelling, go back home page");
-        this.router.navigate(['/']);
+      console.log("registration on cancelling, go back home page");
+      this.router.navigate(['/']);
     }
 
     onClear(){
-        console.log("registration on clearing");
-        this.clinicName = null;
-        this.branchTelephone = null;
-        this.clinicAddr = null;
-        this.name = null;
-        this.addr = null;
-        this.postal = null;
-        this.email = null;
-        this.password = null;
-        this.confirmPassword = null;
-        this.contactNo = null;
-        this.occupation = null;
+      console.log("registration on clearing");
+      this.clinicName = null;
+      this.branchTelephone = null;
+      this.clinicAddr = null;
+      this.name = null;
+      this.addr = null;
+      this.postal = null;
+      this.email = null;
+      this.password = null;
+      this.confirmPassword = null;
+      this.contactNo = null;
+      this.occupation = null;
     }
 
     enableProceed(e: any) {
-        if (e.target.checked) {
-          this.checked = e.target.checked;
-        } else {
-          this.checked = false;        
-        }
+      if (e.target.checked) {
+        this.checked = e.target.checked;
+      } else {
+        this.checked = false;
       }
-
-      addBranch(){
-        
-      }
+    }
 }
