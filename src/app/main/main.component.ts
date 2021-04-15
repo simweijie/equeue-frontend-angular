@@ -15,7 +15,7 @@ export class MainComponent implements OnInit {
   showFiller = false;
   job: string | undefined;
   private login: Login;
-  private username: string | null;
+  private username: string | undefined;
 
   constructor(
     private router: Router,
@@ -24,20 +24,22 @@ export class MainComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getJob();
+    this.getInfo();
   }
-  getJob() {
+  getInfo() {
     // this.activatedRoute.queryParams.subscribe(params => {
     //   this.adminId = params['adminId'];
     // });
     // GlobalConstants.job = this.activatedRoute.snapshot.paramMap.get('job');
-    console.log('getJob - job:');
+    console.log('getInfo - job:');
     this.login = GlobalConstants.login;
     if (this.login !== null) {
       this.job = this.login.job;
     }
     console.log(this.job);
-    this.username = GlobalConstants.username;
+    this.username = GlobalConstants.login.username;
+    console.log('getInfo - username:');
+    console.log(this.username);
   }
 
 
@@ -61,7 +63,6 @@ export class MainComponent implements OnInit {
             this.router.navigate(['/']);
           }
           GlobalConstants.login = new Login();
-          GlobalConstants.username = null;
           GlobalConstants.clinicId = null;
         });
     }
