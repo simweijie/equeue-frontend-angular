@@ -99,7 +99,6 @@ export class PatientLoginComponent implements OnInit {
             if (this.clinicId !== null || this.clinicId !== '') {
               GlobalConstants.clinicId = this.clinicId;
               GlobalConstants.login = this.loginInfo;
-              GlobalConstants.username = this.username;
               this.router.navigate(['/patient-view-details']);
             } else {
               this.router.navigate(['/patient-view-details']);
