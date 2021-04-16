@@ -8,6 +8,9 @@
   </mat-expansion-panel-header>
   <br>
   <div>
+    <div align="right">
+<!--      <button type="button" class="btn-primary" style="min-width: 25px; min-height: 25px;" [routerLink]="['/registration-staff']"><i class="pi pi-user-plus"></i></button>-->
+    </div>
     <div style="width:98%" align="center">
       <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
       <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
@@ -67,8 +70,8 @@
 <ng-template #deleteConfirmation>
   <div class="modal-body text-center">
     <p>Confirm remove staff {{staffName}}?</p>
-    <button type="button" class="btn-ipStyle2" (click)="confirmDelete()" >Yes</button>&nbsp;
-    <button type="button" class="btn-ipStyle2" (click)="decline()" >No</button>
+    <button type="button" class="button-equeue" (click)="confirmDelete()" >Yes</button>&nbsp;
+    <button type="button" class="button-equeue" (click)="decline()" >No</button>
   </div>
 </ng-template>
 
@@ -76,8 +79,8 @@
 <ng-template #acceptConfirmation>
   <div class="modal-body text-center">
     <p>Confirm accept staff {{staffName}}?</p>
-    <button type="button" class="btn-ipStyle2" (click)="confirmAccept()" >Yes</button>&nbsp;
-    <button type="button" class="btn-ipStyle2" (click)="declineAccept()" >No</button>
+    <button type="button" class="button-equeue" (click)="confirmAccept()" >Yes</button>&nbsp;
+    <button type="button" class="button-equeue" (click)="declineAccept()" >No</button>
   </div>
 </ng-template>
 
@@ -86,95 +89,135 @@
   <div class="modal-body text-center">
     <div class="row" style="padding-top: 10px">
 
-      <div class="form-group col-md-2">
-        <label class="form-control-label">Full Name <span class="red-asterisk">*</span></label>
-      </div>
-      <div class="form-group col-md-1">:</div>
-      <div class="form-group col-md-3">
-        <input type="text" class="form-control-label" name="fName" id="field_fName" [(ngModel)]="fName"/>
-      </div>
-      <div class="form-group col-md-5"></div>
+      <form>
+        <div *ngIf="name.invalid && (name.dirty || name.touched)"
+        class="alert alert-danger">
 
-      <div class="form-group col-md-2">
-        <label class="form-control-label">Contact No <span class="red-asterisk">*</span></label>
-      </div>
-      <div class="form-group col-md-1">:</div>
-      <div class="form-group col-md-3">
-        <input type="text" class="form-control-label" name="cNo" id="field_cNo" [(ngModel)]="cNo"/>
-      </div>
-      <div class="form-group col-md-5"></div>
-
-      <div class="form-group col-md-2">
-        <label class="form-control-label">Address <span class="red-asterisk">*</span></label>
-      </div>
-      <div class="form-group col-md-1">:</div>
-      <div class="form-group col-md-3">
-        <input type="text" class="form-control-label" name="address" id="field_address" [(ngModel)]="address"/>
-      </div>
-      <div class="form-group col-md-5"></div>
-
-      <div class="form-group col-md-2">
-        <label class="form-control-label">Email <span class="red-asterisk">*</span></label>
-      </div>
-      <div class="form-group col-md-1">:</div>
-      <div class="form-group col-md-3">
-        <input type="text" class="form-control-label" name="email" id="field_email" [(ngModel)]="email"/>
-      </div>
-      <div class="form-group col-md-5"></div>
-
-      <div class="form-group col-md-2">
-        <label class="form-control-label">Occupation <span class="red-asterisk">*</span></label>
-      </div>
-      <div class="form-group col-md-1">:</div>
-      <div class="form-group col-md-3">
-        <select class="form-control optionPlaceholder" id="field_occupation" name="occupation" [(ngModel)]="occupation">
-          <option [ngValue]="undefined" hidden>Please Select</option>
-          <!--                    <option [ngValue]="null"></option>-->
-          <option [ngValue]="rows.id" *ngFor="let rows of occupationList">{{rows.value}}</option>
-        </select>
-        <div *ngIf="occupationError">
-          <span class="red-error">Required field!</span>
+            <div *ngIf="name.errors.required">
+                Full Name is required.
+            </div>           
+            <div *ngIf="name.errors.pattern">
+                Full Name cannot contain invalid characters.
+            </div>
         </div>
-      </div>
-      <div class="form-group col-md-5"></div>
-
-      <div class="form-group col-md-2">
-        <label class="form-control-label">Clinic <span class="red-asterisk">*</span></label>
-      </div>
-      <div class="form-group col-md-1">:</div>
-      <div class="form-group col-md-3">
-        <select class="form-control optionPlaceholder" id="field_clinic" name="clinic" [(ngModel)]="clinic" (change)="listOfBranchesWithClinicId(clinic)">
-          <option [ngValue]="undefined" hidden>Please Select</option>
-          <!--                    <option [ngValue]="null"></option>-->
-          <option [ngValue]="rows.id" *ngFor="let rows of clinicList">{{rows.value}}</option>
-        </select>
-        <div *ngIf="clinicError">
-          <span class="red-error">Required field!</span>
+        <div *ngIf="contactNo.invalid && (contactNo.dirty || contactNo.touched)"
+        class="alert alert-danger">
+            <div *ngIf="contactNo.errors.required">
+                Contact No is required.
+            </div>           
+            <div *ngIf="contactNo.errors.pattern">
+                Only numeric numbers are allowed for Contact No. 
+            </div>
+            <div *ngIf="contactNo.errors.minlength || contactNo.errors.maxlength">
+                Contact No has a minlength of 8.
+            </div> 
         </div>
-      </div>
-      <div class="form-group col-md-5"></div>
-
-      <ng-template [ngIf]="hide">
-        <div class="form-group col-md-2">
-          <label class="form-control-label">Branch <span class="red-asterisk">*</span></label>
+        <div *ngIf="addr.invalid && (addr.dirty || addr.touched)"
+            class="alert alert-danger">           
+            <div *ngIf="addr.errors.pattern">
+            Address cannot contain invalid characters.
+            </div>         
         </div>
-        <div class="form-group col-md-1">:</div>
-        <div class="form-group col-md-3">
-          <select class="form-control optionPlaceholder" id="field_branch" name="branch" [(ngModel)]="branch">
-            <option [ngValue]="undefined" hidden>Please Select</option>
-            <!--                    <option [ngValue]="null"></option>-->
-            <option [ngValue]="rows.id" *ngFor="let rows of branchListEdit">{{rows.value}}</option>
-          </select>
-          <div *ngIf="branchError">
-            <span class="red-error">Required field!</span>
+        <div *ngIf="emailh.invalid && (emailh.dirty || emailh.touched)"
+                class="alert alert-danger">                  
+            <div *ngIf="emailh.errors.pattern">
+                Email cannot contain invalid characters.
+            </div>
+            <div *ngIf="emailh.errors.required">
+                Email is required.
+            </div>
+        </div>
+
+          <div class="form-group col-md-2">
+            <label class="form-control-label">Full Name <span class="red-asterisk">*</span></label>
           </div>
-        </div>
-        <div class="form-group col-md-5"></div>
-      </ng-template>
+          <div class="form-group col-md-1">:</div>
+          <div class="form-group col-md-3">
+            <input type="text" class="form-control-label" name="fName" id="field_fName" [(ngModel)]="fName" #name = "ngModel" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  maxlength="66" autofocus autocomplete="off" required/>
+          </div>
+          <div class="form-group col-md-5"></div>
 
+          <div class="form-group col-md-2">
+            <label class="form-control-label">Contact No <span class="red-asterisk">*</span></label>
+          </div>
+          <div class="form-group col-md-1">:</div>
+          <div class="form-group col-md-3">
+            <input type="text" class="form-control-label" name="cNo" id="field_cNo" [(ngModel)]="cNo"  #contactNo="ngModel" class="uppercase" pattern="^[0-9]*$" minlength="8" maxlength="8" autofocus autocomplete="off" required />
+          </div>
+          <div class="form-group col-md-5"></div>
+
+          <div class="form-group col-md-2">
+            <label class="form-control-label">Address <span class="red-asterisk">*</span></label>
+          </div>
+          <div class="form-group col-md-1">:</div>
+          <div class="form-group col-md-3">
+            <input type="text" class="form-control-label" name="address" id="field_address" [(ngModel)]="address" #addr="ngModel" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1" maxlength="99" autofocus autocomplete="off" required/>
+          </div>
+          <div class="form-group col-md-5"></div>
+
+          <div class="form-group col-md-2">
+            <label class="form-control-label">Email <span class="red-asterisk">*</span></label>
+          </div>
+          <div class="form-group col-md-1">:</div>
+          <div class="form-group col-md-3">
+            <input type="text" class="form-control-label" name="emailh" id="field_email" [(ngModel)]="email" #emailh="ngModel" class="uppercase" pattern="^[a-zA-Z0-9-@.]*$" minlength="1" maxlength="66" autofocus autocomplete="off" required/>
+          </div>
+          <div class="form-group col-md-5"></div>
+
+          <div class="form-group col-md-2">
+            <label class="form-control-label">Occupation <span class="red-asterisk">*</span></label>
+          </div>
+          <div class="form-group col-md-1">:</div>
+          <div class="form-group col-md-3">
+            <select class="form-control optionPlaceholder" id="field_occupation" name="occupation" [(ngModel)]="occupation" >
+              <option [ngValue]="undefined" hidden>Please Select</option>
+              <!--                    <option [ngValue]="null"></option>-->
+              <option [ngValue]="rows.id" *ngFor="let rows of occupationList">{{rows.value}}</option>
+            </select>
+            <div *ngIf="occupationError">
+              <span class="red-error">Required field!</span>
+            </div>
+          </div>
+          <div class="form-group col-md-5"></div>
+
+          <div class="form-group col-md-2">
+            <label class="form-control-label">Clinic <span class="red-asterisk">*</span></label>
+          </div>
+          <div class="form-group col-md-1">:</div>
+          <div class="form-group col-md-3">
+            <select class="form-control optionPlaceholder" id="field_clinic" name="clinic" [(ngModel)]="clinic" (change)="listOfBranchesWithClinicId(clinic)">
+              <option [ngValue]="undefined" hidden>Please Select</option>
+              <!--                    <option [ngValue]="null"></option>-->
+              <option [ngValue]="rows.id" *ngFor="let rows of clinicList">{{rows.value}}</option>
+            </select>
+            <div *ngIf="clinicError">
+              <span class="red-error">Required field!</span>
+            </div>
+          </div>
+          <div class="form-group col-md-5"></div>
+
+          <ng-template [ngIf]="hide">
+            <div class="form-group col-md-2">
+              <label class="form-control-label">Branch <span class="red-asterisk">*</span></label>
+            </div>
+            <div class="form-group col-md-1">:</div>
+            <div class="form-group col-md-3">
+              <select class="form-control optionPlaceholder" id="field_branch" name="branch" [(ngModel)]="branch">
+                <option [ngValue]="undefined" hidden>Please Select</option>
+                <!--                    <option [ngValue]="null"></option>-->
+                <option [ngValue]="rows.id" *ngFor="let rows of branchListEdit">{{rows.value}}</option>
+              </select>
+              <div *ngIf="branchError">
+                <span class="red-error">Required field!</span>
+              </div>
+            </div>
+            <div class="form-group col-md-5"></div>
+          </ng-template>
+
+       </form>
     </div>
-    <button type="button" class="btn-ipStyle2" (click)="cancel()" >Cancel</button>&nbsp;
+    <button type="button" class="button-equeue" (click)="cancel()" >Cancel</button>&nbsp;
 <!--    <button type="button" class="btn-ipStyle2" (click)="clear()" >Clear</button>&nbsp;-->
-    <button type="button" class="btn-ipStyle2" (click)="update()" >Update</button>
+    <button type="button" class="button-equeue" (click)="update()" >Update</button>
   </div>
 </ng-template>

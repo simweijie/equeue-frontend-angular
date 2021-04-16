@@ -9,7 +9,7 @@
           <!--          <label class="col-sm-1 form-control-label" style="text-align: center"> : </label>-->
           <!--          <input type="text" class="col-sm-3 form-control-label" name="pCode" id="field_pCode" [(ngModel)]="pCode" disabled/>-->
           <!--          &nbsp;-->
-          <button type="button" class="btn-primary" style="min-width: 100px; max-width: 100px" (click)="searchGP()">
+          <button type="button" class="button-equeue" style="min-width: 100px; max-width: 100px" (click)="searchGP()">
             GP Search
           </button>
         </div>
@@ -25,35 +25,26 @@
         </div>
       </div>
       <div class="form-group row">
-        <div class="col-sm-2" style="max-width: 150px">
-          <label class="form-control-label" style="text-align: right">District<span
+        <div class="col-sm">
+          <label class="col-sm-2 form-control-label" style="text-align: right">District: <span
             style="color: red; font-weight: bold;">* </span></label>
-          <label class="form-control-label" style="text-align: center">:</label>
-        </div>
-        <div class="col-sm-2">
-          <select class="form-control optionPlaceholder" style="max-width: 200px" [(ngModel)]="district" name="district" *ngIf="districtList">
+          <select class="form-control-label" style="min-width: 150px; min-height: 30px;" [(ngModel)]="district" name="district" *ngIf="districtList">
             <option [ngValue]="undefined" hidden><span class="optionPlaceholder">Please Select</span></option>
             <!--                <option [ngValue]="null"></option>-->
             <option [ngValue]="rows.id" *ngFor="let rows of districtList">{{rows.value}}</option>
           </select>
-        </div>
-
-        <div class="col-sm-2" style="max-width: 150px">
-          <label class="form-control-label" style="text-align: right">Medical Group<span
+          <label class="col-sm-2 form-control-label" style="text-align: right">Medical Group: <span
             style="color: red; font-weight: bold;">* </span></label>
-          <label class="form-control-label" style="text-align: center">:</label>
-        </div>
-        <div class="col-sm-2">
-          <select class="form-control optionPlaceholder" style="max-width: 200px" [(ngModel)]="mGroup" name="clinic" *ngIf="mGroupList">
+          <select class="form-control-label" style="min-width: 150px; min-height: 30px;" [(ngModel)]="mGroup" name="clinic" *ngIf="mGroupList">
             <option [ngValue]="undefined" hidden><span class="optionPlaceholder">Please Select</span></option>
             <!--                <option [ngValue]="null"></option>-->
             <option [ngValue]="rows.id" *ngFor="let rows of mGroupList">{{rows.value}}</option>
           </select>
+          &nbsp;
+          <button type="button" class="button-equeue" style="min-width: 100px; max-width: 100px" (click)="searchFilter()">
+            GP Search
+          </button>
         </div>
-        &nbsp;
-        <button type="button" class="btn-primary" style="min-width: 100px; max-width: 100px" (click)="searchFilter()">
-          GP Search
-        </button>
       </div>
     </ng-template>
   </li>

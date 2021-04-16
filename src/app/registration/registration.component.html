@@ -1,6 +1,6 @@
 <!-- <div> -->
 <form name="editForm" role="form" #editForm="ngForm">
-    <h3 class="font-bold pl-0 my-4" ><strong>Patient Registration Process</strong></h3>
+    <h3 class="font-bold my-4" style="padding-left: 15px;"><strong>Patient Registration Process</strong></h3>
     <div class="px-3">
         <div class="text-center">
             <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
@@ -99,75 +99,57 @@
 
            
         <div class="form-group row">
-            <label for="name"  class="col-sm-2 col-form-label" >Full Name:* </label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" name="name" id="name" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="fname" #name="ngModel" 
-                maxlength="66" autofocus autocomplete="off" required>
-            </div>
+            <label for="name"  class="col-sm-3 form-control-label" >Full Name:* </label>
+            <input type="text" class="col-sm-3 form-control-label" name="name" id="name" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="fname" #name="ngModel" 
+                 maxlength="66" autofocus autocomplete="off" required>
         </div>
         <div class="form-group row">
-            <label for="uin"  class="col-sm-2 col-form-label" >NRIC: </label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" name="uin" id="uin" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="uinf" #uin="ngModel"
-                maxlength="9" autofocus autocomplete="off">
-            </div>
+            <label for="uin"  class="col-sm-3 form-control-label" >NRIC: </label>
+            <input type="text" class="col-sm-3 form-control-label" name="uin" id="uin" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="uinf" #uin="ngModel"
+                 maxlength="9" autofocus autocomplete="off">
         </div>
         <div class="form-group row">
-            <label for="contactNo"  class="col-sm-2 col-form-label" >Contact No:* </label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" name="contactNo" id="contactNo" class="uppercase" pattern="^[0-9]*$" minlength="8"  [(ngModel)]="contactNof" #contactNo="ngModel"
-                maxlength="8" autofocus autocomplete="off" required>
-            </div>
+            <label for="contactNo"  class="col-sm-3 form-control-label" >Contact No:* </label>
+            <input type="text" class="col-sm-3 form-control-label" name="contactNo" id="contactNo" class="uppercase" pattern="^[0-9]*$" minlength="8"  [(ngModel)]="contactNof" #contactNo="ngModel"
+                 maxlength="8" autofocus autocomplete="off" required>
         </div>
         <div class="form-group row">
-            <label for="addr"  class="col-sm-2 col-form-label" >Address: </label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" name="addr" id="addr" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="addrf" #addr="ngModel"
-                maxlength="99" autofocus autocomplete="off">
-            </div>
+            <label for="addr"  class="col-sm-3 form-control-label" >Address: </label>
+            <input type="text" class="col-sm-3 form-control-label" name="addr" id="addr" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"   [(ngModel)]="addrf" #addr="ngModel"
+                 maxlength="99" autofocus autocomplete="off">
         </div>
         <div class="form-group row">
-            <label for="postal"  class="col-sm-2 col-form-label" >Postal Code: </label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" name="postal" id="postal" class="uppercase" pattern="^[0-9]*$" minlength="6"  [(ngModel)]="postalf" #postal="ngModel"
-                maxlength="6" autofocus autocomplete="off">
-            </div>
+            <label for="postal"  class="col-sm-3 form-control-label" >Postal Code: </label>
+            <input type="text" class="col-sm-3 form-control-label" name="postal" id="postal" class="uppercase" pattern="^[0-9]*$" minlength="6"  [(ngModel)]="postalf" #postal="ngModel"
+                 maxlength="6" autofocus autocomplete="off">
         </div>
         <div class="form-group row">
-            <label for="email"  class="col-sm-2 col-form-label" >Email:* </label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" name="email" id="email" class="uppercase" pattern="^[a-zA-Z0-9-@.]*$" minlength="1"  [(ngModel)]="emailf" #email="ngModel"
-                maxlength="66" autofocus autocomplete="off" required>
-            </div>
+            <label for="email"  class="col-sm-3 form-control-label" >Email:* </label>
+            <input type="text" class="col-sm-3 form-control-label" name="email" id="email" class="uppercase" pattern="^[a-zA-Z0-9-@.]*$" minlength="1" [(ngModel)]="emailf" #email="ngModel"
+                 maxlength="66" autofocus autocomplete="off" required>
         </div>
         <div class="form-group row">
-            <label for="drugAllergy"  class="col-sm-2 col-form-label" >Drug Allergies: </label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" name="drugAllergy" id="drugAllergy" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="drugAllergyf" #drugAllergy="ngModel"
-                maxlength="99" autofocus autocomplete="off">
-            </div>
+            <label for="drugAllergy"  class="col-sm-3 form-control-label" >Drug Allergies: </label>
+            <input type="text" class="col-sm-3 form-control-label" name="drugAllergy" id="drugAllergy" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="drugAllergyf" #drugAllergy="ngModel"
+                 maxlength="99" autofocus autocomplete="off">
         </div>
         <div class="form-group row">
-            <label for="password"  class="col-sm-2 col-form-label" >Password:* </label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" name="password" id="password" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="passwordf" #password="ngModel"
-                maxlength="32" autofocus autocomplete="off" required>
-            </div>
+            <label for="password"  class="col-sm-3 form-control-label" >Password:* </label>
+            <input type="text" class="col-sm-3 form-control-label" name="password" id="password" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"   [(ngModel)]="passwordf" #password="ngModel"
+                 maxlength="32" autofocus autocomplete="off" required>
         </div>
         <div class="form-group row">
-            <label for="confirmpassword"  class="col-sm-2 col-form-label" >Confirm Password:* </label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control"  name="confirmpassword" id="confirmpassword" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="confirmPasswordf" #confirmpassword="ngModel"
-                maxlength="32" autofocus autocomplete="off" required>
-            </div>
+            <label for="confirmpassword"  class="col-sm-3 form-control-label" >Confirm Password:* </label>
+            <input type="text" class="col-sm-3 form-control-label"  name="confirmpassword" id="confirmpassword" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="confirmPasswordf" #confirmpassword="ngModel"
+                 maxlength="32" autofocus autocomplete="off" required>
         </div>
            
 
     <div class="col-md-12">
         <div><br></div>
-        <button class="button-equeue button-bottomleft " type="button" name="cancelButton" (click)="onCancel()" replaceUrl="true">Cancel</button>
-        <button class="button-equeue button-bottomcenter" type="button" name="clearButton" (click)="onClear()" replaceUrl="true">Clear</button>
-        <button class="button-equeue button-bottomright" type="button" name="signUpButton" (click)="onSignUp(editForm)" replaceUrl="true">Sign Up</button>           
+        <button class="button-equeue " type="button" name="cancelButton" (click)="onCancel()" replaceUrl="true">Cancel</button>&nbsp;
+        <button class="button-equeue" type="button" name="clearButton" (click)="onClear()" replaceUrl="true">Clear</button>&nbsp;
+        <button class="button-equeue" type="button" name="signUpButton" (click)="onSignUp(editForm)" replaceUrl="true">Sign Up</button>
     </div>
     <br>
     <br>

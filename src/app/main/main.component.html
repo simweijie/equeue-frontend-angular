@@ -2,22 +2,38 @@
 <br>
 <mat-drawer-container class="example-container" autosize>
   <mat-drawer #drawer class="example-sidenav" mode="side">
-    <div class="row-cols-3" *ngIf="job==='P'">
-      <a href="#">About</a>
+    <div *ngIf="job==='P'">
+      <div class="row-cols-3">
+        <a routerLink="/smart-search-member" routerLinkActive="active">Home</a>
+      </div>
+      <div class="row-cols-3">
+        <a routerLink="/patient-view-details" routerLinkActive="active">Current Registration</a>
+      </div>
+      <div class="row-cols-3">
+        <a routerLink="" routerLinkActive="active">Missed Queue</a>
+      </div>
+      <div class="row-cols-3">
+        <a routerLink="" routerLinkActive="active">Update Information</a>
+      </div>
     </div>
-    <div class="row-cols-3" *ngIf="job==='S' || job==='D'">
-      <a href="#">Services</a>
+    <div *ngIf="job==='S'">
+      <div class="row-cols-3">
+        <a routerLink="/patient-queue" routerLinkActive="active">View Queue</a>
+      </div>
     </div>
-    <div class="row-cols-3" *ngIf="job===null || job===undefined">
-      <a href="#">Clients</a>
-    </div>
-    <div class="row-cols-3" *ngIf="job===null || job===undefined">
-      <a href="#">Contact</a>
+    <div *ngIf="job==='D'">
+      <div class="row-cols-3">
+        <a routerLink="/patient-queue" routerLinkActive="active">View Queue</a>
+      </div>
+      <div class="row-cols-3">
+        <a routerLink="/staff-info" routerLinkActive="active">Staff Information</a>
+      </div>
     </div>
   </mat-drawer>
 
   <div class="example-sidenav-content">
-    <button type="button" mat-button class="btn-primary" style="height: 20px; width: 10px" (click)="drawer.toggle()" *ngIf="job!==null && job!==undefined && job!==''"></button>
+    <button type="button" mat-button class="btn-primary" style="height: 25px; width: 25px" (click)="drawer.toggle()" *ngIf="job!==null && job!==undefined && job!==''"><i class="pi pi-bars"></i></button>
+<!--    <button type="button" mat-button class="btn-primary" style="height: 25px; width: 25px" (click)="drawer.toggle()"><i class="pi pi-bars"></i></button>-->
     <div class="container">
       <div class="card" style="align-content: center; border-style: none ;">
         <router-outlet><button type="button" class="btn-primary refresh" style="min-width: 20px; min-height: 20px;" (click)="logout()" *ngIf="job!==null && job!==undefined && job!==''">Logout</button>&nbsp;

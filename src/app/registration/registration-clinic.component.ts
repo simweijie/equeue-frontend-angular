@@ -9,6 +9,7 @@ import { RegistrationClinic } from '../shared/modals/registration-clinic.model';
 import { CommonService } from '../shared/services/common.service';
 import { RegistrationService } from '../shared/services/registration.service';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { faPlus, faMinus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'ic-registration-clinic',
@@ -16,14 +17,17 @@ import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
     // styleUrls: ['registration.component.css']
 })
 export class RegistrationClinicComponent implements OnInit {
+    faPlus = faPlus;
+    faMinus = faMinus;
+    faTimes = faTimes;
     registrationClinic: RegistrationClinic;
     name: any;
-    addr: any;
-    postal: any;
-    email: any;
-    password: any;
-    confirmPassword: any;
-    contactNo: any;
+    addrf: any;
+    postalf: any;
+    emailf: any;
+    passwordf: any;
+    confirmPasswordf: any;
+    contactNof: any;
     occupation: any;
     clinic: any;
     branch: any;
@@ -70,10 +74,17 @@ export class RegistrationClinicComponent implements OnInit {
         {id: "6", value: "Saturday"},
         {id: "7", value: "Sunday"}
     ];
+
+  occupationList: Array<object> = [
+    {id: 'D', value: 'Doctor'},
+    {id: 'S', value: 'Nurse'},
+    {id: 'A', value: 'Admin'}
+  ];
     
     constructor(private router: Router, private RegistrationService: RegistrationService, private commonService: CommonService, private fb: FormBuilder) {
         this.registrationClinic = new RegistrationClinic();
         this.errorFlag = false;
+        this.occupation ='';
     }
 
     loadAll() {}
@@ -89,6 +100,7 @@ export class RegistrationClinicComponent implements OnInit {
       ).subscribe(() => this.successMessage = '');
 
       this._error.subscribe((message) => this.errorMessage = message);
+      this.addOpeningHour();
       this.addBranch();
     }
 
@@ -131,22 +143,22 @@ export class RegistrationClinicComponent implements OnInit {
     onSignUp(editForm: NgForm){
         console.log("here at registrationClinic, start");
         if (this.name !== null && this.name !== '' && this.name !== undefined &&
-            this.addr !== null && this.addr !== '' && this.addr !== undefined &&
-            this.postal !== null && this.postal !== '' && this.postal !== undefined &&
-            this.email !== null && this.email !== '' && this.email !== undefined &&
-            this.contactNo !== null && this.contactNo !== '' && this.contactNo !== undefined &&
+            this.addrf !== null && this.addrf !== '' && this.addrf !== undefined &&
+            this.postalf !== null && this.postalf !== '' && this.postalf !== undefined &&
+            this.emailf !== null && this.emailf !== '' && this.emailf !== undefined &&
+            this.contactNof !== null && this.contactNof !== '' && this.contactNof !== undefined &&
             this.occupation !== null && this.occupation !== '' && this.occupation !== undefined &&
-            this.password !== null && this.password !== '' && this.password !== undefined &&
-            this.confirmPassword !== null && this.confirmPassword !== '' && this.confirmPassword !== undefined
+            this.passwordf !== null && this.passwordf !== '' && this.passwordf !== undefined &&
+            this.confirmPasswordf !== null && this.confirmPasswordf !== '' && this.confirmPasswordf !== undefined
         ) {
             this.checkPassword();
             console.log(" sf 8");
             if (this.errorFlag === false) {
                 this.registrationClinic.name = this.name;
-                this.registrationClinic.addr = this.addr;
-                this.registrationClinic.postal = this.postal;
-                this.registrationClinic.email = this.email;
-                this.registrationClinic.contactNo = this.contactNo;
+                this.registrationClinic.addr = this.addrf;
+                this.registrationClinic.postal = this.postalf;
+                this.registrationClinic.email = this.emailf;
+                this.registrationClinic.contactNo = this.contactNof;
                 this.registrationClinic.occupation = this.occupation;
                 this.registrationClinic.clinic = this.clinic;
                 this.registrationClinic.branch = this.branch;
@@ -179,13 +191,13 @@ export class RegistrationClinicComponent implements OnInit {
 
     checkPassword() {
         // check if password input is correct
-        console.log("this.password is : " + this.password);
-        console.log("this.cmfpassword is : " + this.confirmPassword);
-        if (this.password === this.confirmPassword) {
-            this.registrationClinic.password = this.password;
+        console.log("this.password is : " + this.passwordf);
+        console.log("this.cmfpassword is : " + this.confirmPasswordf);
+        if (this.passwordf === this.confirmPasswordf) {
+            this.registrationClinic.password = this.passwordf;
             this.errorFlag = false;
             console.log(" sf 5");
-        } else if (this.password != this.confirmPassword) {
+        } else if (this.passwordf != this.confirmPasswordf) {
             this._error.next("Passwords input are different. Please ensure both passwords are exactly the same.");
             this.errorFlag = true;
             console.log(" sf 7");
@@ -202,19 +214,19 @@ export class RegistrationClinicComponent implements OnInit {
             this._error.next("Please enter all required fields marked with '*'.");
             console.log(" sf 1");
         }
-        if (this.contactNo === null || this.contactNo === '' ||  this.contactNo === undefined) {
+        if (this.contactNof === null || this.contactNof === '' ||  this.contactNof === undefined) {
             this._error.next("Please enter all required fields marked with '*'.");
             console.log(" sf 2");
         }
-        if (this.email === null || this.email === '' || this.email === undefined) {
+        if (this.emailf === null || this.emailf === '' || this.emailf === undefined) {
             this._error.next("Please enter all required fields marked with '*'.");
             console.log(" sf 3");
         }
-        if (this.password === null || this.password === '' || this.password === undefined) {
+        if (this.passwordf === null || this.passwordf === '' || this.passwordf === undefined) {
             this._error.next("Please enter all required fields marked with '*'.");
             console.log(" sf 4");
         }
-        if (this.confirmPassword === null || this.confirmPassword === '' || this.confirmPassword === undefined) {
+        if (this.confirmPasswordf === null || this.confirmPasswordf === '' || this.confirmPasswordf === undefined) {
             this._error.next("Please enter all required fields marked with '*'.");
             console.log(" sf 5");
         }
@@ -223,7 +235,7 @@ export class RegistrationClinicComponent implements OnInit {
 
     onCancel() {
       console.log("registration on cancelling, go back home page");
-      this.router.navigate(['/']);
+      this.router.navigate(['/staff-login']);
     }
 
     onClear(){
@@ -234,12 +246,12 @@ export class RegistrationClinicComponent implements OnInit {
       this.pCode = null;
       this.clinicAddr = null;
       this.name = null;
-      this.addr = null;
-      this.postal = null;
-      this.email = null;
-      this.password = null;
-      this.confirmPassword = null;
-      this.contactNo = null;
+      this.addrf = null;
+      this.postalf = null;
+      this.emailf = null;
+      this.passwordf = null;
+      this.confirmPasswordf = null;
+      this.contactNof = null;
       this.occupation = null;
       this.clinicOpeningHours.clear();
     }
