@@ -92,19 +92,23 @@ export class PatientLoginComponent implements OnInit {
     if (this.username !== '' && this.password !== '') {
       this.patientLoginService.loginFunction({username: this.username, password: this.password}).subscribe(
         data => {
-          console.log(data);
-          // @ts-ignore
-          this.loginInfo = data;
-          if (this.loginInfo.id !== null) {
-            if (this.clinicId !== null || this.clinicId !== '') {
-              GlobalConstants.clinicId = this.clinicId;
-              GlobalConstants.login = this.loginInfo;
-              this.router.navigate(['/patient-view-details']);
+          if (data !== 'ERROR') {
+            console.log(data);
+            // @ts-ignore
+            this.loginInfo = data;
+            if (this.loginInfo.id !== null) {
+              if (this.clinicId !== null || this.clinicId !== '') {
+                GlobalConstants.clinicId = this.clinicId;
+                GlobalConstants.login = this.loginInfo;
+                this.router.navigate(['/patient-view-details']);
+              } else {
+                this.router.navigate(['/patient-view-details']);
+              }
             } else {
-              this.router.navigate(['/patient-view-details']);
+              this._error.next(`Incorrect Username or Password!`);
             }
           } else {
-            this._error.next(`Incorrect Username or Password!`);
+            this._error.next(`Unable to login!`);
           }
           this.cancel();
         });

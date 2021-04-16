@@ -27,9 +27,15 @@ export class RegistrationStaffComponent implements OnInit {
     clinic: any;
     branch: any;
     branchList: any;
-    clinicList: any
+    clinicList: any;
     clinicDisplay: string;
     branchDisplay: string;
+    occupationDisplay: string;
+    occupationList: Array<object> = [
+      {id: 'D', value: 'Doctor'},
+      {id: 'S', value: 'Nurse'},
+      {id: 'A', value: 'Admin'}
+    ];
 
     private signUpStatus: string | Object | null | string;
     private _success = new Subject<string>();
@@ -44,6 +50,7 @@ export class RegistrationStaffComponent implements OnInit {
         this.errorFlag = false;
         this.clinicDisplay = '';
         this.branchDisplay = '';
+        this.occupationDisplay = '';
     }
 
     loadAll() {}
@@ -204,7 +211,7 @@ export class RegistrationStaffComponent implements OnInit {
 
     onCancel() {
         console.log("registration on cancelling, go back home page");
-        this.router.navigate(['/']);
+        this.router.navigate(['/staff-login']);;
     }
 
     onClear(){

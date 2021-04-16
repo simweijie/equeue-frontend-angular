@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import {Component, OnInit, HostListener, AfterViewInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {PatientQueueService} from "../shared/services/patient-queue.service";
 import {BsModalService} from "ngx-bootstrap/modal";
@@ -11,7 +11,7 @@ import {CommonService} from '../shared/services/common.service';
     selector: 'ic-main',
     templateUrl: './main.component.html'
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, AfterViewInit {
   showFiller = false;
   job: string | undefined;
   private login: Login;
@@ -26,6 +26,11 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.getInfo();
   }
+
+  ngAfterViewInit() {
+    this.getInfo();
+  }
+
   getInfo() {
     // this.activatedRoute.queryParams.subscribe(params => {
     //   this.adminId = params['adminId'];

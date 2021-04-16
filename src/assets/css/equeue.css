@@ -103,19 +103,19 @@
 }
 
 .button-bottomright {
-    position: fixed;
+    /*position: fixed;*/
     bottom: 10%;
     right: 20;
 }
 
 .button-bottomleft {
-    position: fixed;
+    /*position: fixed;*/
     bottom: 10%;
     left: 20;
 }
 
 .button-bottomcenter {
-    position: fixed;
+    /*position: fixed;*/
     bottom: 10%;
     text-align: center;
     margin-left: 40%;

@@ -8,6 +8,9 @@
   </mat-expansion-panel-header>
   <br>
   <div>
+    <div align="right">
+<!--      <button type="button" class="btn-primary" style="min-width: 25px; min-height: 25px;" [routerLink]="['/registration-staff']"><i class="pi pi-user-plus"></i></button>-->
+    </div>
     <div style="width:98%" align="center">
       <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
       <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
@@ -67,8 +70,8 @@
 <ng-template #deleteConfirmation>
   <div class="modal-body text-center">
     <p>Confirm remove staff {{staffName}}?</p>
-    <button type="button" class="btn-ipStyle2" (click)="confirmDelete()" >Yes</button>&nbsp;
-    <button type="button" class="btn-ipStyle2" (click)="decline()" >No</button>
+    <button type="button" class="button-equeue" (click)="confirmDelete()" >Yes</button>&nbsp;
+    <button type="button" class="button-equeue" (click)="decline()" >No</button>
   </div>
 </ng-template>
 
@@ -76,8 +79,8 @@
 <ng-template #acceptConfirmation>
   <div class="modal-body text-center">
     <p>Confirm accept staff {{staffName}}?</p>
-    <button type="button" class="btn-ipStyle2" (click)="confirmAccept()" >Yes</button>&nbsp;
-    <button type="button" class="btn-ipStyle2" (click)="declineAccept()" >No</button>
+    <button type="button" class="button-equeue" (click)="confirmAccept()" >Yes</button>&nbsp;
+    <button type="button" class="button-equeue" (click)="declineAccept()" >No</button>
   </div>
 </ng-template>
 
@@ -173,8 +176,8 @@
       </ng-template>
 
     </div>
-    <button type="button" class="btn-ipStyle2" (click)="cancel()" >Cancel</button>&nbsp;
+    <button type="button" class="button-equeue" (click)="cancel()" >Cancel</button>&nbsp;
 <!--    <button type="button" class="btn-ipStyle2" (click)="clear()" >Clear</button>&nbsp;-->
-    <button type="button" class="btn-ipStyle2" (click)="update()" >Update</button>
+    <button type="button" class="button-equeue" (click)="update()" >Update</button>
   </div>
 </ng-template>

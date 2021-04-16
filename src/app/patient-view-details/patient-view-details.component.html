@@ -1,5 +1,6 @@
 <form name="editForm" role="form" #editForm="ngForm">
     <h3 class="font-bold pl-0 my-4" ><strong>Patient Current Registration</strong></h3>
+    <button type="button" class="btn-primary refresh" style="min-width: 25px; min-height: 25px;"><i class="pi pi-refresh"></i></button>&nbsp;
     <div class="px-3">
         <div class="text-center">
             <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
@@ -28,7 +29,7 @@
                 <div class="col-sm-4">
                     <input type="text" class="form-control" name="currentQueueNo" id="currentQueueNo"  [value]="currentQueueNoDisplay" readonly>
                 </div>
-                <img src="../../content/img/refresh.png" alt="Refresh">
+<!--                <img src="../../content/img/refresh.png" alt="Refresh">-->
                 <!-- <img src="https://www.google.com/search?q=refresh+icon+blue&rlz=1C1GCEV_enSG856SG856&sxsrf=ALeKk00kgKc5BtqlxQnl6o4xOZoouA5WVQ:1617983262607&tbm=isch&source=iu&ictx=1&fir=S9WSwIb0lI7KbM%252CxGh0KslYEg5qFM%252C_&vet=1&usg=AI4_-kRmhJQpAWEl7v6SQNDH-zoDC28O0g&sa=X&ved=2ahUKEwiYz_qswfHvAhVRX30KHfxUCFMQ9QF6BAgSEAE&biw=1042&bih=764#imgrc=S9WSwIb0lI7KbM" alt="Refresh"> -->
                 
             </div>
@@ -50,10 +51,10 @@
         <div><br></div>
         <label class="button" type="button" name="forgotCredentialsButton" (click)="forgotCredentials()" replaceUrl="true"><b>Forgot Username or Password?</b></label>           
     </div>    -->
-    <div class="col-md-12">
+    <div class="text-center">
         <div><br></div>
-        <button class="button-equeue button-left" type="button" name="cancelButton" (click)="onCancelQueuePopUp()" replaceUrl="true">Cancel Queue No</button>
-        <button class="button-equeue button-right" type="button" name="ChangeButton" (click)="onChangeClinic()" replaceUrl="true">Change Clinic</button>           
+        <button class="button-equeue col-sm-2" type="button" name="cancelButton" (click)="onCancelQueuePopUp()" replaceUrl="true">Cancel Queue No</button>&nbsp;&nbsp;
+        <button class="button-equeue col-sm-2" type="button" name="ChangeButton" (click)="onChangeClinic()" replaceUrl="true">Change Clinic</button>
     </div>
     <!-- <div><br><br><br><br><br></div>
     <div class="col-md-12">
@@ -70,14 +71,17 @@
 
 <ng-template #cancelQueueModal>
     <div class="modal-body text-center">
-      <div class="col-md-12">
-       <span>Please note that once you cancel your queue number, you would have to select the clinic again.</span>
-       <span>Confirm cancel queue number?</span>
+      <div class="form-group row">
+        <div class="col-sm">
+         <span>Please note that once you cancel your queue number, you would have to select the clinic again.</span>
+         <span>Confirm cancel queue number?</span>
+        </div>
       </div>
-      <div><br><br></div>
-      <div class="col-md-10">
-        <button type="button" class="button-equeue btn-primary col-md-2 float-left" (click)="onCancelQueueYes()">Yes</button>&nbsp;
-        <button type="button" class="button-equeue btn-primary col-md-2 float-right" (click)="onCancelQueueNo()">No</button>
+      <div class="form-group row">
+        <div class="col-sm">
+          <button type="button" class="button-equeue col-md-2" (click)="onCancelQueueYes()">Yes</button>&nbsp;
+          <button type="button" class="button-equeue col-md-2" (click)="onCancelQueueNo()">No</button>
+        </div>
       </div>
     </div>
   </ng-template>

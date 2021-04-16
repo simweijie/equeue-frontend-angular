@@ -1,196 +1,196 @@
-.titleHeader{
-  font-size: 15px;
-  color: white;
-}
-
-/*.info{*/
-/*  max-height: 20px;*/
-/*  max-width: 10px;*/
+/*.titleHeader{*/
+/*  font-size: 15px;*/
+/*  color: white;*/
 /*}*/
 
-.tableHeaderText{
-  font-size: 12px;
-  color: white;
-  padding-top: 0.5em;
-  padding-bottom: 0.1em;
-  padding-left: 0.5em;
-}
+/*!*.info{*!*/
+/*!*  max-height: 20px;*!*/
+/*!*  max-width: 10px;*!*/
+/*!*}*!*/
 
-.card{
-  background-color: #d3e5ff;
-}
+/*.tableHeaderText{*/
+/*  font-size: 12px;*/
+/*  color: white;*/
+/*  padding-top: 0.5em;*/
+/*  padding-bottom: 0.1em;*/
+/*  padding-left: 0.5em;*/
+/*}*/
 
-.test{
-  text-align: center;
-}
+/*.card{*/
+/*  background-color: #d3e5ff;*/
+/*}*/
 
-.mat-radio-label-content{
-  padding-right: 5px;
-}
+/*.test{*/
+/*  text-align: center;*/
+/*}*/
 
-.pageIndicator{
-  box-align: right;
-}
+/*.mat-radio-label-content{*/
+/*  padding-right: 5px;*/
+/*}*/
 
-.tableCols{
-  background-color: lavender;
-}
+/*.pageIndicator{*/
+/*  box-align: right;*/
+/*}*/
 
-.tableColName{
-  color: #1654ad;
-  font-size: 14px;
-  font-weight: 600;
-  padding-left: 0.8em;
-}
+/*.tableCols{*/
+/*  background-color: lavender;*/
+/*}*/
 
-.tableColResults{
-  background-color: white;
-  font-size: 10px;
-  border-bottom: solid grey 0.5px;
-  padding: 0.5em;
-  padding-left: 0;
-}
+/*.tableColName{*/
+/*  color: #1654ad;*/
+/*  font-size: 14px;*/
+/*  font-weight: 600;*/
+/*  padding-left: 0.8em;*/
+/*}*/
 
-.headerSpacing{
-  background-color: lightblue;
-  min-height: 1rem;
-  padding-bottom: 0;
-  margin-bottom: -1px;
-}
+/*.tableColResults{*/
+/*  background-color: white;*/
+/*  font-size: 10px;*/
+/*  border-bottom: solid grey 0.5px;*/
+/*  padding: 0.5em;*/
+/*  padding-left: 0;*/
+/*}*/
 
-.criteriaText{
-  font-size: 12px;
-  font-weight: 500;
-}
+/*.headerSpacing{*/
+/*  background-color: lightblue;*/
+/*  min-height: 1rem;*/
+/*  padding-bottom: 0;*/
+/*  margin-bottom: -1px;*/
+/*}*/
 
-.criteriaTable{
-  width: 60%;
-  padding: 2rem;
-  margin: 1.5rem;
-}
+/*.criteriaText{*/
+/*  font-size: 12px;*/
+/*  font-weight: 500;*/
+/*}*/
 
-input{
-  font-size: 12px;
-}
+/*.criteriaTable{*/
+/*  width: 60%;*/
+/*  padding: 2rem;*/
+/*  margin: 1.5rem;*/
+/*}*/
 
-.dropdownResize{
-  width: 100%;
-  max-width: 400px;
-}
+/*input{*/
+/*  font-size: 12px;*/
+/*}*/
 
-option{
-  font-size: 11px;
-}
+/*.dropdownResize{*/
+/*  width: 100%;*/
+/*  max-width: 400px;*/
+/*}*/
 
-.searchText{
-  font-size: 12px;
-}
+/*option{*/
+/*  font-size: 11px;*/
+/*}*/
 
-.buttonLinks{
-  background:none!important;
-  color:inherit;
-  border:none;
-  padding:0!important;
-  font: inherit;
-  /*border is optional*/
-  border-bottom:1px solid #444;
-  cursor: pointer;
-  font-size: 12px;
-}
+/*.searchText{*/
+/*  font-size: 12px;*/
+/*}*/
 
-.resultFormat{
-  padding-left: 1em;
-}
+/*.buttonLinks{*/
+/*  background:none!important;*/
+/*  color:inherit;*/
+/*  border:none;*/
+/*  padding:0!important;*/
+/*  font: inherit;*/
+/*  !*border is optional*!*/
+/*  border-bottom:1px solid #444;*/
+/*  cursor: pointer;*/
+/*  font-size: 12px;*/
+/*}*/
 
-.resultTableName{
-  font-size: 16px;
-  color: white;
-  padding: 0.5em;
-  font-weight: 600;
-}
+/*.resultFormat{*/
+/*  padding-left: 1em;*/
+/*}*/
 
-.warningText{
-  font-size: 12px;
-  color: red;
-}
+/*.resultTableName{*/
+/*  font-size: 16px;*/
+/*  color: white;*/
+/*  padding: 0.5em;*/
+/*  font-weight: 600;*/
+/*}*/
 
-.colorcodeRequired{
-  color:red;
-  font-weight: 700;
-  font-size: 12px;
-}
+/*.warningText{*/
+/*  font-size: 12px;*/
+/*  color: red;*/
+/*}*/
 
-.form-control-label{
-  font-size: 15px;
-  font-weight: 400;
-}
+/*.colorcodeRequired{*/
+/*  color:red;*/
+/*  font-weight: 700;*/
+/*  font-size: 12px;*/
+/*}*/
 
-.warningMsg{
-  font-size: 14px;
-  font-weight: 500;
-}
+/*.form-control-label{*/
+/*  font-size: 15px;*/
+/*  font-weight: 400;*/
+/*}*/
 
-.searchResult{
-  font-size: 12px;
-}
+/*.warningMsg{*/
+/*  font-size: 14px;*/
+/*  font-weight: 500;*/
+/*}*/
 
-.optionPlaceholder{
-  font-size: 11.5px;
-}
+/*.searchResult{*/
+/*  font-size: 12px;*/
+/*}*/
 
-.tp-radio-group {
-  display: flex;
-  flex-direction: row;
-}
-.tp-radio-button {
-  margin-right: 10px;
-}
+/*.optionPlaceholder{*/
+/*  font-size: 11.5px;*/
+/*}*/
 
-textarea{
-  font-size: 11.5px;
-}
+/*.tp-radio-group {*/
+/*  display: flex;*/
+/*  flex-direction: row;*/
+/*}*/
+/*.tp-radio-button {*/
+/*  margin-right: 10px;*/
+/*}*/
 
-td, th {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
-  font-size: small;
-}
+/*textarea{*/
+/*  font-size: 11.5px;*/
+/*}*/
 
-tr:nth-child(even){
-  background-color: #dddddd;
-}
+/*td, th {*/
+/*  border: 1px solid #ddd;*/
+/*  padding: 10px;*/
+/*  text-align: left;*/
+/*  font-size: small;*/
+/*}*/
 
-tr:hover {
-  background-color: rgba(124, 122, 122, 0.774);
-}
+/*tr:nth-child(even){*/
+/*  background-color: #dddddd;*/
+/*}*/
 
-th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: center;
-  background-color: blue;
-  color: white;
-}
+/*tr:hover {*/
+/*  background-color: rgba(124, 122, 122, 0.774);*/
+/*}*/
 
-td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type{
-  padding: 10px;
-}
+/*th {*/
+/*  padding-top: 12px;*/
+/*  padding-bottom: 12px;*/
+/*  text-align: center;*/
+/*  background-color: blue;*/
+/*  color: white;*/
+/*}*/
 
-td.mat-cell, td.mat-footer-cell, th.mat-header-cell{
-  padding: 10px;
-}
+/*td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type{*/
+/*  padding: 10px;*/
+/*}*/
 
-.cdk-overlay-connected-position-bounding-box{
-  width: 30px;
-  text-align: right;
-}
+/*td.mat-cell, td.mat-footer-cell, th.mat-header-cell{*/
+/*  padding: 10px;*/
+/*}*/
 
-::ng-deep .mat-select-panel .mat-optgroup-label, .mat-select-panel .mat-option{
-  width: 30px;
-  text-align: right;
-}
+/*.cdk-overlay-connected-position-bounding-box{*/
+/*  width: 30px;*/
+/*  text-align: right;*/
+/*}*/
 
-.row-selected {
-  background-color: rgba(124, 122, 122, 0.774) !important;
-}
+/*::ng-deep .mat-select-panel .mat-optgroup-label, .mat-select-panel .mat-option{*/
+/*  width: 30px;*/
+/*  text-align: right;*/
+/*}*/
+
+/*.row-selected {*/
+/*  background-color: rgba(124, 122, 122, 0.774) !important;*/
+/*}*/

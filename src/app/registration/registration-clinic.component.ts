@@ -9,6 +9,7 @@ import { RegistrationClinic } from '../shared/modals/registration-clinic.model';
 import { CommonService } from '../shared/services/common.service';
 import { RegistrationService } from '../shared/services/registration.service';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { faPlus, faMinus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'ic-registration-clinic',
@@ -16,6 +17,9 @@ import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
     // styleUrls: ['registration.component.css']
 })
 export class RegistrationClinicComponent implements OnInit {
+    faPlus = faPlus;
+    faMinus = faMinus;
+    faTimes = faTimes;
     registrationClinic: RegistrationClinic;
     name: any;
     addr: any;
@@ -70,10 +74,17 @@ export class RegistrationClinicComponent implements OnInit {
         {id: "6", value: "Saturday"},
         {id: "7", value: "Sunday"}
     ];
+
+  occupationList: Array<object> = [
+    {id: 'D', value: 'Doctor'},
+    {id: 'S', value: 'Nurse'},
+    {id: 'A', value: 'Admin'}
+  ];
     
     constructor(private router: Router, private RegistrationService: RegistrationService, private commonService: CommonService, private fb: FormBuilder) {
         this.registrationClinic = new RegistrationClinic();
         this.errorFlag = false;
+        this.occupation ='';
     }
 
     loadAll() {}
@@ -89,6 +100,7 @@ export class RegistrationClinicComponent implements OnInit {
       ).subscribe(() => this.successMessage = '');
 
       this._error.subscribe((message) => this.errorMessage = message);
+      this.addOpeningHour();
       this.addBranch();
     }
 
@@ -223,7 +235,7 @@ export class RegistrationClinicComponent implements OnInit {
 
     onCancel() {
       console.log("registration on cancelling, go back home page");
-      this.router.navigate(['/']);
+      this.router.navigate(['/staff-login']);
     }
 
     onClear(){

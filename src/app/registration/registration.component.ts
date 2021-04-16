@@ -159,7 +159,7 @@ export class RegistrationComponent implements OnInit {
 
     onCancel() {
         console.log("registration on cancelling, go back home page");
-        this.router.navigate(['/']);
+        this.router.navigate(['/patient-login']);
     }
 
     onClear(){
