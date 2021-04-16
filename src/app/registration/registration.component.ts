@@ -15,15 +15,15 @@ import {GlobalConstants} from "../shared/global-constants";
 })
 export class RegistrationComponent implements OnInit {
     registration: Registration;
-    name: any;
-    uin:any;
-    addr: any;
-    postal: any;
-    email: any;
-    password: any;
-    confirmPassword: any;
-    contactNo: any;
-    drugAllergy: any;
+    fname: any;
+    uinf:any;
+    addrf: any;
+    postalf: any;
+    emailf: any;
+    passwordf: any;
+    confirmPasswordf: any;
+    contactNof: any;
+    drugAllergyf: any;
 
     private signUpStatus: string | Object | null | string;
     private _success = new Subject<string>();
@@ -61,26 +61,26 @@ export class RegistrationComponent implements OnInit {
 
     onSignUp(editForm: NgForm){
         console.log("here at registration, start");
-        if (this.name !== null && this.name !== '' && this.name !== undefined &&
+        if (this.fname !== null && this.fname !== '' && this.fname !== undefined &&
             // this.uin !== null && this.uin !== '' && this.uin !== undefined &&
             // this.addr !== null && this.addr !== '' && this.addr !== undefined &&
             // this.postal !== null && this.postal !== '' && this.postal !== undefined &&
-            this.email !== null && this.email !== '' && this.email !== undefined &&
-            this.contactNo !== null && this.contactNo !== '' && this.contactNo !== undefined &&
+            this.emailf !== null && this.emailf !== '' && this.emailf !== undefined &&
+            this.contactNof !== null && this.contactNof !== '' && this.contactNof!== undefined &&
             // this.drugAllergy !== null && this.drugAllergy !== '' && this.drugAllergy !== undefined &&
-            this.password !== null && this.password !== '' && this.password !== undefined &&
-            this.confirmPassword !== null && this.confirmPassword !== '' && this.confirmPassword !== undefined 
+            this.passwordf !== null && this.passwordf !== '' && this.passwordf !== undefined &&
+            this.confirmPasswordf !== null && this.confirmPasswordf !== '' && this.confirmPasswordf !== undefined 
         ) { 
             this.checkPassword();
             console.log(" sf 8");
             if (this.errorFlag === false) {
-                this.registration.name = this.name;
-                this.registration.uin = this.uin;
-                this.registration.addr = this.addr;
-                this.registration.postal = this.postal;
-                this.registration.email = this.email;
-                this.registration.contactNo = this.contactNo;
-                this.registration.drugAllergy = this.drugAllergy;
+                this.registration.name = this.fname;
+                this.registration.uin = this.uinf;
+                this.registration.addr = this.addrf;
+                this.registration.postal = this.postalf;
+                this.registration.email = this.emailf;
+                this.registration.contactNo = this.contactNof;
+                this.registration.drugAllergy = this.drugAllergyf;
                 console.log(" sf 10");
                 console.log("this.registration is : " + this.registration);
                 this.RegistrationService.customerSignUp(this.registration).subscribe(
@@ -111,15 +111,21 @@ export class RegistrationComponent implements OnInit {
         
     }
 
+    // formCheck(editForm: NgForm) {
+    //     if (editForm.status === 'INVALID') {
+
+    //     }
+    // }
+
     checkPassword() {
         // check if password input is correct
-        console.log("this.password is : " + this.password);
-        console.log("this.cmfpassword is : " + this.confirmPassword);
-        if (this.password === this.confirmPassword) {
-            this.registration.password = this.password;
+        console.log("this.password is : " + this.passwordf);
+        console.log("this.cmfpassword is : " + this.confirmPasswordf);
+        if (this.passwordf === this.confirmPasswordf) {
+            this.registration.password = this.passwordf;
             this.errorFlag = false;
             console.log(" sf 5");
-        } else if (this.password != this.confirmPassword) {
+        } else if (this.passwordf != this.confirmPasswordf) {
             this._error.next("Passwords input are different. Please ensure both passwords are exactly the same.");
             this.errorFlag = true;
             console.log(" sf 7");
@@ -132,23 +138,23 @@ export class RegistrationComponent implements OnInit {
 
     checkRequiredFields() {
         console.log("checking if required fields are filled up");
-        if (this.name === null || this.name === '' || this.name === undefined) {
+        if (this.fname === null || this.fname === '' || this.fname === undefined) {
             this._error.next("Please enter all required fields marked with '*'.");
             console.log(" sf 1");
         }
-        if (this.contactNo === null || this.contactNo === '' ||  this.contactNo === undefined) {
+        if (this.contactNof === null || this.contactNof === '' ||  this.contactNof === undefined) {
             this._error.next("Please enter all required fields marked with '*'.");
             console.log(" sf 2");
         }
-        if (this.email === null || this.email === '' || this.email === undefined) {
+        if (this.emailf === null || this.emailf === '' || this.emailf === undefined) {
             this._error.next("Please enter all required fields marked with '*'.");
             console.log(" sf 3");
         }
-        if (this.password === null || this.password === '' || this.password === undefined) {
+        if (this.passwordf === null || this.passwordf === '' || this.passwordf === undefined) {
             this._error.next("Please enter all required fields marked with '*'.");
             console.log(" sf 4");
         }
-        if (this.confirmPassword === null || this.confirmPassword === '' || this.confirmPassword === undefined) {
+        if (this.confirmPasswordf === null || this.confirmPasswordf === '' || this.confirmPasswordf === undefined) {
             this._error.next("Please enter all required fields marked with '*'.");
             console.log(" sf 5");
         }
@@ -164,14 +170,14 @@ export class RegistrationComponent implements OnInit {
 
     onClear(){
         console.log("registration on clearing");
-        this.name = null;
-        this.uin = null;
-        this.addr = null;
-        this.postal = null;
-        this.email = null;
-        this.password = null;
-        this.confirmPassword = null;
-        this.contactNo = null;
-        this.drugAllergy = null;
+        this.fname = null;
+        this.uinf = null;
+        this.addrf = null;
+        this.postalf = null;
+        this.emailf = null;
+        this.passwordf= null;
+        this.confirmPasswordf = null;
+        this.contactNof = null;
+        this.drugAllergyf = null;
     }
 }

@@ -6,66 +6,158 @@
             <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
             <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
         </div>
+        <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                class="alert alert-danger">
+
+            <div *ngIf="name.errors.required">
+                Full Name is required.
+            </div>           
+            <div *ngIf="name.errors.pattern">
+                Full Name cannot contain invalid characters.
+            </div>
+        </div>
+        <div *ngIf="contactNo.invalid && (contactNo.dirty || contactNo.touched)"
+        class="alert alert-danger">
+            <div *ngIf="contactNo.errors.required">
+                Contact No is required.
+            </div>           
+            <div *ngIf="contactNo.errors.pattern">
+                Only numeric numbers are allowed for Contact No. 
+            </div>
+            <div *ngIf="contactNo.errors.minlength || contactNo.errors.maxlength">
+                Contact No has a minlength of 8.
+            </div> 
+        </div>
+        <div *ngIf="uin.invalid && (uin.dirty || uin.touched)"
+                class="alert alert-danger">
+
+            <div *ngIf="uin.errors.required">
+                NRIC is required.
+            </div>           
+            <div *ngIf="uin.errors.pattern">
+                NRIC cannot contain invalid characters.
+            </div>
+            <div *ngIf="uin.errors.minlength || uin.errors.maxlength">
+                NRIC has a minlength of 9.
+            </div> 
+        </div>
+        <div *ngIf="addr.invalid && (addr.dirty || addr.touched)"
+                class="alert alert-danger">           
+            <div *ngIf="addr.errors.pattern">
+                Address cannot contain invalid characters.
+            </div>         
+        </div>
+        <div *ngIf="postal.invalid && (postal.dirty || postal.touched)"
+                class="alert alert-danger">                  
+            <div *ngIf="postal.errors.pattern">
+               Only numeric numbers are allowed for Postal Code. 
+            </div>
+            <div *ngIf="postal.errors.minlength || postal.errors.maxlength">
+                Postal Code is invalid.
+            </div> 
+        </div>
+         <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                class="alert alert-danger">                  
+            <div *ngIf="email.errors.pattern">
+                Email cannot contain invalid characters.
+            </div>
+            <div *ngIf="email.errors.required">
+                Email is required.
+            </div>
+        </div>
+        <div *ngIf="drugAllergy.invalid && (drugAllergy.dirty || drugAllergy.touched)"
+            class="alert alert-danger">                  
+            <div *ngIf="drugAllergy.errors.pattern">
+                Drug Allergy cannot contain invalid characters. 
+            </div>           
+        </div>
+        <div *ngIf="password.invalid && (password.dirty || password.touched)"
+        class="alert alert-danger">
+            <div *ngIf="password.errors.required">
+                Password is required.
+            </div>           
+            <div *ngIf="password.errors.pattern">
+                Password cannot contain invalid characters.
+            </div>
+            <div *ngIf="password.errors.minlength">
+                Password has a minlength of 9.
+            </div> 
+        </div>
+        <div *ngIf="confirmpassword.invalid && (confirmpassword.dirty || confirmpassword.touched)"
+        class="alert alert-danger">
+            <div *ngIf="confirmpassword.errors.required">
+                Confirm Password is required.
+            </div>           
+            <div *ngIf="confirmpassword.errors.pattern">
+                Confirm Password cannot contain invalid characters.
+            </div>
+            <div *ngIf="confirmpassword.errors.minlength">
+                Confirm Password has a minlength of 9.
+            </div> 
+        </div>
+
+
+           
         <div class="form-group row">
             <label for="name"  class="col-sm-2 col-form-label" >Full Name:* </label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" name="name" id="name" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="name" 
+                <input type="text" class="form-control" name="name" id="name" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="fname" #name="ngModel" 
                 maxlength="66" autofocus autocomplete="off" required>
             </div>
         </div>
         <div class="form-group row">
             <label for="uin"  class="col-sm-2 col-form-label" >NRIC: </label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" name="uin" id="uin" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="uin" 
+                <input type="text" class="form-control" name="uin" id="uin" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="uinf" #uin="ngModel"
                 maxlength="9" autofocus autocomplete="off">
             </div>
         </div>
         <div class="form-group row">
             <label for="contactNo"  class="col-sm-2 col-form-label" >Contact No:* </label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" name="contactNo" id="contactNo" class="uppercase" pattern="^[0-9-/]*$" minlength="9"  [(ngModel)]="contactNo" 
-                maxlength="9" autofocus autocomplete="off" required>
+                <input type="text" class="form-control" name="contactNo" id="contactNo" class="uppercase" pattern="^[0-9]*$" minlength="8"  [(ngModel)]="contactNof" #contactNo="ngModel"
+                maxlength="8" autofocus autocomplete="off" required>
             </div>
         </div>
         <div class="form-group row">
             <label for="addr"  class="col-sm-2 col-form-label" >Address: </label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" name="addr" id="addr" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="addr" 
+                <input type="text" class="form-control" name="addr" id="addr" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="addrf" #addr="ngModel"
                 maxlength="99" autofocus autocomplete="off">
             </div>
         </div>
         <div class="form-group row">
             <label for="postal"  class="col-sm-2 col-form-label" >Postal Code: </label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" name="postal" id="postal" class="uppercase" pattern="^[0-9-/]*$" minlength="6"  [(ngModel)]="postal" 
+                <input type="text" class="form-control" name="postal" id="postal" class="uppercase" pattern="^[0-9]*$" minlength="6"  [(ngModel)]="postalf" #postal="ngModel"
                 maxlength="6" autofocus autocomplete="off">
             </div>
         </div>
         <div class="form-group row">
             <label for="email"  class="col-sm-2 col-form-label" >Email:* </label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" name="email" id="email" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="email" 
+                <input type="text" class="form-control" name="email" id="email" class="uppercase" pattern="^[a-zA-Z0-9-@.]*$" minlength="1"  [(ngModel)]="emailf" #email="ngModel"
                 maxlength="66" autofocus autocomplete="off" required>
             </div>
         </div>
         <div class="form-group row">
             <label for="drugAllergy"  class="col-sm-2 col-form-label" >Drug Allergies: </label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" name="drugAllergy" id="drugAllergy" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="drugAllergy" 
+                <input type="text" class="form-control" name="drugAllergy" id="drugAllergy" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="drugAllergyf" #drugAllergy="ngModel"
                 maxlength="99" autofocus autocomplete="off">
             </div>
         </div>
         <div class="form-group row">
             <label for="password"  class="col-sm-2 col-form-label" >Password:* </label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" name="password" id="password" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="password" 
+                <input type="text" class="form-control" name="password" id="password" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="passwordf" #password="ngModel"
                 maxlength="32" autofocus autocomplete="off" required>
             </div>
         </div>
         <div class="form-group row">
             <label for="confirmpassword"  class="col-sm-2 col-form-label" >Confirm Password:* </label>
             <div class="col-sm-5">
-                <input type="text" class="form-control"  name="confirmpassword" id="confirmpassword" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="confirmPassword" 
+                <input type="text" class="form-control"  name="confirmpassword" id="confirmpassword" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="confirmPasswordf" #confirmpassword="ngModel"
                 maxlength="32" autofocus autocomplete="off" required>
             </div>
         </div>

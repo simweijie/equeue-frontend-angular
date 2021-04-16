@@ -229,7 +229,9 @@ export class RegistrationClinicComponent implements OnInit {
     onClear(){
       console.log("registration on clearing");
       this.clinicName = null;
+      this.branchName = null;
       this.branchTelephone = null;
+      this.pCode = null;
       this.clinicAddr = null;
       this.name = null;
       this.addr = null;
@@ -239,6 +241,7 @@ export class RegistrationClinicComponent implements OnInit {
       this.confirmPassword = null;
       this.contactNo = null;
       this.occupation = null;
+      this.clinicOpeningHours.clear();
     }
 
     enableProceed(e: any) {

@@ -28,15 +28,15 @@
             <div class="form-group row">
               <label for="branchTelephone" class="col-sm-2 col-form-label" >Branch Telephone No.:* </label>
               <div class="col-sm-5">
-                <input type="text" formControlName="branchTele" class="form-control" name="branchTelephone" id="branchTelephone" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="branchTelephone"
-                       maxlength="18" autofocus autocomplete="off" required>
+                <input type="text" formControlName="branchTele" class="form-control" name="branchTelephone" id="branchTelephone" class="uppercase" pattern="^[0-9]*$" minlength="8"  [(ngModel)]="branchTelephone"
+                       maxlength="8" autofocus autocomplete="off" required>
               </div>
             </div>
             <div class="form-group row">
               <label for="pCode" class="col-sm-2 col-form-label" >Postal Code:* </label>
               <div class="col-sm-5">
-                <input type="text" formControlName="branchPcode" class="form-control" name="pCode" id="pCode" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="pCode"
-                       maxlength="99" autofocus autocomplete="off">
+                <input type="text" formControlName="branchPcode" class="form-control" name="pCode" id="pCode" class="uppercase" pattern="^[0-9]*$" minlength="6"  [(ngModel)]="pCode"
+                       maxlength="6" autofocus autocomplete="off">
               </div>
             </div>
             <div class="form-group row">
@@ -102,8 +102,8 @@
     <div class="form-group row">
       <label for="contactNo"  class="col-sm-2 col-form-label" >Contact No:* </label>
       <div class="col-sm-5">
-        <input type="text" class="form-control" name="contactNo" id="contactNo" class="uppercase" pattern="^[0-9-/]*$" minlength="9"  [(ngModel)]="contactNo"
-               maxlength="9" autofocus autocomplete="off" required>
+        <input type="text" class="form-control" name="contactNo" id="contactNo" class="uppercase" pattern="^[0-9]*$" minlength="8"  [(ngModel)]="contactNo"
+               maxlength="8" autofocus autocomplete="off" required>
       </div>
     </div>
     <div class="form-group row">
@@ -116,7 +116,7 @@
     <div class="form-group row">
       <label for="postal"  class="col-sm-2 col-form-label" >Postal Code:* </label>
       <div class="col-sm-5">
-        <input type="text" class="form-control" name="postal" id="postal" class="uppercase" pattern="^[0-9-/]*$" minlength="6"  [(ngModel)]="postal"
+        <input type="text" class="form-control" name="postal" id="postal" class="uppercase" pattern="^[0-9]*$" minlength="6"  [(ngModel)]="postal"
                maxlength="6" autofocus autocomplete="off">
       </div>
     </div>
