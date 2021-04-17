@@ -89,7 +89,8 @@ export class PatientLoginComponent implements OnInit {
   }
 
   loginFunction() {
-    if (this.username !== '' && this.password !== '') {
+    if (this.username !== null && this.username !== '' && this.username !== undefined &&
+      this.password !== null && this.password !== '' && this.password !== undefined) {
       this.patientLoginService.loginFunction({username: this.username, password: this.password}).subscribe(
         data => {
           if (data !== 'ERROR') {
@@ -97,9 +98,9 @@ export class PatientLoginComponent implements OnInit {
             // @ts-ignore
             this.loginInfo = data;
             if (this.loginInfo.id !== null) {
+              GlobalConstants.login = this.loginInfo;
               if (this.clinicId !== null || this.clinicId !== '') {
                 GlobalConstants.clinicId = this.clinicId;
-                GlobalConstants.login = this.loginInfo;
                 this.router.navigate(['/patient-view-details']);
               } else {
                 this.router.navigate(['/patient-view-details']);

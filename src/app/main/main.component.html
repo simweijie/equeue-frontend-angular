@@ -2,7 +2,7 @@
 <br>
 <mat-drawer-container class="example-container" autosize>
   <mat-drawer #drawer class="example-sidenav" mode="side">
-    <div *ngIf="job==='P'">
+    <div *ngIf="login.job===null || login.job === undefined || login.job === ''">
       <div class="row-cols-3">
         <a routerLink="/smart-search-member" routerLinkActive="active">Home</a>
       </div>
@@ -16,15 +16,12 @@
         <a routerLink="" routerLinkActive="active">Update Information</a>
       </div>
     </div>
-    <div *ngIf="job==='S'">
+    <div *ngIf="login.job==='S' || login.job==='D'">
       <div class="row-cols-3">
         <a routerLink="/patient-queue" routerLinkActive="active">View Queue</a>
       </div>
     </div>
-    <div *ngIf="job==='D'">
-      <div class="row-cols-3">
-        <a routerLink="/patient-queue" routerLinkActive="active">View Queue</a>
-      </div>
+    <div *ngIf="login.isAdmin==='Y'">
       <div class="row-cols-3">
         <a routerLink="/staff-info" routerLinkActive="active">Staff Information</a>
       </div>
@@ -32,11 +29,11 @@
   </mat-drawer>
 
   <div class="example-sidenav-content">
-    <button type="button" mat-button class="btn-primary" style="height: 25px; width: 25px" (click)="drawer.toggle()" *ngIf="job!==null && job!==undefined && job!==''"><i class="pi pi-bars"></i></button>
+    <button type="button" mat-button class="btn-primary" style="height: 25px; width: 25px" (click)="drawer.toggle()" *ngIf="login.id!==null && login.id!==undefined && login.id!==''"><i class="pi pi-bars"></i></button>
 <!--    <button type="button" mat-button class="btn-primary" style="height: 25px; width: 25px" (click)="drawer.toggle()"><i class="pi pi-bars"></i></button>-->
     <div class="container">
       <div class="card" style="align-content: center; border-style: none ;">
-        <router-outlet><button type="button" class="btn-primary refresh" style="min-width: 20px; min-height: 20px;" (click)="logout()" *ngIf="job!==null && job!==undefined && job!==''">Logout</button>&nbsp;
+        <router-outlet><button type="button" class="btn-primary refresh" style="min-width: 20px; min-height: 20px;" (click)="logout()" *ngIf="login.id!==null && login.id!==undefined && login.id!==''">Logout</button>&nbsp;
 
         </router-outlet>
       </div>

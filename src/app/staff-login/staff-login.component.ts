@@ -6,6 +6,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { StaffLoginService } from '../shared/services/staff-login.service';
+import {Login} from '../shared/modals/login.modal';
+import {GlobalConstants} from "../shared/global-constants";
 
 @Component({
     selector: 'ic-staff-login',
@@ -18,7 +20,7 @@ export class StaffLoginComponent implements OnInit {
     contactNo: any;
     adminId: string | null;
 
-    private loginStatus: string | Object | null | string;
+    private loginInfo: Login;
     private forgotCredentialsStatus: string | Object | null | string;
     private _success = new Subject<string>();
     private _error = new Subject<string>();
@@ -28,7 +30,9 @@ export class StaffLoginComponent implements OnInit {
     modalForgotRef: BsModalRef;
     @ViewChild('forgotModal') modalForgot: TemplateRef<any>;
     
-    constructor(private router: Router, private staffLoginService: StaffLoginService, private modalService: BsModalService) {}
+    constructor(private router: Router, private staffLoginService: StaffLoginService, private modalService: BsModalService) {
+      this.loginInfo = new Login();
+    }
 
     loadAll() {}
 
@@ -51,14 +55,16 @@ export class StaffLoginComponent implements OnInit {
             this.staffLoginService.staffLogin({username: this.username, password:this.password}).subscribe(
                 data => {
                 console.log(data);
-                this.loginStatus = data;
-                if (this.loginStatus === 'Success') {
+                // @ts-ignore
+                this.loginInfo = data;
+                if (this.loginInfo.id !== null) {
                     console.log(" sf 11");
+                    GlobalConstants.login = this.loginInfo;
                     if (this.adminId !== null || this.adminId !== '') {
-                        this.router.navigate(['/staff-info', { adminId: this.adminId }]);
-                      } else {
-                        this.router.navigate(['/staff-info/:adminId']);
-                      }
+                        this.router.navigate(['/staff-info']);
+                    } else {
+                      this.router.navigate(['/staff-info']);
+                    }
                 } else {
                     this._error.next(`Incorrect Username or Password!`);
                     console.log(" sf 12");

@@ -219,7 +219,7 @@ export class RegistrationStaffComponent implements OnInit {
 
     onCancel() {
         console.log("registration on cancelling, go back home page");
-        this.router.navigate(['/staff-login']);;
+        this.router.navigate(['/staff-login']);
     }
 
     onClear(){

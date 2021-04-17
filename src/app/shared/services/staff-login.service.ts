@@ -35,7 +35,7 @@ export class StaffLoginService {
     console.log('req: ');
     console.log(req);
 
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/staffLogin', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
+    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/staff-login', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
       response => {
         if (response.status === 200) {
           console.log('response is 200');

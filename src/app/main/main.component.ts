@@ -12,16 +12,19 @@ import {CommonService} from '../shared/services/common.service';
     templateUrl: './main.component.html'
 })
 export class MainComponent implements OnInit, AfterViewInit {
-  showFiller = false;
-  job: string | undefined;
-  private login: Login;
-  private username: string | undefined;
+  // showFiller = false;
+  // job: string | undefined;
+  login: Login;
+  // private username: string | undefined;
+  // private isAdmin: string | undefined;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private commonService: CommonService
-  ) { }
+  ) {
+    this.login = new Login();
+  }
 
   ngOnInit() {
     this.getInfo();
@@ -38,13 +41,6 @@ export class MainComponent implements OnInit, AfterViewInit {
     // GlobalConstants.job = this.activatedRoute.snapshot.paramMap.get('job');
     console.log('getInfo - job:');
     this.login = GlobalConstants.login;
-    if (this.login !== null) {
-      this.job = this.login.job;
-    }
-    console.log(this.job);
-    this.username = GlobalConstants.login.username;
-    console.log('getInfo - username:');
-    console.log(this.username);
   }
 
 
@@ -58,8 +54,21 @@ export class MainComponent implements OnInit, AfterViewInit {
   //     document.getElementById("myNav").style.width = "0%";
   // }
   logout() {
-    if (this.username !== '') {
-      this.commonService.logout({username: this.username}).subscribe(
+    if (this.login.id !== '') {
+      if (this.login.job !== null || this.login.job !== undefined || this.login.job !== '')
+        this.commonService.logout({username: this.login.id}).subscribe(
+          data => {
+            console.log(data);
+            if (data === 'SUCCESS') {
+              this.router.navigate(['/']);
+            } else {
+              this.router.navigate(['/']);
+            }
+            GlobalConstants.login = new Login();
+            GlobalConstants.clinicId = null;
+          });
+    } else {
+      this.commonService.staffLogout({username: this.login.id}).subscribe(
         data => {
           console.log(data);
           if (data === 'SUCCESS') {
