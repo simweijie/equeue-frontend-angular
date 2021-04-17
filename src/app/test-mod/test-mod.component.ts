@@ -183,4 +183,13 @@ export class TestModComponent implements OnInit {
         console.log(data.data);
       });
   }
+
+  getListOfBranch() {
+    this.testModService.retrieveBranchList().subscribe(
+      data => {
+        console.log(data);
+        // @ts-ignore
+        console.log(data.data);
+      });
+  }
 }

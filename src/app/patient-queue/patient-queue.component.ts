@@ -37,20 +37,21 @@ export class PatientQueueComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
-  sampleData: Array<IPatientQueue> = [
-    {id: '1', status: 'Q', queueNumber: '31', customerId: '28', branchId: '1', customerName: 'customer1', customerContactNo: '12345678'},
-    {id: '2', status: 'Q', queueNumber: '32', customerId: '29', branchId: '1', customerName: 'customer2', customerContactNo: '12345678'},
-    {id: '3', status: 'D', queueNumber: '33', customerId: '30', branchId: '1', customerName: 'customer3', customerContactNo: '12345678'},
-    {id: '4', status: 'D', queueNumber: '34', customerId: '31', branchId: '1', customerName: 'customer4', customerContactNo: '12345678'},
-    {id: '5', status: 'P', queueNumber: '35', customerId: '32', branchId: '1', customerName: 'customer5', customerContactNo: '12345678'},
-    {id: '6', status: 'P', queueNumber: '36', customerId: '33', branchId: '1', customerName: 'customer6', customerContactNo: '12345678'},
-    {id: '7', status: 'C', queueNumber: '37', customerId: '34', branchId: '1', customerName: 'customer7', customerContactNo: '12345678'},
-    {id: '8', status: 'C', queueNumber: '38', customerId: '35', branchId: '1', customerName: 'customer8', customerContactNo: '12345678'},
-    {id: '9', status: 'R', queueNumber: '39', customerId: '36', branchId: '1', customerName: 'customer9', customerContactNo: '12345678'},
-    {id: '10', status: 'R', queueNumber: '40', customerId: '37', branchId: '1', customerName: 'customer10', customerContactNo: '12345678'},
-    {id: '11', status: 'M', queueNumber: '41', customerId: '38', branchId: '1', customerName: 'customer11', customerContactNo: '12345678'},
-    {id: '12', status: 'M', queueNumber: '42', customerId: '39', branchId: '1', customerName: 'customer12', customerContactNo: '12345678'}
-  ];
+  sampleData: any;
+  // sampleData: Array<IPatientQueue> = [
+  //   {id: '1', status: 'Q', queueNumber: '31', customerId: '28', branchId: '1', customerName: 'customer1', customerContactNo: '12345678'},
+  //   {id: '2', status: 'Q', queueNumber: '32', customerId: '29', branchId: '1', customerName: 'customer2', customerContactNo: '12345678'},
+  //   {id: '3', status: 'D', queueNumber: '33', customerId: '30', branchId: '1', customerName: 'customer3', customerContactNo: '12345678'},
+  //   {id: '4', status: 'D', queueNumber: '34', customerId: '31', branchId: '1', customerName: 'customer4', customerContactNo: '12345678'},
+  //   {id: '5', status: 'P', queueNumber: '35', customerId: '32', branchId: '1', customerName: 'customer5', customerContactNo: '12345678'},
+  //   {id: '6', status: 'P', queueNumber: '36', customerId: '33', branchId: '1', customerName: 'customer6', customerContactNo: '12345678'},
+  //   {id: '7', status: 'C', queueNumber: '37', customerId: '34', branchId: '1', customerName: 'customer7', customerContactNo: '12345678'},
+  //   {id: '8', status: 'C', queueNumber: '38', customerId: '35', branchId: '1', customerName: 'customer8', customerContactNo: '12345678'},
+  //   {id: '9', status: 'R', queueNumber: '39', customerId: '36', branchId: '1', customerName: 'customer9', customerContactNo: '12345678'},
+  //   {id: '10', status: 'R', queueNumber: '40', customerId: '37', branchId: '1', customerName: 'customer10', customerContactNo: '12345678'},
+  //   {id: '11', status: 'M', queueNumber: '41', customerId: '38', branchId: '1', customerName: 'customer11', customerContactNo: '12345678'},
+  //   {id: '12', status: 'M', queueNumber: '42', customerId: '39', branchId: '1', customerName: 'customer12', customerContactNo: '12345678'}
+  // ];
 
   queueData: Array<object> = [];
   conData: Array<object> = [];
@@ -116,7 +117,7 @@ export class PatientQueueComponent implements OnInit {
         this.mpData = [];
         this.missData = [];
         // @ts-ignore
-        this.sampleData = data;
+        this.sampleData = data.data;
         for (var item of this.sampleData){
           if (item.status === 'Q') {
             this.queueData.push(item);

@@ -9,10 +9,6 @@ import {of} from 'rxjs';
 export class StaffInfoService {
   httpOptions: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials': 'true',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
     'x-api-key': 'Pbo1e5P62c9YPYYbmyT8a703Fst9Eb4YaGipoMRd'
   });
   constructor(private http: HttpClient) { }

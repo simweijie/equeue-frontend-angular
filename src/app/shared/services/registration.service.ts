@@ -9,10 +9,6 @@ import {of} from 'rxjs';
 export class RegistrationService {
   httpOptions: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials': 'true',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
     'x-api-key': 'Pbo1e5P62c9YPYYbmyT8a703Fst9Eb4YaGipoMRd'
   });
   constructor(private http: HttpClient) { }
@@ -21,7 +17,7 @@ export class RegistrationService {
     console.log('req: ');
     console.log(req);
 
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/registerCustomer', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
+    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/register-customer', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
       response => {
         if (response.status === 200) {
           console.log('response is 200');
@@ -38,7 +34,7 @@ export class RegistrationService {
     console.log('req: ');
     console.log(req);
 
-    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/registerStaffToExistingClinic', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
+    return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/register-staff-to-existing-clinic', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
       response => {
         if (response.status === 200) {
           console.log('response is 200');
@@ -56,7 +52,7 @@ export class RegistrationService {
       console.log('req: ');
       console.log(req);
 
-      return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/registerStaffToNewClinic', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
+      return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/register-staff-to-new-clinic', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
         response => {
           if (response.status === 200) {
             console.log('response is 200');
