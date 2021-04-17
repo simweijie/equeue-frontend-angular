@@ -6,6 +6,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { PatientViewDetailsService } from '../shared/services/patient-view-details.service';
+import {GlobalConstants} from "../shared/global-constants";
 
 @Component({
     selector: 'ic-patient-view-details',
@@ -32,6 +33,7 @@ export class PatientViewDetailsComponent implements OnInit {
 
     modalCancelQueueRef: BsModalRef;
     @ViewChild('cancelQueueModal') modalCancelQueue: TemplateRef<any>;
+    statusValue: any;
     
     constructor(
         private router: Router,
@@ -49,22 +51,29 @@ export class PatientViewDetailsComponent implements OnInit {
       ).subscribe(() => this.successMessage = '');
   
       this._error.subscribe((message) => this.errorMessage = message);
-
-        this.patientViewDetailsService.getJoinedQueueStatus().subscribe(
-            data => {
-              console.log(data);
-              if (data !== 'ERROR') {
-                this.joinedQueueStatus = data;
+      console.log('GlobalConstants.login.id' + GlobalConstants.login.id);
+      if(GlobalConstants.login.id !== null && GlobalConstants.login.id !== undefined && GlobalConstants.login.id !== '') {
+        this.patientViewDetailsService.getJoinedQueueStatus({customerId: GlobalConstants.login.id}).subscribe(
+          data => {
+            console.log(data);
+            if (data !== 'ERROR') {
+              // @ts-ignore
+              this.joinedQueueStatus = data.data;
+              console.log("this.joinedQueueStatus.currentQueueNumber : " + this.joinedQueueStatus.currentQueueNumber);
+              if(this.joinedQueueStatus.currentQueueNumber !== undefined) {
+                console.log("this.joinedQueueStatus : " + this.joinedQueueStatus);
+                this.branchIdDisplay = this.joinedQueueStatus.branchId;
+                this.clinicNameDisplay = this.joinedQueueStatus.clinicName;
+                this.branchAddressDisplay = this.joinedQueueStatus.branchAddr;
+                this.patientQueueNoDisplay = this.joinedQueueStatus.yourQueueNumber;
+                this.currentQueueNoDisplay = this.joinedQueueStatus.currentQueueNumber;
+                this.statusValue = this.joinedQueueStatus.status;
+              } else {
+                console.log("No pending queues");
               }
-            });
-          
-        console.log("this.joinedQueueStatus : " + this.joinedQueueStatus);
-        this.branchIdDisplay = this.joinedQueueStatus.branchId;
-        this.clinicNameDisplay = this.joinedQueueStatus.clinicName;
-        this.branchAddressDisplay = this.joinedQueueStatus.branchAddr;
-        this.patientQueueNoDisplay = this.joinedQueueStatus.yourQueueNumber;
-        this.currentQueueNoDisplay = this.joinedQueueStatus.currentQueueNumber;
-
+            }
+          });
+      }
     }
 
 

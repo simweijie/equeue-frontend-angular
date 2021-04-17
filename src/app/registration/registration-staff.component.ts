@@ -37,7 +37,7 @@ export class RegistrationStaffComponent implements OnInit {
       {id: 'A', value: 'Admin'}
     ];
 
-    private signUpStatus: string | Object | null | string;
+    private signUpStatus: any;
     private _success = new Subject<string>();
     private _error = new Subject<string>();
     successMessage: string;
@@ -108,13 +108,14 @@ export class RegistrationStaffComponent implements OnInit {
                 console.log("this.registrationStaff is : " + this.registrationStaff);
                 this.RegistrationService.registerStaffToExistingClinic(this.registrationStaff).subscribe(
                     data => {
-                    console.log(data);
+                    console.log('data: ' + data);
                     this.signUpStatus = data;
-                    if (this.signUpStatus === 'Success') {
+                    console.log('this.signUpStatus: ' + this.signUpStatus);
+                    if (this.signUpStatus === 200) {
                         this._success.next(`You are successfully registered with eQueue ` + this.registrationStaff);
                         console.log(" sf 11");
                         // routed to login page to sign in
-                        this.router.navigate(['/patient-login/:clinicId']);
+                        this.router.navigate(['/patient-login']);
                     } else {
                         this._error.next(`Unable to register with eQueue!`);
                         console.log(" sf 12");

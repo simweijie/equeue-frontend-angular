@@ -38,7 +38,7 @@ export class RegistrationService {
       response => {
         if (response.status === 200) {
           console.log('response is 200');
-          return response.body;
+          return response.status;
         } else {
           console.log('Error - ');
           console.log(response.body);

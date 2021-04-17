@@ -53,8 +53,10 @@
     </div>    -->
     <div class="text-center">
         <div><br></div>
-        <button class="button-equeue col-sm-2" type="button" name="cancelButton" (click)="onCancelQueuePopUp()" replaceUrl="true">Cancel Queue No</button>&nbsp;&nbsp;
-        <button class="button-equeue col-sm-2" type="button" name="ChangeButton" (click)="onChangeClinic()" replaceUrl="true">Change Clinic</button>
+        <button class="button-equeue col-sm-2" type="button" name="cancelButton" *ngIf="statusValue==='Q'" (click)="onCancelQueuePopUp()" replaceUrl="true">Cancel Queue No</button>&nbsp;&nbsp;
+        <button class="button-equeue col-sm-2" type="button" name="ChangeButton" *ngIf="statusValue==='Q'" (click)="onChangeClinic()" replaceUrl="true">Change Clinic</button>
+        <button class="button-equeue col-sm-2" type="button" name="cancelButton" *ngIf="statusValue==='M'" (click)="onCancelQueuePopUp()" replaceUrl="true">Rejoin Queue</button>&nbsp;&nbsp;
+        <button class="button-equeue col-sm-2" type="button" name="ChangeButton" *ngIf="statusValue==='M'" (click)="onChangeClinic()" replaceUrl="true">Leave Queue</button>
     </div>
     <!-- <div><br><br><br><br><br></div>
     <div class="col-md-12">
