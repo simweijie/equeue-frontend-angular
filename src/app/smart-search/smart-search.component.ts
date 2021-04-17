@@ -96,11 +96,9 @@ export class SmartSearchComponent implements OnInit {
       data => {
         // @ts-ignore
         console.log(data.data);
-        // @ts-ignore
-        this.mGroupList = data.data;
         if (data !== 'ERROR') {
           // @ts-ignore
-
+          this.mGroupList = data.data;
         }
       });
   }
@@ -139,7 +137,8 @@ export class SmartSearchComponent implements OnInit {
         data => {
           console.log(data);
           if (data !== null || data !== 'ERROR') {
-            this.filterList = data;
+            // @ts-ignore
+            this.filterList = data.data;
             for (let entry of this.filterList) {
               const latLong = [entry.lat, entry.long];
               let listOfMarkers = L.marker(latLong).addTo(this.mymap);
@@ -159,11 +158,12 @@ export class SmartSearchComponent implements OnInit {
     //   queueLength?: string;
     // };
     if (this.district !== undefined && this.mGroup !== undefined) {
-      this.smartSearchService.searchByDistrictOrMGroup({district: this.district, clinic: this.mGroup}).subscribe(
+      this.smartSearchService.searchByDistrictOrMGroup({clinicId: this.mGroup, district: this.district}).subscribe(
         data => {
           console.log(data);
           if (data !== null || data !== 'ERROR') {
-            this.filterList = data;
+            // @ts-ignore
+            this.filterList = data.data;
             for (let entry of this.filterList) {
               const latLong = [entry.lat, entry.long];
               let listOfMarkers = L.marker(latLong).addTo(this.mymap);

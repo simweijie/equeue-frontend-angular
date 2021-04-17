@@ -28,7 +28,7 @@ export class SmartSearchMemberComponent implements OnInit {
   mGroup: any;
   district: any;
   // pCode: any;
-  mGroupList: string | Object | null | string = [{id: '1', value: 'Happy Clinic'}];
+  mGroupList: any;
   curLat = 0;
   curLong = 0;
 
@@ -105,9 +105,11 @@ export class SmartSearchMemberComponent implements OnInit {
     // Get the medical group list
     this.commonService.retrieveClinicList().subscribe(
       data => {
-        console.log(data);
+        // @ts-ignore
+        console.log(data.data);
         if (data !== 'ERROR') {
-          this.mGroupList = data;
+          // @ts-ignore
+          this.mGroupList = data.data;
         }
       });
   }
@@ -146,7 +148,8 @@ export class SmartSearchMemberComponent implements OnInit {
         data => {
           console.log(data);
           if (data !== null || data !== 'ERROR') {
-            this.filterList = data;
+            // @ts-ignore
+            this.filterList = data.data;
             for (let entry of this.filterList) {
               const latLong = [entry.lat, entry.long];
               let listOfMarkers = L.marker(latLong).addTo(this.mymap);
@@ -170,11 +173,12 @@ export class SmartSearchMemberComponent implements OnInit {
     //   queueLength?: string;
     // };
     if (this.district !== undefined && this.mGroup !== undefined) {
-      this.smartSearchService.searchByDistrictOrMGroup({district: this.district, clinic: this.mGroup}).subscribe(
+      this.smartSearchService.searchByDistrictOrMGroup({clinicId: this.mGroup, district: this.district}).subscribe(
         data => {
           console.log(data);
           if (data !== null || data !== 'ERROR') {
-            this.filterList = data;
+            // @ts-ignore
+            this.filterList = data.data;
             for (let entry of this.filterList) {
               const latLong = [entry.lat, entry.long];
               let listOfMarkers = L.marker(latLong).addTo(this.mymap);

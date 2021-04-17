@@ -2,6 +2,7 @@ import {Component, ElementRef, Input, OnInit, Output, EventEmitter, TemplateRef,
 import {ActivatedRoute} from '@angular/router';
 import {TestModService} from '../shared/services/test-mod.service';
 import {Geolocation} from 'ol';
+import {MatTableDataSource} from "@angular/material/table";
 
 declare  const L: any;
 
@@ -173,4 +174,13 @@ export class TestModComponent implements OnInit {
   // public onMapReady(event: any) {
   //   console.log('Map Ready');
   // }
+
+  getBranchQueue() {
+    this.testModService.getBranchQueue({staffId: 1}).subscribe(
+      data => {
+        console.log(data);
+        // @ts-ignore
+        console.log(data.data);
+      });
+  }
 }

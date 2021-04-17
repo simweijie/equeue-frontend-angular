@@ -38,7 +38,7 @@
           <select class="form-control-label" style="min-width: 150px; min-height: 30px;" [(ngModel)]="mGroup" name="clinic" *ngIf="mGroupList">
             <option [ngValue]="undefined" hidden><span class="optionPlaceholder">Please Select</span></option>
             <!--                <option [ngValue]="null"></option>-->
-            <option [ngValue]="rows.id" *ngFor="let rows of mGroupList">{{rows.value}}</option>
+            <option [ngValue]="rows.id" *ngFor="let rows of mGroupList">{{rows.name}}</option>
           </select>
           &nbsp;
           <button type="button" class="button-equeue" style="min-width: 100px; max-width: 100px" (click)="searchFilter()">
