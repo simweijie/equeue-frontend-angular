@@ -127,6 +127,21 @@ export class TestModComponent implements OnInit {
     });
   }
 
+  testListOfClinic(): void {
+    // login
+    // Call the service and send to the backend
+    console.log('Inside testPost statement');
+
+    this.testModService.testListOfClinic().subscribe(data => {
+      console.log(data);
+      if (data === null || data === 'ERROR') {
+        this.output = 'Hello';
+      } else {
+        this.output = data.toString();
+      }
+    });
+  }
+
   testDelete(): void {
     // deleteOpeningHours
     // Call the service and send to the backend

@@ -21,7 +21,7 @@ export class SmartSearchComponent implements OnInit {
   mGroup: any;
   district: any;
   // pCode: any;
-  mGroupList: string | Object | null | string = [{id: '1', value: 'Happy Clinic'}];
+  mGroupList: any;
   curLat = 0;
   curLong = 0;
 
@@ -94,9 +94,13 @@ export class SmartSearchComponent implements OnInit {
     // Get the medical group list
     this.commonService.retrieveClinicList().subscribe(
       data => {
-        console.log(data);
+        // @ts-ignore
+        console.log(data.data);
+        // @ts-ignore
+        this.mGroupList = data.data;
         if (data !== 'ERROR') {
-          this.mGroupList = data;
+          // @ts-ignore
+
         }
       });
   }
