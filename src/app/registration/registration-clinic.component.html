@@ -9,19 +9,61 @@
     
     <div *ngIf="clinicNamef.invalid && (clinicNamef.dirty || clinicNamef.touched)"
     class="alert alert-danger">
-      <div *ngIf="clinicNamef.errors.required">
-          Clinic Name is required.
-      </div>           
+<!--      <div *ngIf="clinicNamef.errors.required">-->
+<!--          Clinic Name is required.-->
+<!--      </div>           -->
       <div *ngIf="clinicNamef.errors.pattern">
         Clinic Name cannot contain invalid characters.
       </div>
     </div>
+<!--    <div *ngIf="branchNamef.invalid && (branchNamef.dirty || branchNamef.touched)"-->
+<!--         class="alert alert-danger">-->
+<!--&lt;!&ndash;      <div *ngIf="branchNamef.errors.required">&ndash;&gt;-->
+<!--&lt;!&ndash;        Branch Name is required.&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--      <div *ngIf="branchNamef.errors.pattern">-->
+<!--        Branch Name cannot contain invalid characters.-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div *ngIf="branchTelephonef.invalid && (branchTelephonef.dirty || branchTelephonef.touched)"-->
+<!--         class="alert alert-danger">-->
+<!--&lt;!&ndash;      <div *ngIf="branchTelephonef.errors.required">&ndash;&gt;-->
+<!--&lt;!&ndash;        Branch Telephone No is required.&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--      <div *ngIf="branchTelephonef.errors.pattern">-->
+<!--        Only numeric numbers are allowed for Branch Telephone No.-->
+<!--      </div>-->
+<!--      <div *ngIf="branchTelephonef.errors.minlength || branchTelephonef.errors.maxlength">-->
+<!--        Branch Telephone No has a minlength of 8.-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div *ngIf="clinicAddrf.invalid && (clinicAddrf.dirty || clinicAddrf.touched)"-->
+<!--         class="alert alert-danger">-->
+<!--      <div *ngIf="clinicAddrf.errors.pattern">-->
+<!--        Clinic Address cannot contain invalid characters.-->
+<!--      </div>-->
+<!--&lt;!&ndash;      <div *ngIf="clinicAddrf.errors.required">&ndash;&gt;-->
+<!--&lt;!&ndash;        Clinic Address is required.&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--    </div>-->
+<!--    <div *ngIf="pCodef.invalid && (pCodef.dirty || pCodef.touched)"-->
+<!--         class="alert alert-danger">-->
+<!--      <div *ngIf="pCodef.errors.pattern">-->
+<!--        Only numeric numbers are allowed for Clinic Postal Code.-->
+<!--      </div>-->
+<!--      <div *ngIf="pCodef.errors.minlength || pCodef.errors.maxlength">-->
+<!--        Clinic Postal Code is invalid.-->
+<!--      </div>-->
+<!--&lt;!&ndash;      <div *ngIf="pCodef.errors.required">&ndash;&gt;-->
+<!--&lt;!&ndash;        Clinic Postal Code is required.&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--    </div>-->
     <div *ngIf="fname.invalid && (fname.dirty || fname.touched)"
     class="alert alert-danger">
 
     <div *ngIf="fname.errors.required">
         Full Name is required.
-    </div>           
+    </div>
     <div *ngIf="fname.errors.pattern">
         Full Name cannot contain invalid characters.
     </div>
@@ -30,27 +72,27 @@
     class="alert alert-danger">
         <div *ngIf="contactNo.errors.required">
             Contact No is required.
-        </div>           
+        </div>
         <div *ngIf="contactNo.errors.pattern">
-            Only numeric numbers are allowed for Contact No. 
+            Only numeric numbers are allowed for Contact No.
         </div>
         <div *ngIf="contactNo.errors.minlength || contactNo.errors.maxlength">
             Contact No has a minlength of 8.
-        </div> 
+        </div>
     </div>
     <div *ngIf="addr.invalid && (addr.dirty || addr.touched)"
-            class="alert alert-danger">           
+            class="alert alert-danger">
         <div *ngIf="addr.errors.pattern">
             Address cannot contain invalid characters.
-        </div> 
+        </div>
     <div *ngIf="addr.errors.required">
             Address is required.
-        </div>        
+        </div>
     </div>
     <div *ngIf="postal.invalid && (postal.dirty || postal.touched)"
-            class="alert alert-danger">                  
+            class="alert alert-danger">
         <div *ngIf="postal.errors.pattern">
-        Only numeric numbers are allowed for Postal Code. 
+        Only numeric numbers are allowed for Postal Code.
         </div>
         <div *ngIf="postal.errors.minlength || postal.errors.maxlength">
             Postal Code is invalid.
@@ -60,7 +102,7 @@
         </div>
     </div>
     <div *ngIf="email.invalid && (email.dirty || email.touched)"
-            class="alert alert-danger">                  
+            class="alert alert-danger">
         <div *ngIf="email.errors.pattern">
             Email cannot contain invalid characters.
         </div>
@@ -72,26 +114,26 @@
     class="alert alert-danger">
         <div *ngIf="password.errors.required">
             Password is required.
-        </div>           
+        </div>
         <div *ngIf="password.errors.pattern">
             Password cannot contain invalid characters.
         </div>
         <div *ngIf="password.errors.minlength">
             Password has a minlength of 9.
-        </div> 
+        </div>
     </div>
     <div *ngIf="confirmpassword.invalid && (confirmpassword.dirty || confirmpassword.touched)"
     class="alert alert-danger">
         <div *ngIf="confirmpassword.errors.required">
             Confirm Password is required.
-        </div>           
+        </div>
         <div *ngIf="confirmpassword.errors.pattern">
             Confirm Password cannot contain invalid characters.
         </div>
         <div *ngIf="confirmpassword.errors.minlength">
             Confirm Password has a minlength of 9.
-        </div> 
-    </div> 
+        </div>
+    </div>
 
     <!-- <div *ngIf="clinicOpeningHours.invalid && (clinicOpeningHours.dirty || clinicOpeningHours.touched)" class="alert alert-danger">
         <div *ngIf="clinicOpeningHours.errors.required">
@@ -115,111 +157,127 @@
     <div class="form-group row">
       <div class="col-sm">
         <label for="clinicName"  class="col-sm-3 form-control-label" style="text-align: left">Clinic Name:* </label>
-        <input type="text" class="col-sm-2 form-control-label" name="clinicName" id="clinicName" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="clinicName" #clinicNamef = "ngModel"
+        <input type="text" class="col-sm-2 form-control-label" name="clinicName" id="clinicName" class="uppercase" pattern="^[a-zA-Z0-9-/ ]*$" minlength="1"  [(ngModel)]="clinicName" #clinicNamef = "ngModel"
                maxlength="66" autofocus autocomplete="off" required>
       </div>
     </div>
-    <div class="add-opening-hours" [formGroup]="branchForm">
-      <div formArrayName="branchInfo">
-        <div *ngFor="let branchInfoForm of branchInfo.controls; let j=index">
-        <div [formGroup]="branchInfoForm">
-          <div >
-            <div class="form-group row">
-              <div class="col-sm">
-                <label for="branchName" class="col-sm-3 form-control-label" style="text-align: left">Branch Name:* </label>
-                <input type="text" formControlName="branchName" class="col-sm-2 form-control-label" name="branchName" id="branchName" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="branchName" 
-                       maxlength="66" autofocus autocomplete="off" required>&nbsp;&nbsp;
-                <button class="buttonLinks" (click)="deleteBranch(j)">Remove Branch <fa-icon [icon]="faTimes" style="color: red"></fa-icon></button>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm">
-                <label for="branchTelephone" class="col-sm-3 form-control-label" style="text-align: left">Branch Telephone No.:* </label>
-                <input type="text" formControlName="branchTele" class="col-sm-2 form-control-label" name="branchTelephone" id="branchTelephone" class="uppercase" pattern="^[0-9]*$" minlength="8"  [(ngModel)]="branchTelephone"
-                       maxlength="18" autofocus autocomplete="off" required>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm">
-                <label for="pCode" class="col-sm-3 form-control-label" style="text-align: left">Postal Code:* </label>
-                <input type="text" formControlName="branchPcode" class="col-sm-2 form-control-label" name="pCode" id="pCode" class="uppercase" pattern="^[0-9]*$" minlength="6"  [(ngModel)]="pCode"
-                       maxlength="6" autofocus autocomplete="off">
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm">
-                <label for="clinicAddr" class="col-sm-3 form-control-label" style="text-align: left">Address:* </label>
-                <input type="text" formControlName="branchAddr" class="col-sm-2 form-control-label" name="clinicAddr" id="clinicAddr" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="clinicAddr"
-                       maxlength="99" autofocus autocomplete="off">
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm">
-                <label for="openingHour"  class="col-sm-3 form-control-label" style="text-align: left">Opening Hour:* </label>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm">
-                <div class="col-sm-9 form-control-label" [formGroup]="form">
-                  <div formArrayName="clinicOpeningHours">
-                    <div *ngFor="let openingHourForm of clinicOpeningHours.controls; let i = index ">
-                      <div [formGroup]="openingHourForm" style="padding-left: 215px; padding-bottom: 10px">
-                        <!-- sf start -->
-                        <!-- <div *ngIf="clinicOpeningHours.controls[i].get('openingHourDayOfWeek').errors?.required">
-                          sf hahha pls work -->
-                        <!-- </div> -->
-                        <!-- sf end -->
-                        <select formControlName="openingHourDayOfWeek" placeholder="Day" style="min-height: 30px;">
-                          <option disabled>Please select</option>
-                          <option *ngFor="let day of dayOfWeek" [value]="day.id">{{day.value}}</option>
-                        </select>
-                        &nbsp;
-                        <select formControlName="openingHourStartTime" placeholder="Start Time" style="min-height: 30px;">
-                          <option disabled>Please select</option>
-                          <option *ngFor="let start of startTime" value={{start}}>{{start}}</option>
-                        </select>
-                        &nbsp;
-                        <select formControlName="openingHourEndTime" placeholder="End Time" style="min-height: 30px;">
-                          <option disabled>Please select</option>
-                          <option *ngFor="let end of endTime" [value]="end">{{end}}</option>
-                        </select>
-                        &nbsp;
-                        <button class="btn-primary" *ngIf="i!==0" style="height: 25px; width: 25px;background-color: transparent;border: transparent" (click)="deleteOpeningHour(i)"><fa-icon [icon]="faMinus" style="color: red"></fa-icon></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm" style="padding-left: 598px">
-                <button class="btn-primary" style="height: 25px; width: 25px;background-color: transparent;border: transparent" (click)="addOpeningHour()"><fa-icon [icon]="faPlus" style="color: limegreen"></fa-icon></button>
-              </div>
-            </div>
-            <br><br>
-
+    <div class="form-group row">
+      <div class="col-sm">
+        <label for="branchName" class="col-sm-3 form-control-label" style="text-align: left">Branch Name:* </label>
+        <input type="text" class="col-sm-2 form-control-label" name="branchName" id="branchName" class="uppercase" pattern="^[a-zA-Z0-9-/ ]*$" minlength="1"  [(ngModel)]="branchName" #branchNamef = "ngModel"
+               maxlength="66" autofocus autocomplete="off" required >&nbsp;&nbsp;
+        <button type="button" name="addBranchButton" class="buttonLinks" (click)="addBranch()">Add Branch <fa-icon [icon]="faPlus" style="color: limegreen"></fa-icon></button>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm">
+        <label for="branchTelephone" class="col-sm-3 form-control-label" style="text-align: left">Branch Telephone No.:* </label>
+        <input type="text" class="col-sm-2 form-control-label" name="branchTelephone" id="branchTelephone" class="uppercase" pattern="^[0-9]*$" minlength="8"  [(ngModel)]="branchTelephone" #branchTelephonef = "ngModel"
+               maxlength="8" autofocus autocomplete="off" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm">
+        <label for="pCode" class="col-sm-3 form-control-label" style="text-align: left">Postal Code:* </label>
+        <input type="text" class="col-sm-2 form-control-label" name="pCode" id="pCode" class="uppercase" pattern="^[0-9]*$" minlength="6"  [(ngModel)]="pCode" #pCodef = "ngModel"
+               maxlength="6" autofocus autocomplete="off">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm">
+        <label for="clinicAddr" class="col-sm-3 form-control-label" style="text-align: left">Address:* </label>
+        <input type="text" class="col-sm-2 form-control-label" name="clinicAddr" id="clinicAddr" class="uppercase" pattern="^[a-zA-Z0-9-/ #]*$" minlength="1"  [(ngModel)]="clinicAddr" #clinicAddrf = "ngModel"
+               maxlength="99" autofocus autocomplete="off">
+      </div>
+    </div>
+<!--    <div *ngIf="openHourError">-->
+<!--      <span class="red-error">At least 1 contact person detail is required!</span>-->
+<!--    </div>-->
+    <div class="form-group row">
+      <div class="col-sm">
+        <label class="col-sm-3 form-control-label" style="text-align: left">Opening Hour:* </label>
+        <select class="col-sm-2 form-control-label optionPlaceholder" id="day" name="day" style="min-width: 200px; min-height: 30px;" [(ngModel)]="day">
+          <option disabled>Please select</option>
+          <option *ngFor="let day of dayOfWeek" [value]="day.id">{{day.value}}</option>
+        </select>
+        &nbsp;
+        <select class="col-sm-2 form-control-label optionPlaceholder" id="day" name="day" style="min-width: 200px; min-height: 30px;" [(ngModel)]="start">
+          <option disabled>Please select</option>
+          <option *ngFor="let start of startTime" value={{start}}>{{start}}</option>
+        </select>
+        &nbsp;
+        <select class="col-sm-2 form-control-label optionPlaceholder" id="day" name="day" style="min-width: 200px; min-height: 30px;" [(ngModel)]="end">
+          <option disabled>Please select</option>
+          <option *ngFor="let end of endTime" [value]="end">{{end}}</option>
+        </select>
+        <button class="btn-primary" style="height: 25px; width: 25px;background-color: transparent;border: transparent" (click)="addOpeningHour()"><fa-icon [icon]="faPlus" style="color: limegreen"></fa-icon></button>
+      </div>
+    </div>
+      <div class="form-group row">
+        <div class="col-sm">
+          <div style="width:98%" align="center" *ngIf="openingHourList">
+            <table class="record" id="table" style="width: 100%;">
+          <thead>
+          <tr>
+            <th>Day</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngFor="let openHours of openingHourList; trackBy: trackId;">
+            <tr>
+              <td>{{dayOfWeekMap.get(openHours.day)}}</td>
+              <td>{{ openHours.startTime }}</td>
+              <td>{{ openHours.endTime }}</td>
+              <td><button class="btn-primary" style="height: 25px; width: 25px;background-color: transparent;border: transparent" (click)="deleteOpeningHour(openHours)"><fa-icon [icon]="faMinus" style="color: red"></fa-icon></button></td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
           </div>
         </div>
-      </div>
       </div>
       <div class="form-group row">
         <div class="col-sm">
-          <div class="col-sm-3">
-            <button type="button" name="addBranchButton" class="buttonLinks" (click)="addBranch()">Add Branch <fa-icon [icon]="faPlus" style="color: limegreen"></fa-icon></button>
+          <div style="width:98%" align="center" *ngIf="branchInfoList">
+            <table class="record" id="table" style="width: 100%;">
+          <thead>
+          <tr>
+            <th>Branch Name</th>
+            <th>Telephone No</th>
+            <th>Postal Code</th>
+            <th>Address</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngFor="let branchInfo of branchInfoList; trackBy: bTrackId;">
+            <tr>
+              <td>{{ branchInfo.branchName }}</td>
+              <td>{{ branchInfo.branchTelNo }}</td>
+              <td>{{ branchInfo.postalCode }}</td>
+              <td>{{ branchInfo.address }}</td>
+              <td>
+                <ng-container *ngFor="let openHours of branchInfo.openHours; trackBy: bTrackId;">
+                  <pre>{{dayOfWeekMap.get(openHours.day)}} - {{openHours.startTime}} - {{openHours.endTime}}</pre>
+                </ng-container>
+              </td>
+              <td><button class="btn-primary" style="height: 25px; width: 25px;background-color: transparent;border: transparent" (click)="deleteBranch(branchInfo)"><fa-icon [icon]="faMinus" style="color: red"></fa-icon></button></td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-12">
-      <div><br></div>
-
-    </div>
 
     <h3 class="font-bold my-4" style="padding-left: 15px;"><strong>New Clinic Registration Process(Staff Details)</strong></h3>
     <div class="form-group row">
       <div class="col-sm">
         <label for="name" class="col-sm-3 form-control-label" >Full Name:* </label>
-        <input type="text" class="col-sm-3 form-control-label" name="name" id="name" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="name"  #fname="ngModel"
+        <input type="text" class="col-sm-3 form-control-label" name="name" id="name" class="uppercase" pattern="^[a-zA-Z0-9-/ ]*$" minlength="1"  [(ngModel)]="name"  #fname="ngModel"
                maxlength="66" autofocus autocomplete="off" required>
       </div>
     </div>
@@ -234,7 +292,7 @@
 
       <div class="col-sm">
         <label for="addr" class="col-sm-3 form-control-label" >Address:* </label>
-        <input type="text" class="col-sm-3 form-control-label" name="addr" id="addr" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="addrf"  #addr="ngModel"
+        <input type="text" class="col-sm-3 form-control-label" name="addr" id="addr" class="uppercase" pattern="^[a-zA-Z0-9-/ #]*$" minlength="1"  [(ngModel)]="addrf"  #addr="ngModel"
                maxlength="99" autofocus autocomplete="off">
       </div>
     </div>

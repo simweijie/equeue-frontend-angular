@@ -45,25 +45,25 @@ export class StaffInfoComponent implements OnInit {
     {id: 'C', value: 'Clerk'}
   ];
 
-  // clinicList: any = [
-  //   {id: '4', value: 'CLINIC'},
-  //   {id: '5', value: 'CLINIC2'}
-  // ];
+  clinicList: any = [
+    {id: '4', value: 'CLINIC'},
+    {id: '5', value: 'CLINIC2'}
+  ];
 
-  // branchList: any = [
-  //   {id: '4', value: 'BRANCH'}
-  // ];
-  //
-  // branchListEdit: any = [
-  //   {id: '4', value: 'BRANCH'}
-  // ];
+  branchList: any = [
+    {id: '4', value: 'BRANCH'}
+  ];
+
+  branchListEdit: any = [
+    {id: '4', value: 'BRANCH'}
+  ];
 
   branchError: boolean = false;
   clinicError: boolean = false;
   occupationError: boolean = false;
-  clinicList: any;
-  branchList: any;
-  branchListEdit: any;
+  // clinicList: any;
+  // branchList: any;
+  // branchListEdit: any;
   hide = false;
   clinic: any;
   branch: any;
@@ -127,12 +127,12 @@ export class StaffInfoComponent implements OnInit {
     this.staffInfoService.listOfStaffInClinic({staffId: this.id}).subscribe(
       data => {
         console.log(data);
-        // this.dataSource = new MatTableDataSource<any>(this.sampleData);
+        this.dataSource = new MatTableDataSource<any>(this.sampleData);
         if (data === 'ERROR') {
           return;
         }
         // @ts-ignore
-        this.dataSource = new MatTableDataSource<any>(data);
+        // this.dataSource = new MatTableDataSource<any>(data);
 
         // if (data === null) {
         //   this._error.next(this.error500);
@@ -164,28 +164,28 @@ export class StaffInfoComponent implements OnInit {
       this.occupationMap.set(entry.id, entry.value);
     }
 
-    this.commonService.retrieveBranchList().subscribe(
-      data => {
-        console.log(data);
-        if (data !== 'ERROR') {
-          this.branchList = data;
+    // this.commonService.retrieveBranchList().subscribe(
+    //   data => {
+    //     console.log(data);
+    //     if (data !== 'ERROR') {
+    //       this.branchList = data;
           this.branchMap = new Map<string, string>();
           for (let entry of this.branchList) {
             this.branchMap.set(entry.id, entry.value);
           }
-        }
-      });
-    this.commonService.retrieveClinicList().subscribe(
-      data => {
-        console.log(data);
-        if (data !== 'ERROR') {
-          this.clinicList = data;
+    //     }
+    //   });
+    // this.commonService.retrieveClinicList().subscribe(
+    //   data => {
+    //     console.log(data);
+    //     if (data !== 'ERROR') {
+    //       this.clinicList = data;
           this.clinicMap = new Map<string, string>();
           for (let entry of this.clinicList) {
             this.clinicMap.set(entry.id, entry.value);
           }
-        }
-      });
+      //   }
+      // });
 
     this._success.subscribe((message) => this.successMessage = message);
     this._success.pipe(
@@ -232,7 +232,8 @@ export class StaffInfoComponent implements OnInit {
     this.staffName = '';
   }
 
-  acceptConfirmation(staffId: any, staffName: any) {
+  accConfirmation(staffId: any, staffName: any) {
+    console.log('staff name:' + staffName);
     this.staffId = staffId;
     this.staffName = staffName;
     this.modalAcceptRef = this.modalService.show(this.modalAccept);
@@ -272,6 +273,9 @@ export class StaffInfoComponent implements OnInit {
     this.statusEdit = staff.status;
     this.isAdmin = staff.isAdmin;
     // console.log('_staffInfoEdit: ' + this._staffInfoEdit);
+    if(this.clinic !== null || this.clinic !== undefined || this.clinic !== '') {
+      this.listOfBranchesWithClinicId(this.clinic);
+    }
     this.modalEditRef = this.modalService.show(this.modalEdit);
   }
 

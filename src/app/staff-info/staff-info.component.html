@@ -53,7 +53,7 @@
           <td mat-cell *matCellDef="let rows">
             <button type="button" class="buttonLinks" *ngIf="rows.status!=='I'" (click)="editStaff(rows)">Edit </button>&nbsp;
             <button type="button" class="buttonLinks" *ngIf="rows.status==='A'" (click)="removeConfirmation(rows.id, rows.name)"> Remove</button>
-            <button type="button" class="buttonLinks" *ngIf="rows.status==='P'" (click)="acceptConfirmation(rows.id, rows.name)"> Accept</button>
+            <button type="button" class="buttonLinks" *ngIf="rows.status==='P'" (click)="accConfirmation(rows.id, rows.name)"> Accept</button>
           </td>
         </ng-container>
 
@@ -87,8 +87,8 @@
 <!-- POPUP MODAL EDIT STAFF RECORD. -->
 <ng-template #editStaffRecord>
   <div class="modal-body text-center">
-    <div class="row" style="padding-top: 10px">
-
+    <h3 class="font-bold pl-0 my-4" ><strong>Update Staff Information</strong></h3>
+    <div class="text-center">
       <form>
         <div *ngIf="name.invalid && (name.dirty || name.touched)"
         class="alert alert-danger">
@@ -128,48 +128,34 @@
             </div>
         </div>
 
-          <div class="form-group col-md-2">
-            <label class="form-control-label">Full Name <span class="red-asterisk">*</span></label>
+        <div class="form-group row">
+          <div class="col-sm">
+            <label class="col-sm-4 form-control-label" style="text-align: left">Full Name: <span class="red-asterisk">*</span></label>
+            <input type="text" class="col-sm-4 form-control-label" name="fName" id="field_fName" [(ngModel)]="fName" #name = "ngModel" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  maxlength="66" autofocus autocomplete="off" required/>
           </div>
-          <div class="form-group col-md-1">:</div>
-          <div class="form-group col-md-3">
-            <input type="text" class="form-control-label" name="fName" id="field_fName" [(ngModel)]="fName" #name = "ngModel" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  maxlength="66" autofocus autocomplete="off" required/>
-          </div>
-          <div class="form-group col-md-5"></div>
-
-          <div class="form-group col-md-2">
-            <label class="form-control-label">Contact No <span class="red-asterisk">*</span></label>
-          </div>
-          <div class="form-group col-md-1">:</div>
-          <div class="form-group col-md-3">
+        </div>
+        <div class="form-group row">
+          <div class="col-sm">
+            <label class="col-sm-4 form-control-label" style="text-align: left">Contact No: <span class="red-asterisk">*</span></label>
             <input type="text" class="form-control-label" name="cNo" id="field_cNo" [(ngModel)]="cNo"  #contactNo="ngModel" class="uppercase" pattern="^[0-9]*$" minlength="8" maxlength="8" autofocus autocomplete="off" required />
           </div>
-          <div class="form-group col-md-5"></div>
-
-          <div class="form-group col-md-2">
-            <label class="form-control-label">Address <span class="red-asterisk">*</span></label>
-          </div>
-          <div class="form-group col-md-1">:</div>
-          <div class="form-group col-md-3">
+        </div>
+        <div class="form-group row">
+          <div class="col-sm">
+            <label class="col-sm-4 form-control-label" style="text-align: left">Address <span class="red-asterisk">*</span></label>
             <input type="text" class="form-control-label" name="address" id="field_address" [(ngModel)]="address" #addr="ngModel" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1" maxlength="99" autofocus autocomplete="off" required/>
           </div>
-          <div class="form-group col-md-5"></div>
-
-          <div class="form-group col-md-2">
-            <label class="form-control-label">Email <span class="red-asterisk">*</span></label>
-          </div>
-          <div class="form-group col-md-1">:</div>
-          <div class="form-group col-md-3">
+        </div>
+        <div class="form-group row">
+          <div class="col-sm">
+            <label class="col-sm-4 form-control-label" style="text-align: left">Email <span class="red-asterisk">*</span></label>
             <input type="text" class="form-control-label" name="emailh" id="field_email" [(ngModel)]="email" #emailh="ngModel" class="uppercase" pattern="^[a-zA-Z0-9-@.]*$" minlength="1" maxlength="66" autofocus autocomplete="off" required/>
           </div>
-          <div class="form-group col-md-5"></div>
-
-          <div class="form-group col-md-2">
-            <label class="form-control-label">Occupation <span class="red-asterisk">*</span></label>
-          </div>
-          <div class="form-group col-md-1">:</div>
-          <div class="form-group col-md-3">
-            <select class="form-control optionPlaceholder" id="field_occupation" name="occupation" [(ngModel)]="occupation" >
+        </div>
+        <div class="form-group row">
+          <div class="col-sm">
+            <label class="col-sm-4 form-control-label" style="text-align: left">Occupation <span class="red-asterisk">*</span></label>
+            <select class="col-sm-4 form-control-label optionPlaceholder" style="min-width: 150px; max-width: 150px; min-height: 30px;" id="field_occupation" name="occupation" [(ngModel)]="occupation" >
               <option [ngValue]="undefined" hidden>Please Select</option>
               <!--                    <option [ngValue]="null"></option>-->
               <option [ngValue]="rows.id" *ngFor="let rows of occupationList">{{rows.value}}</option>
@@ -178,14 +164,11 @@
               <span class="red-error">Required field!</span>
             </div>
           </div>
-          <div class="form-group col-md-5"></div>
-
-          <div class="form-group col-md-2">
-            <label class="form-control-label">Clinic <span class="red-asterisk">*</span></label>
-          </div>
-          <div class="form-group col-md-1">:</div>
-          <div class="form-group col-md-3">
-            <select class="form-control optionPlaceholder" id="field_clinic" name="clinic" [(ngModel)]="clinic" (change)="listOfBranchesWithClinicId(clinic)">
+        </div>
+        <div class="form-group row">
+          <div class="col-sm">
+            <label class="col-sm-4 form-control-label" style="text-align: left">Clinic <span class="red-asterisk">*</span></label>
+            <select class="col-sm-4 form-control-label optionPlaceholder" style="min-width: 150px; max-width: 150px; min-height: 30px;" id="field_clinic" name="clinic" [(ngModel)]="clinic" (change)="listOfBranchesWithClinicId(clinic)">
               <option [ngValue]="undefined" hidden>Please Select</option>
               <!--                    <option [ngValue]="null"></option>-->
               <option [ngValue]="rows.id" *ngFor="let rows of clinicList">{{rows.value}}</option>
@@ -194,26 +177,22 @@
               <span class="red-error">Required field!</span>
             </div>
           </div>
-          <div class="form-group col-md-5"></div>
-
+        </div>
           <ng-template [ngIf]="hide">
-            <div class="form-group col-md-2">
-              <label class="form-control-label">Branch <span class="red-asterisk">*</span></label>
-            </div>
-            <div class="form-group col-md-1">:</div>
-            <div class="form-group col-md-3">
-              <select class="form-control optionPlaceholder" id="field_branch" name="branch" [(ngModel)]="branch">
-                <option [ngValue]="undefined" hidden>Please Select</option>
-                <!--                    <option [ngValue]="null"></option>-->
-                <option [ngValue]="rows.id" *ngFor="let rows of branchListEdit">{{rows.value}}</option>
-              </select>
-              <div *ngIf="branchError">
-                <span class="red-error">Required field!</span>
+            <div class="form-group row">
+              <div class="col-sm">
+                <label class="col-sm-4 form-control-label" style="text-align: left">Branch <span class="red-asterisk">*</span></label>
+                <select class="col-sm-4 form-control-label optionPlaceholder" style="min-width: 150px; max-width: 150px; min-height: 30px;" id="field_branch" name="branch" [(ngModel)]="branch">
+                  <option [ngValue]="undefined" hidden>Please Select</option>
+                  <!--                    <option [ngValue]="null"></option>-->
+                  <option [ngValue]="rows.id" *ngFor="let rows of branchListEdit">{{rows.value}}</option>
+                </select>
+                <div *ngIf="branchError">
+                  <span class="red-error">Required field!</span>
+                </div>
               </div>
             </div>
-            <div class="form-group col-md-5"></div>
           </ng-template>
-
        </form>
     </div>
     <button type="button" class="button-equeue" (click)="cancel()" >Cancel</button>&nbsp;

@@ -10,6 +10,8 @@ import { CommonService } from '../shared/services/common.service';
 import { RegistrationService } from '../shared/services/registration.service';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { faPlus, faMinus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {OpenHour} from "../shared/modals/open-hour.modal";
+import {BranchInfo} from "../shared/modals/branch.modal";
 
 @Component({
     selector: 'ic-registration-clinic',
@@ -45,13 +47,13 @@ export class RegistrationClinicComponent implements OnInit {
     errorFlag: boolean;
     checked: boolean;
  
-    form = this.fb.group({
-      clinicOpeningHours: this.fb.array([])
-    });
+    // form = this.fb.group({
+    //   clinicOpeningHours: this.fb.array([])
+    // });
 
-    branchForm = this.fb.group({
-      branchInfo: this.fb.array([])
-    });
+    // branchForm = this.fb.group({
+    //   branchInfo: this.fb.array([])
+    // });
 
     startTime: Array<string> = [
         "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00",
@@ -65,7 +67,7 @@ export class RegistrationClinicComponent implements OnInit {
         "20:00", "21:00", "22:00", "23:00"
     ];
 
-    dayOfWeek: Array<object> = [
+    dayOfWeek: any = [
         {id: "1", value: "Monday"},
         {id: "2", value: "Tuesday"},
         {id: "3", value: "Wednesday"},
@@ -74,12 +76,23 @@ export class RegistrationClinicComponent implements OnInit {
         {id: "6", value: "Saturday"},
         {id: "7", value: "Sunday"}
     ];
+  dayOfWeekMap: Map<string, string>;
 
   occupationList: Array<object> = [
     {id: 'D', value: 'Doctor'},
     {id: 'S', value: 'Nurse'},
     {id: 'A', value: 'Admin'}
   ];
+  openingHourList: Array<OpenHour> = [];
+  day: any;
+  start: any;
+  end: any;
+  openHour: OpenHour;
+  openHourError: boolean = false;
+
+  branchInfoList: Array<BranchInfo> = [];
+  branchInfo: BranchInfo;
+  branchInfoError: boolean = false;
     
     constructor(private router: Router, private RegistrationService: RegistrationService, private commonService: CommonService, private fb: FormBuilder) {
         this.registrationClinic = new RegistrationClinic();
@@ -94,50 +107,106 @@ export class RegistrationClinicComponent implements OnInit {
       this.checked = false;
       console.log("ngonit this.checked is : "+ this.checked);
 
+      this.dayOfWeekMap = new Map<string, string>();
+      for (let entry of this.dayOfWeek) {
+        this.dayOfWeekMap.set(entry.id, entry.value);
+      }
+
       this._success.subscribe((message) => this.successMessage = message);
       this._success.pipe(
         debounceTime(40000)
       ).subscribe(() => this.successMessage = '');
 
       this._error.subscribe((message) => this.errorMessage = message);
-      this.addOpeningHour();
-      this.addBranch();
+      // this.addOpeningHour();
+      // this.addBranch();
     }
 
-    get clinicOpeningHours(){
-      return this.form.controls["clinicOpeningHours"] as FormArray;
-    }
+    // get clinicOpeningHours(){
+    //   return this.form.controls["clinicOpeningHours"] as FormArray;
+    // }
 
     addOpeningHour(){
-      const openingHourForm = this.fb.group({
-        openingHourDayOfWeek: ['', Validators.required],
-        openingHourStartTime: ['', Validators.required],
-        openingHourEndTime: ['', Validators.required]
+      // const openingHourForm = this.fb.group({
+      //   openingHourDayOfWeek: ['', Validators.required],
+      //   openingHourStartTime: ['', Validators.required],
+      //   openingHourEndTime: ['', Validators.required]
+      // });
+      // this.clinicOpeningHours.push(openingHourForm);
+      if (this.openingHourList === undefined) {
+        console.log('this.openingHourList: undefined');
+        this.openingHourList = Array<OpenHour>();
+      }
+
+      if (this.day !== '' && this.start !== '' && this.end !== '' && this.day !== undefined && this.start !== undefined && this.end !== undefined) {
+        this.openHour = {
+          day: this.day , startTime: this.start,
+          endTime: this.end
+        };
+        console.log('this.openHour: ');
+        console.log(this.openHour);
+        console.log('Before this.openingHourList: ');
+        console.log(this.openingHourList);
+        this.openingHourList.push(this.openHour);
+        console.log('After this.openingHourList: ');
+        console.log(this.openingHourList);
+        this.clear();
+      } else {
+        this.openHourError = true;
+      }
+      console.log('addOpeningHour' + this.openingHourList);
+    }
+
+  clear() {
+    this.day = '';
+    this.start = '';
+    this.end = '';
+    this.openHourError = false;
+  }
+    deleteOpeningHour(openHour: OpenHour) {
+      // this.clinicOpeningHours.removeAt(openingHourIndex);
+      // this.openingHourList.filter(obj => obj !== openHour);
+      this.openingHourList.forEach( (item, index) => {
+        if (item === openHour) this.openingHourList.splice(index,1);
       });
-      this.clinicOpeningHours.push(openingHourForm);
     }
 
-    deleteOpeningHour(openingHourIndex: number) {
-      this.clinicOpeningHours.removeAt(openingHourIndex);
-    }
-
-    get branchInfo(){
-      return this.branchForm.controls["branchInfo"] as FormArray;
-    }
+    // get branchInfo(){
+    //   return this.branchForm.controls["branchInfo"] as FormArray;
+    // }
 
     addBranch(){
-      const branchInfoForm = this.fb.group({
-        branchName: ['', Validators.required],
-        branchTele: ['', Validators.required],
-        branchPcode: ['', Validators.required],
-        branchAddr: ['', Validators.required]
-        // branchOpening: ['', Validators.required]
-      });
-      this.branchInfo.push(branchInfoForm);
+      if (this.branchInfoList === undefined) {
+        console.log('this.branchInfoList: undefined');
+        this.branchInfoList = Array<BranchInfo>();
+      }
+
+      if (this.branchName !== '' && this.branchTelephone !== '' && this.pCode !== '' &&
+        this.branchName !== undefined && this.branchTelephone !== undefined && this.pCode !== undefined) {
+        this.branchInfo = {
+          branchName: this.branchName , branchTelNo: this.branchTelephone,
+          postalCode: this.pCode, address: this.clinicAddr, openHours: this.openingHourList
+        };
+        console.log('this.branchInfo: ');
+        console.log(this.branchInfo);
+        console.log('Before this.branchInfoList: ');
+        console.log(this.branchInfoList);
+        this.branchInfoList.push(this.branchInfo);
+        console.log('After this.branchInfoList: ');
+        console.log(this.branchInfoList);
+        this.clearBranch();
+      } else {
+        this.branchInfoError = true;
+      }
+      console.log('addBranch' + this.branchInfoList);
     }
 
-    deleteBranch(branchIndex: number) {
-      this.branchInfo.removeAt(branchIndex);
+    deleteBranch(branchInfo: BranchInfo) {
+      // this.branchInfo.removeAt(branchIndex);
+      // this.branchInfoList.filter(obj => obj !== branchInfo);
+      this.branchInfoList.forEach( (item, index) => {
+        if (item === branchInfo) this.branchInfoList.splice(index,1);
+      });
     }
 
     onSignUp(editForm: NgForm){
@@ -253,7 +322,7 @@ export class RegistrationClinicComponent implements OnInit {
       this.confirmPasswordf = null;
       this.contactNof = null;
       this.occupation = null;
-      this.clinicOpeningHours.clear();
+      // this.clinicOpeningHours.clear();
     }
 
     enableProceed(e: any) {
@@ -263,4 +332,22 @@ export class RegistrationClinicComponent implements OnInit {
         this.checked = false;
       }
     }
+
+  trackId(index: number, item: object) {
+    return item;
+  }
+
+  bTrackId(index: number, item: object) {
+    return item;
+  }
+
+  clearBranch() {
+    this.clear();
+    this.branchName = null;
+    this.branchTelephone = null;
+    this.pCode = null;
+    this.clinicAddr = null;
+    this.openingHourList = Array<OpenHour>();
+    this.branchInfoError = false;
+  }
 }

@@ -86,7 +86,7 @@
         <div class="form-group row">
           <div class="col-sm">
             <label for="name"  class="col-sm-2 form-control-label" style="text-align: left">Full Name:* </label>
-            <input type="text" class="col-sm-2 form-control-label" name="name" id="name" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="fname" #name="ngModel" 
+            <input type="text" class="col-sm-2 form-control-label" name="name" id="name" class="uppercase" pattern="^[a-zA-Z0-9-/ ]*$" minlength="1"  [(ngModel)]="fname" #name="ngModel"
                    maxlength="66" autofocus autocomplete="off" required>
           </div>
 
@@ -108,7 +108,7 @@
         <div class="form-group row">
           <div class="col-sm">
             <label for="addr"  class="col-sm-2 form-control-label" style="text-align: left">Address:* </label>
-            <input type="text" class="col-sm-2 form-control-label" name="addr" id="addr" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="1"  [(ngModel)]="addrf" #addr="ngModel"
+            <input type="text" class="col-sm-2 form-control-label" name="addr" id="addr" class="uppercase" pattern="^[a-zA-Z0-9-/# ]*$" minlength="1"  [(ngModel)]="addrf" #addr="ngModel"
                    maxlength="99" autofocus autocomplete="off">
           </div>
         </div>
@@ -146,7 +146,7 @@
         </div>
         <div class="form-group row">
           <div class="col-sm">
-            <label for="confirmpassword"  class="col-sm-2 form-control-label" >Confirm Password:* </label>
+            <label for="confirmpassword"  class="col-sm-2 form-control-label" style="text-align: left">Confirm Password:* </label>
             <input type="password" class="col-sm-2 form-control-label"  name="confirmpassword" id="confirmpassword" class="uppercase" pattern="^[a-zA-Z0-9-/]*$" minlength="9"  [(ngModel)]="confirmPasswordf" #confirmpassword="ngModel"
                    maxlength="32" autofocus autocomplete="off" required>
           </div>
