@@ -88,10 +88,10 @@ export class RegistrationComponent implements OnInit {
                     console.log(data);
                     this.signUpStatus = data;
                     if (data === 'SUCCESS') {
-                        this._success.next(`You are successfully registered with eQueue ` + this.registration);
+                        this._success.next(`You are successfully registered with eQueue ` + this.registration.name);
                         console.log(" sf 11");
                         // routed to login page to sign in
-                        this.router.navigate(['/patient-login/:clinicId']);
+                        this.router.navigate(['/patient-login']);
                     } else {
                         this._error.next(`Unable to register with eQueue!`);
                         console.log(" sf 12");
