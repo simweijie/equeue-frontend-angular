@@ -22,7 +22,7 @@ export class PatientViewDetailsService {
       response => {
         if (response.status === 200) {
           console.log('response is 200');
-          return response.body;
+          return 'SUCCESS';
         } else {
           console.log('Error - ');
           console.log(response.body);

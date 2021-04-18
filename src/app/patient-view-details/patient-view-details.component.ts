@@ -35,6 +35,7 @@ export class PatientViewDetailsComponent implements OnInit {
     modalCancelQueueRef: BsModalRef;
     @ViewChild('cancelQueueModal') modalCancelQueue: TemplateRef<any>;
     statusValue: any;
+    output: any;
     
     constructor(
         private router: Router,
@@ -119,8 +120,11 @@ export class PatientViewDetailsComponent implements OnInit {
       this.patientViewDetailsService.rejoinQueue({branchId: this.joinedQueueStatus.branchId, customerId: this.joinedQueueStatus.customerId}).subscribe(
         data => {
           console.log(data);
-          if (data === 'SUCCESS') {
+          this.output = data;
+          if (this.output === '') {
             this._success.next(`Successfully rejoined queue with new Queue Number : ` + this.joinedQueueStatus.yourQueueNumber);
+          } else if (this.output.error !== '') {
+            this._error.next(this.output.error);
           } else {
             this._error.next(`Unable to rejoin queue:`);
           }
@@ -133,8 +137,8 @@ export class PatientViewDetailsComponent implements OnInit {
         data => {
             console.log(data);
             this.status = data;
-            if (this.status === 'Success') {
-                console.log(" sf 11");            
+            if (data === 'SUCCESS') {
+                console.log(" sf 11");
                 this.router.navigate(['/smart-search-member']);                  
             } else {
                 this._error.next(`Unable to cancel Queue No. Kindly refresh or retry later!`);
@@ -171,6 +175,6 @@ export class PatientViewDetailsComponent implements OnInit {
 
     onChangeClinic(){
         console.log("here at onChangeClinic");
-        this.router.navigate(['/smart-search-member']); 
+        this.router.navigate(['/smart-search-member']);
     }
 }

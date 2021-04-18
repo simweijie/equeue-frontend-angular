@@ -48,6 +48,7 @@ export class SmartSearchMemberComponent implements OnInit {
   patientId: any;
   private state: string | null;
   headerName: any;
+  output: any;
 
   constructor(
     private router: Router,
@@ -162,6 +163,8 @@ export class SmartSearchMemberComponent implements OnInit {
                 }
               }
             }
+          } else {
+
           }
         });
     }
@@ -249,8 +252,12 @@ export class SmartSearchMemberComponent implements OnInit {
       this.smartSearchService.joinQueue({branchId: this.branchId, customerId: this.patientId}).subscribe(
         data => {
           console.log(data);
-          if (data === 'SUCCESS') {
+          this.output = data;
+          if (this.output === '') {
             console.log('Successfully Joined');
+            window.history.back();
+          } else if (this.output.error !== '') {
+            alert(this.output.error);
           } else {
             alert('Unable to join the queue. Please refresh page or try again later!');
           }

@@ -73,7 +73,7 @@ export class SmartSearchService {
       response => {
         if (response.status === 200) {
           console.log('response is 200');
-          return 'SUCCESS';
+          return response.body;
         } else {
           console.log('Error - ');
           console.log(response.body);
