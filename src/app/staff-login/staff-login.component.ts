@@ -52,7 +52,7 @@ export class StaffLoginComponent implements OnInit {
         if (this.username !== null && this.username !== '' && this.username !== undefined &&
             this.password !== null && this.password !== '' && this.password !== undefined
         ) {
-            this.staffLoginService.staffLogin({username: this.username, password:this.password}).subscribe(
+            this.staffLoginService.staffLogin({email: this.username, password: this.password}).subscribe(
                 data => {
                 console.log(data);
                 if (data !== 'ERROR') {

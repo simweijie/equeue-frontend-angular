@@ -93,7 +93,7 @@ export class PatientLoginComponent implements OnInit {
   loginFunction() {
     if (this.username !== null && this.username !== '' && this.username !== undefined &&
       this.password !== null && this.password !== '' && this.password !== undefined) {
-      this.patientLoginService.loginFunction({username: this.username, password: this.password}).subscribe(
+      this.patientLoginService.loginFunction({email: this.username, password: this.password}).subscribe(
         data => {
           if (data !== 'ERROR') {
             console.log(data);
