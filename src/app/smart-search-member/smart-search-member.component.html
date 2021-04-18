@@ -1,61 +1,99 @@
-<h2>{{headerName}}</h2>
-<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-  <li [ngbNavItem]="1">
-    <a ngbNavLink>Smart Search</a>
-    <ng-template ngbNavContent>
-      <div class="form-group row">
-        <div class="col-sm">
-          <!--          <label class="col-sm-2 form-control-label" style="text-align: center">Postal Code</label>-->
-          <!--          <label class="col-sm-1 form-control-label" style="text-align: center"> : </label>-->
-          <!--          <input type="text" class="col-sm-3 form-control-label" name="pCode" id="field_pCode" [(ngModel)]="pCode" disabled/>-->
-          <!--          &nbsp;-->
-          <button type="button" class="button-equeue" style="min-width: 100px; max-width: 100px" (click)="searchGP()">
-            GP Search
-          </button>
-        </div>
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <div *ngIf="login.job===null || login.job === undefined || login.job === ''">
+      <div class="row-cols-3">
+        <a routerLink="/smart-search-member" routerLinkActive="active">Home</a>
       </div>
-    </ng-template>
-  </li>
-  <li [ngbNavItem]="2">
-    <a ngbNavLink>Smart Filter Search</a>
-    <ng-template ngbNavContent>
-      <div class="form-group row">
-        <div class="col-sm">
-          * Please select one of the search criteria.
-        </div>
+      <div class="row-cols-3">
+        <a routerLink="/patient-view-details" routerLinkActive="active">Current Registration</a>
       </div>
-      <div class="form-group row">
-        <div class="col-sm">
-          <label class="col-sm-2 form-control-label" style="text-align: right">District: <span
-            style="color: red; font-weight: bold;">* </span></label>
-          <select class="form-control-label" style="min-width: 150px; min-height: 30px;" [(ngModel)]="district" name="district" *ngIf="districtList">
-            <option [ngValue]="undefined" hidden><span class="optionPlaceholder">Please Select</span></option>
-            <!--                <option [ngValue]="null"></option>-->
-            <option [ngValue]="rows.id" *ngFor="let rows of districtList">{{rows.value}}</option>
-          </select>
-          <label class="col-sm-2 form-control-label" style="text-align: right">Medical Group: <span
-            style="color: red; font-weight: bold;">* </span></label>
-          <select class="form-control-label" style="min-width: 150px; min-height: 30px;" [(ngModel)]="mGroup" name="clinic" *ngIf="mGroupList">
-            <option [ngValue]="undefined" hidden><span class="optionPlaceholder">Please Select</span></option>
-            <!--                <option [ngValue]="null"></option>-->
-            <option [ngValue]="rows.id" *ngFor="let rows of mGroupList">{{rows.value}}</option>
-          </select>
-          &nbsp;
-          <button type="button" class="button-equeue" style="min-width: 100px; max-width: 100px" (click)="searchFilter()">
-            GP Search
-          </button>
-        </div>
+      <!--      <div class="row-cols-3">-->
+      <!--        <a routerLink="" routerLinkActive="active">Missed Queue</a>-->
+      <!--      </div>-->
+      <!--      <div class="row-cols-3">-->
+      <!--        <a routerLink="" routerLinkActive="active">Update Information</a>-->
+      <!--      </div>-->
+    </div>
+    <div *ngIf="login.job==='S' || login.job==='D'">
+      <div class="row-cols-3">
+        <a routerLink="/patient-queue" routerLinkActive="active">View Queue</a>
       </div>
-    </ng-template>
-  </li>
-</ul>
+    </div>
+    <div *ngIf="login.isAdmin==='Y'">
+      <div class="row-cols-3">
+        <a routerLink="/staff-info" routerLinkActive="active">Staff Information</a>
+      </div>
+    </div>
+  </mat-drawer>
 
-<div [ngbNavOutlet]="nav" class="mt-2"></div>
-<pre>
-<!--  Active: {{ active }}-->
-  <div id="map"></div>
-</pre>
+  <div class="example-sidenav-content">
+    <button type="button" mat-button class="btn-primary" style="height: 25px; width: 25px" (click)="drawer.toggle()" *ngIf="login.id!==null && login.id!==undefined && login.id!==''"><i class="pi pi-bars"></i></button>
+<!--    <div class="container">-->
+    <button type="button" class="btn-primary refresh" style="min-width: 20px; min-height: 20px;" (click)="logout()" *ngIf="login.id!==null && login.id!==undefined && login.id!==''">Logout</button>&nbsp;
+<!--      <div class="card" style="align-content: center; border-style: none ;">-->
+      <div class="container">
+        <h2 style="padding-left: 20px">{{headerName}}</h2>
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>Smart Search</a>
+            <ng-template ngbNavContent>
+              <div class="form-group row">
+                <div class="col-sm">
+                  <!--          <label class="col-sm-2 form-control-label" style="text-align: center">Postal Code</label>-->
+                  <!--          <label class="col-sm-1 form-control-label" style="text-align: center"> : </label>-->
+                  <!--          <input type="text" class="col-sm-3 form-control-label" name="pCode" id="field_pCode" [(ngModel)]="pCode" disabled/>-->
+                  <!--          &nbsp;-->
+                  <button type="button" class="button-equeue" style="min-width: 100px; max-width: 100px" (click)="searchGP()">
+                    GP Search
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink>Smart Filter Search</a>
+            <ng-template ngbNavContent>
+              <div class="form-group row">
+                <div class="col-sm">
+                  * Please select one of the search criteria.
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm">
+                  <label class="col-sm-2 form-control-label" style="text-align: right">District: <span
+                    style="color: red; font-weight: bold;">* </span></label>
+                  <select class="form-control-label" style="min-width: 150px; min-height: 30px;" [(ngModel)]="district" name="district" *ngIf="districtList">
+                    <option [ngValue]="undefined" hidden><span class="optionPlaceholder">Please Select</span></option>
+                    <!--                <option [ngValue]="null"></option>-->
+                    <option [ngValue]="rows.id" *ngFor="let rows of districtList">{{rows.value}}</option>
+                  </select>
+                  <label class="col-sm-2 form-control-label" style="text-align: right">Medical Group: <span
+                    style="color: red; font-weight: bold;">* </span></label>
+                  <select class="form-control-label" style="min-width: 150px; min-height: 30px;" [(ngModel)]="mGroup" name="clinic" *ngIf="mGroupList">
+                    <option [ngValue]="undefined" hidden><span class="optionPlaceholder">Please Select</span></option>
+                    <!--                <option [ngValue]="null"></option>-->
+                    <option [ngValue]="rows.id" *ngFor="let rows of mGroupList">{{rows.value}}</option>
+                  </select>
+                  &nbsp;
+                  <button type="button" class="button-equeue" style="min-width: 100px; max-width: 100px" (click)="searchFilter()">
+                    GP Search
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+        </ul>
 
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+        <pre>
+        <!--  Active: {{ active }}-->
+          <div id="map"></div>
+        </pre>
+
+      </div>
+<!--    </div>-->
+  </div>
+</mat-drawer-container>
 <!-- POPUP MODAL CONFIRMATION FOR CHANGE QUEUE. -->
 <ng-template #changeConfirmation>
   <div class="modal-body text-center">

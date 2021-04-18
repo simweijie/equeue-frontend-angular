@@ -138,7 +138,7 @@ export class SmartSearchComponent implements OnInit {
           console.log(data);
           if (data !== null || data !== 'ERROR') {
             // @ts-ignore
-            this.filterList = data.data;
+            this.filterList = data.data[0];
             for (let entry of this.filterList) {
               console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
               if (entry.latt !== null  && entry.longt !== null) {
@@ -166,7 +166,7 @@ export class SmartSearchComponent implements OnInit {
           console.log(data);
           if (data !== null || data !== 'ERROR') {
             // @ts-ignore
-            this.filterList = data.data;
+            this.filterList = data.data[0];
             for (let entry of this.filterList) {
               console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
               if (entry.latt !== null  && entry.longt !== null) {
@@ -186,12 +186,11 @@ export class SmartSearchComponent implements OnInit {
     this.branchId = branchId;
     if (this.branchId !== null || this.branchId !== '') {
       GlobalConstants.branchId = this.branchId;
-      this.router.navigate(['/patient-login/', {branchId: GlobalConstants.branchId}]);
+      this.router.navigate(['/patient-login']);
     }
   }
 
   login() {
-    GlobalConstants.branchId = '1';
     this.router.navigate(['/patient-login']);
   }
 }

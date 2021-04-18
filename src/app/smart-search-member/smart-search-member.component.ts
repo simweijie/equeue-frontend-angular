@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {CommonService} from '../shared/services/common.service';
 import {GlobalConstants} from "../shared/global-constants";
+import {Login} from "../shared/modals/login.modal";
 
 declare  const L: any;
 
@@ -49,6 +50,7 @@ export class SmartSearchMemberComponent implements OnInit {
   private state: string | null;
   headerName: any;
   output: any;
+  login: Login;
 
   constructor(
     private router: Router,
@@ -56,10 +58,13 @@ export class SmartSearchMemberComponent implements OnInit {
     private smartSearchService: SmartSearchService,
     private modalService: BsModalService,
     private commonService: CommonService
-  ) { }
+  ) {
+    this.login = new Login();
+  }
 
   ngOnInit(): void {
-    this.getPatientId();
+    this.getInfo();
+    this.getState();
     // this._filterResults = new class {
     //   clicicId?: string;
     //   clinicName?: string;
@@ -113,6 +118,36 @@ export class SmartSearchMemberComponent implements OnInit {
           this.mGroupList = data.data;
         }
       });
+  }
+
+  getInfo() {
+    console.log('getInfo - job:');
+    if (GlobalConstants.login === undefined) {
+      this.login = new Login();
+    } else {
+      this.login = GlobalConstants.login;
+    }
+    console.log('this.login: ');
+    console.log(this.login);
+    console.log('GlobalConstants.login: ');
+    console.log(GlobalConstants.login);
+  }
+
+  logout() {
+    if (this.login.id !== '') {
+      this.commonService.logout({username: this.login.id}).subscribe(
+        data => {
+          console.log('1' + data);
+          if (data === 'SUCCESS') {
+            console.log('2' + data);
+            this.router.navigate(['/']);
+          } else {
+            this.router.navigate(['/']);
+          }
+          GlobalConstants.login = new Login();
+          GlobalConstants.clinicId = '';
+        });
+    }
   }
 
   watchPosition() {
@@ -202,14 +237,8 @@ export class SmartSearchMemberComponent implements OnInit {
     }
   }
 
-  getPatientId() {
-    // this.activatedRoute.queryParams.subscribe(params => {
-    //   this.adminId = params['adminId'];
-    // });
-    this.patientId = GlobalConstants.login.id;
+  getState() {
     this.state = GlobalConstants.serachType;
-    console.log('getPatientId - patientId:');
-    console.log(this.patientId);
     console.log(this.state);
     if (this.state === 'N') {
       this.headerName = 'Get Queue No';

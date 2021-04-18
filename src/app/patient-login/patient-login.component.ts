@@ -62,7 +62,7 @@ export class PatientLoginComponent implements OnInit {
     //   this.branchId = params['branchId'];
     // });
     // @ts-ignore
-    GlobalConstants.branchId = this.activatedRoute.snapshot.paramMap.get('branchId');
+    // GlobalConstants.branchId = this.activatedRoute.snapshot.paramMap.get('branchId');
     // this.activatedRoute.data.subscribe(v => {
     //   console.log(v);
     //   GlobalConstants.branchId = v.branchId;
@@ -103,7 +103,7 @@ export class PatientLoginComponent implements OnInit {
           if (data !== 'ERROR') {
             console.log(data);
             // @ts-ignore
-            this.loginInfo = data.data;
+            this.loginInfo = data.data[0];
             if (this.loginInfo.id !== null) {
               GlobalConstants.login = this.loginInfo;
               console.log('GlobalConstants.login: ');
@@ -112,7 +112,9 @@ export class PatientLoginComponent implements OnInit {
                 // GlobalConstants.clinicId = this.clinicId;
                 this.joinQueue(GlobalConstants.branchId, GlobalConstants.login.id);
               } else {
-                this.router.navigate(['/patient-view-details/', {id: GlobalConstants.login.id}]);
+                console.log('GlobalConstants.login.id: ');
+                console.log(GlobalConstants.login.id);
+                this.router.navigate(['/patient-view-details']);
               }
             } else {
               this._error.next(`Incorrect Username or Password!`);
@@ -132,7 +134,7 @@ export class PatientLoginComponent implements OnInit {
 
   signUp() {
     // GlobalConstants.clinicId = this.clinicId;
-    this.router.navigate(['/registration']);
+    this.router.navigate(['/registration/', {branchId: GlobalConstants.branchId}]);
   }
 
   return() {
@@ -147,11 +149,12 @@ export class PatientLoginComponent implements OnInit {
           console.log(data);
           if (data === 'SUCCESS') {
             console.log('Successfully Joined');
+            this.router.navigate(['/patient-view-details']);
           } else {
-            alert('Unable to join the queue. Please refresh page or try again later!');
+            alert('Unable to join the queue. Please try again later!');
+            this.router.navigate(['/smart-search-member']);
           }
           this.decline();
-          this.router.navigate(['/patient-view-details/', {id: GlobalConstants.login.id}]);
         });
     }
   }

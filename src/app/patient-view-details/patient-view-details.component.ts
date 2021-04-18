@@ -8,6 +8,7 @@ import { debounceTime } from 'rxjs/operators';
 import { PatientViewDetailsService } from '../shared/services/patient-view-details.service';
 import {GlobalConstants} from "../shared/global-constants";
 import {Login} from "../shared/modals/login.modal";
+import {CommonService} from "../shared/services/common.service";
 
 @Component({
     selector: 'ic-patient-view-details',
@@ -24,6 +25,7 @@ export class PatientViewDetailsComponent implements OnInit {
     branchList: any;
     clinicList: any;
     joinedQueueStatus: any;
+    hide = false;
     // adminId: string | null;
 
     private status: string | Object | null | string;
@@ -37,13 +39,17 @@ export class PatientViewDetailsComponent implements OnInit {
     @ViewChild('cancelQueueModal') modalCancelQueue: TemplateRef<any>;
     statusValue: any;
     output: any;
+    login: Login;
     
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private patientViewDetailsService: PatientViewDetailsService,
-        private modalService: BsModalService
-        ) {}
+        private modalService: BsModalService,
+        private commonService: CommonService
+        ) {
+      this.login = new Login();
+    }
 
     loadAll() {}
 
@@ -54,7 +60,7 @@ export class PatientViewDetailsComponent implements OnInit {
       //   GlobalConstants.login = new Login(params['login']);
       // });
       // @ts-ignore
-      GlobalConstants.login.id = this.activatedRoute.snapshot.paramMap.get('id');
+      this.getInfo();
       // this.activatedRoute.data.subscribe(v => console.log(v));
       console.log('GlobalConstants.login.id: ');
       console.log(GlobalConstants.login.id);
@@ -98,6 +104,51 @@ export class PatientViewDetailsComponent implements OnInit {
       // }
     }
 
+  getInfo() {
+    // this.activatedRoute.queryParams.subscribe(params => {
+    //   GlobalConstants.login.id = params['id'];
+    //   console.log('GlobalConstants.login: ' + GlobalConstants.login.id);
+    // });
+    // this.activatedRoute.data.subscribe(v => {
+    //   console.log(v);
+    //   GlobalConstants.login = v.login;
+    // });
+    // GlobalConstants.login = this.activatedRoute.snapshot.paramMap.get('job');
+    // @ts-ignore
+    // GlobalConstants.login.id = this.activatedRoute.snapshot.paramMap.get('id');
+    // @ts-ignore
+    // GlobalConstants.login.job = this.activatedRoute.snapshot.paramMap.get('job');
+    // @ts-ignore
+    // GlobalConstants.login.name = this.activatedRoute.snapshot.paramMap.get('name');
+    console.log('getInfo - job:');
+    if (GlobalConstants.login === undefined) {
+      this.login = new Login();
+    } else {
+      this.login = GlobalConstants.login;
+    }
+    console.log('this.login: ');
+    console.log(this.login);
+    console.log('GlobalConstants.login: ');
+    console.log(GlobalConstants.login);
+  }
+
+  logout() {
+    if (this.login.id !== '') {
+      this.commonService.logout({username: this.login.id}).subscribe(
+        data => {
+          console.log('1' + data);
+          if (data === 'SUCCESS') {
+            console.log('2' + data);
+            this.router.navigate(['/']);
+          } else {
+            this.router.navigate(['/']);
+          }
+          GlobalConstants.login = new Login();
+          GlobalConstants.clinicId = '';
+        });
+    }
+  }
+
     getCurrentStatus(){
       console.log('at getCurrentStatus');
       if(GlobalConstants.login.id !== null && GlobalConstants.login.id !== undefined && GlobalConstants.login.id !== '') {
@@ -106,7 +157,7 @@ export class PatientViewDetailsComponent implements OnInit {
             console.log(data);
             if (data !== 'ERROR') {
               // @ts-ignore
-              this.joinedQueueStatus = data.data;
+              this.joinedQueueStatus = data.data[0];
               console.log("this.joinedQueueStatus.currentQueueNumber : " + this.joinedQueueStatus.currentQueueNumber);
               if(this.joinedQueueStatus.currentQueueNumber !== undefined) {
                 console.log("this.joinedQueueStatus : " + this.joinedQueueStatus);
@@ -116,7 +167,9 @@ export class PatientViewDetailsComponent implements OnInit {
                 this.patientQueueNoDisplay = this.joinedQueueStatus.yourQueueNumber;
                 this.currentQueueNoDisplay = this.joinedQueueStatus.currentQueueNumber;
                 this.statusValue = this.joinedQueueStatus.status;
+                this.hide = true;
               } else {
+                this.hide = false;
                 console.log("No pending queues");
               }
             }
