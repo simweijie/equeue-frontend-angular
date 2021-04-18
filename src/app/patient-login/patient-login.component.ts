@@ -8,6 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {debounceTime} from 'rxjs/operators';
 import {GlobalConstants} from '../shared/global-constants';
 import {Login} from "../shared/modals/login.modal";
+import {SmartSearchService} from "../shared/services/smart-search.service";
 
 @Component({
   selector: 'app-patient-login',
@@ -29,7 +30,7 @@ export class PatientLoginComponent implements OnInit {
 
   modalForgotRef: BsModalRef;
   @ViewChild('forgotModal') modalForgot: TemplateRef<any>;
-  private status: string | Object | null | string;
+  // private status: string | Object | null | string;
   private loginInfo: Login;
 
   constructor(
@@ -37,6 +38,7 @@ export class PatientLoginComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private modalService: BsModalService,
     private patientLoginService: PatientLoginService,
+    private smartSearchService: SmartSearchService,
     private confirmationService: ConfirmationService,
     private translate: TranslateService,
     private messageService: MessageService,
@@ -45,7 +47,7 @@ export class PatientLoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getId();
+    // this.getId();
 
     this._success.subscribe((message) => this.successMessage = message);
     this._success.pipe(
@@ -55,15 +57,15 @@ export class PatientLoginComponent implements OnInit {
     this._error.subscribe((message) => this.errorMessage = message);
   }
 
-  getId() {
-    // this.activatedRoute.queryParams.subscribe(params => {
-    //   this.clinicId = params['clinicId'];
-    // });
-    // this.clinicId = this.activatedRoute.snapshot.paramMap.get('clinicId');
-    this.clinicId = GlobalConstants.clinicId;
-    console.log('clinicId');
-    console.log(this.clinicId);
-  }
+  // getId() {
+  //   // this.activatedRoute.queryParams.subscribe(params => {
+  //   //   this.clinicId = params['clinicId'];
+  //   // });
+  //   // this.clinicId = this.activatedRoute.snapshot.paramMap.get('clinicId');
+  //   this.clinicId = GlobalConstants.clinicId;
+  //   console.log('clinicId');
+  //   console.log(this.clinicId);
+  // }
 
   forgot() {
     this.modalForgotRef = this.modalService.show(this.modalForgot);
@@ -73,8 +75,8 @@ export class PatientLoginComponent implements OnInit {
     this.patientLoginService.forgot({mobile: this.mobile}).subscribe(
       data => {
         console.log(data);
-        this.status = data;
-        if (this.status === 'Success') {
+        // this.status = data;
+        if (data === 'SUCCESS') {
           this._success.next(`Please check your mobile no.`);
         } else {
           this._error.next(`You are not an existing member. Please sign up!`);
@@ -96,12 +98,12 @@ export class PatientLoginComponent implements OnInit {
           if (data !== 'ERROR') {
             console.log(data);
             // @ts-ignore
-            this.loginInfo = data;
+            this.loginInfo = data.data;
             if (this.loginInfo.id !== null) {
               GlobalConstants.login = this.loginInfo;
-              if (this.clinicId !== null || this.clinicId !== '') {
-                GlobalConstants.clinicId = this.clinicId;
-                this.router.navigate(['/patient-view-details']);
+              if (GlobalConstants.branchId !== null && GlobalConstants.branchId  !== '') {
+                // GlobalConstants.clinicId = this.clinicId;
+                this.joinQueue(GlobalConstants.branchId, GlobalConstants.login.id);
               } else {
                 this.router.navigate(['/patient-view-details']);
               }
@@ -111,7 +113,7 @@ export class PatientLoginComponent implements OnInit {
           } else {
             this._error.next(`Unable to login!`);
           }
-          this.cancel();
+          this.clear();
         });
     }
   }
@@ -122,11 +124,31 @@ export class PatientLoginComponent implements OnInit {
   }
 
   signUp() {
-    GlobalConstants.clinicId = this.clinicId;
+    // GlobalConstants.clinicId = this.clinicId;
     this.router.navigate(['/registration']);
   }
 
   return() {
     this.router.navigate(['/']);
+  }
+
+  joinQueue(branch: string, customer: string | undefined) {
+    console.log('joinQueue - branchId:');
+    if ((branch !== null || branch !== '') && (customer !== null || customer !== '' || customer !== undefined)) {
+      this.smartSearchService.joinQueue({branchId: branch, customerId: customer}).subscribe(
+        data => {
+          console.log(data);
+          if (data === 'SUCCESS') {
+            console.log('Successfully Joined');
+          } else {
+            alert('Unable to join the queue. Please refresh page or try again later!');
+          }
+          this.decline();
+          this.router.navigate(['/patient-view-details']);
+        });
+    }
+  }
+  decline() {
+    GlobalConstants.branchId = '';
   }
 }

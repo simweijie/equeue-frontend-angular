@@ -51,23 +51,25 @@ export class StaffLoginComponent implements OnInit {
         console.log("here at staff login, start");
         if (this.username !== null && this.username !== '' && this.username !== undefined &&
             this.password !== null && this.password !== '' && this.password !== undefined
-        ) {      
+        ) {
             this.staffLoginService.staffLogin({username: this.username, password:this.password}).subscribe(
                 data => {
                 console.log(data);
-                // @ts-ignore
-                this.loginInfo = data;
-                if (this.loginInfo.id !== null) {
+                if (data !== 'ERROR') {
+                  // @ts-ignore
+                  this.loginInfo = data.data;
+                  if (this.loginInfo.id !== null) {
                     console.log(" sf 11");
                     GlobalConstants.login = this.loginInfo;
-                    if (this.adminId !== null || this.adminId !== '') {
-                        this.router.navigate(['/staff-info']);
-                    } else {
-                      this.router.navigate(['/staff-info']);
-                    }
-                } else {
+                    // if (this.adminId !== null || this.adminId !== '') {
+                    //     this.router.navigate(['/staff-info']);
+                    // } else {
+                    this.router.navigate(['/staff-info']);
+                    // }
+                  } else {
                     this._error.next(`Incorrect Username or Password!`);
                     console.log(" sf 12");
+                  }
                 }
                 });
         } else {
@@ -115,7 +117,7 @@ export class StaffLoginComponent implements OnInit {
           data => {
             console.log(data);
             this.forgotCredentialsStatus = data;
-            if (this.forgotCredentialsStatus === 'Success') {
+            if (data === 'SUCCESS') {
               this._success.next(`Please check your Contact No.`);
             } else {
               this._error.next(`You are not an existing staff. Kindly sign up!`);

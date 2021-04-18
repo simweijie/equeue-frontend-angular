@@ -61,14 +61,16 @@ export class RegistrationStaffComponent implements OnInit {
         data => {
           console.log(data);
           if (data !== 'ERROR') {
-            this.branchList = data;
+            // @ts-ignore
+            this.branchList = data.data;
           }
         });
       this.commonService.retrieveClinicList().subscribe(
         data => {
           console.log(data);
           if (data !== 'ERROR') {
-            this.clinicList = data;
+            // @ts-ignore
+            this.clinicList = data.data;
           }
         });
 
@@ -111,7 +113,7 @@ export class RegistrationStaffComponent implements OnInit {
                     console.log('data: ' + data);
                     this.signUpStatus = data;
                     console.log('this.signUpStatus: ' + this.signUpStatus);
-                    if (this.signUpStatus === 200) {
+                    if (data === 'SUCCESS') {
                         this._success.next(`You are successfully registered with eQueue ` + this.registrationStaff);
                         console.log(" sf 11");
                         // routed to login page to sign in

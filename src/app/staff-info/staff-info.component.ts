@@ -128,11 +128,12 @@ export class StaffInfoComponent implements OnInit {
       data => {
         console.log(data);
         // this.dataSource = new MatTableDataSource<any>(this.sampleData);
-        if (data === 'ERROR') {
-          return;
+        if (data !== 'ERROR') {
+          // @ts-ignore
+          this.sampleData = data.data;
+          this.dataSource = new MatTableDataSource<any>(this.sampleData);
+          this.dataSource.paginator = this.paginator;
         }
-        // @ts-ignore
-        this.dataSource = new MatTableDataSource<any>(data);
 
         // if (data === null) {
         //   this._error.next(this.error500);
@@ -168,7 +169,8 @@ export class StaffInfoComponent implements OnInit {
       data => {
         console.log(data);
         if (data !== 'ERROR') {
-          this.branchList = data;
+          // @ts-ignore
+          this.branchList = data.data;
           this.branchMap = new Map<string, string>();
           for (let entry of this.branchList) {
             this.branchMap.set(entry.id, entry.value);
@@ -179,7 +181,8 @@ export class StaffInfoComponent implements OnInit {
       data => {
         console.log(data);
         if (data !== 'ERROR') {
-          this.clinicList = data;
+          // @ts-ignore
+          this.clinicList = data.data;
           this.clinicMap = new Map<string, string>();
           for (let entry of this.clinicList) {
             this.clinicMap.set(entry.id, entry.value);
@@ -216,7 +219,7 @@ export class StaffInfoComponent implements OnInit {
       data => {
         console.log(data);
         this.statusD = data;
-        if (this.statusD === 'Success') {
+        if (data === 'SUCCESS') {
           this._success.next(`Successfully removed staff: ` + this.staffName);
         } else {
           this._error.next(`Unable to remove staff!`);
@@ -245,7 +248,7 @@ export class StaffInfoComponent implements OnInit {
       data => {
         console.log(data);
         this.statusA = data;
-        if (this.statusA === 'Success') {
+        if (data === 'SUCCESS') {
           this._success.next(`Successfully accepted staff: ` + this.staffName);
         } else {
           this._error.next(`Unable to accept staff!`);
@@ -273,7 +276,7 @@ export class StaffInfoComponent implements OnInit {
     this.statusEdit = staff.status;
     this.isAdmin = staff.isAdmin;
     // console.log('_staffInfoEdit: ' + this._staffInfoEdit);
-    if(this.clinic !== null || this.clinic !== undefined || this.clinic !== '') {
+    if (this.clinic !== null || this.clinic !== undefined || this.clinic !== '') {
       this.listOfBranchesWithClinicId(this.clinic);
     }
     this.modalEditRef = this.modalService.show(this.modalEdit);
@@ -296,7 +299,7 @@ export class StaffInfoComponent implements OnInit {
         data => {
           console.log(data);
           this.statusU = data;
-          if (this.statusU === 'Success') {
+          if (data === 'SUCCESS') {
             this._success.next(`Successfully updated staff: ` + this.staffId);
           } else {
             this._error.next(`Unable to update staff!`);
@@ -344,7 +347,8 @@ export class StaffInfoComponent implements OnInit {
       data => {
         console.log(data);
         if (data !== 'ERROR') {
-          this.branchListEdit = data;
+          // @ts-ignore
+          this.branchListEdit = data.data;
           this.hide = true;
       }
     });

@@ -237,7 +237,7 @@ export class RegistrationClinicComponent implements OnInit {
                     data => {
                     console.log(data);
                     this.signUpStatus = data;
-                    if (this.signUpStatus === 'Success') {
+                    if (data === 'SUCCESS') {
                         this._success.next(`You are successfully registered with eQueue ` + this.registrationClinic);
                         console.log(" sf 11");
                         // routed to login page to sign in

@@ -118,21 +118,24 @@ export class PatientQueueComponent implements OnInit {
         this.missData = [];
         // @ts-ignore
         this.sampleData = data.data;
-        for (var item of this.sampleData){
-          if (item.status === 'Q') {
-            this.queueData.push(item);
-          } else if (item.status === 'M') {
-            this.missData.push(item);
-          } else if (item.status === 'D') {
-            this.conData.push(item);
-          } else if (item.status === 'P') {
-            this.mpData.push(item);
-          } else if (item.status === 'C') {
-            // this.queueData.push(item);
-          } else if (item.status === 'R') {
-            // this.queueData.push(item);
+        if (this.sampleData !== undefined) {
+          for (var item of this.sampleData){
+            if (item.status === 'Q') {
+              this.queueData.push(item);
+            } else if (item.status === 'M') {
+              this.missData.push(item);
+            } else if (item.status === 'D') {
+              this.conData.push(item);
+            } else if (item.status === 'P') {
+              this.mpData.push(item);
+            } else if (item.status === 'C') {
+              // this.queueData.push(item);
+            } else if (item.status === 'R') {
+              // this.queueData.push(item);
+            }
           }
         }
+
         this.dataSourceQueue = new MatTableDataSource<any>(this.queueData);
         this.dataSourceQueue.paginator = this.paginator;
 
@@ -186,7 +189,7 @@ export class PatientQueueComponent implements OnInit {
     this.patientQueueService.updateQueueStatus({newStatus: 'D', branchId: branch, customerId: patientId, currentStatus: currStatus}).subscribe(
       data => {
         console.log(data);
-        if (data === '200') {
+        if (data === 'SUCCESS') {
           this._success.next(`Successfully changed patient: ` + patientName + ' status.');
         } else {
           this._error.next(`Unable to change patient:` + patientName + ' status!');
@@ -198,7 +201,7 @@ export class PatientQueueComponent implements OnInit {
     this.patientQueueService.updateQueueStatus({newStatus: 'P', branchId: branch, customerId: patientId, currentStatus: currStatus}).subscribe(
       data => {
         console.log(data);
-        if (data === '200') {
+        if (data === 'SUCCESS') {
           this._success.next(`Successfully changed patient: ` + patientName + ' status.');
         } else {
           this._error.next(`Unable to change patient:` + patientName + ' status!');
@@ -210,7 +213,7 @@ export class PatientQueueComponent implements OnInit {
     this.patientQueueService.updateQueueStatus({newStatus: 'C', branchId: branch, customerId: patientId, currentStatus: currStatus}).subscribe(
       data => {
         console.log(data);
-        if (data === '200') {
+        if (data === 'SUCCESS') {
           this._success.next(`Successfully changed patient: ` + patientName + ' status.');
         } else {
           this._error.next(`Unable to change patient:` + patientName + ' status!');
@@ -222,7 +225,7 @@ export class PatientQueueComponent implements OnInit {
     this.patientQueueService.updateQueueStatus({newStatus: 'M', branchId: branch, customerId: patientId, currentStatus: currStatus}).subscribe(
       data => {
         console.log(data);
-        if (data === '200') {
+        if (data === 'SUCCESS') {
           this._success.next(`Successfully changed patient: ` + patientName + ' status.');
         } else {
           this._error.next(`Unable to change patient:` + patientName + ' status!');
@@ -234,7 +237,7 @@ export class PatientQueueComponent implements OnInit {
     this.patientQueueService.updateQueueStatus({newStatus: 'Q', branchId: branch, customerId: patientId, currentStatus: currStatus}).subscribe(
       data => {
         console.log(data);
-        if (data === '200') {
+        if (data === 'SUCCESS') {
           this._success.next(`Successfully changed patient: ` + patientName + ' status.');
         } else {
           this._error.next(`Unable to change patient:` + patientName + ' status!');
