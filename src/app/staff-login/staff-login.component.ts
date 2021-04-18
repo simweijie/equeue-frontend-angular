@@ -104,7 +104,7 @@ export class StaffLoginComponent implements OnInit {
 
     registerNewStaffExistingClinic(){
         console.log("test registerNewStaffExistingClinic ");
-        this.router.navigate(['/registration-staff', {branchId: GlobalConstants.branchId}]);
+        this.router.navigate(['/registration-staff']);
     }
 
     forgotCredentials(){
