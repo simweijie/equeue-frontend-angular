@@ -241,7 +241,7 @@ export class RegistrationClinicComponent implements OnInit {
                         this._success.next(`You are successfully registered with eQueue ` + this.registrationClinic);
                         console.log(" sf 11");
                         // routed to login page to sign in
-                        this.router.navigate(['/patient-login/:clinicId']);
+                        this.router.navigate(['/staff-info/']);
                     } else {
                         this._error.next(`Unable to register with eQueue!`);
                         console.log(" sf 12");

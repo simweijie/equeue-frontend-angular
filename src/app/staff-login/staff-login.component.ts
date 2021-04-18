@@ -57,7 +57,7 @@ export class StaffLoginComponent implements OnInit {
                 console.log(data);
                 if (data !== 'ERROR') {
                   // @ts-ignore
-                  this.loginInfo = data.data;
+                  this.loginInfo = data.data[0];
                   if (this.loginInfo.id !== null) {
                     console.log(" sf 11");
                     GlobalConstants.login = this.loginInfo;
@@ -104,7 +104,7 @@ export class StaffLoginComponent implements OnInit {
 
     registerNewStaffExistingClinic(){
         console.log("test registerNewStaffExistingClinic ");
-        this.router.navigate(['/registration-staff']);
+        this.router.navigate(['/registration-staff', {branchId: GlobalConstants.branchId}]);
     }
 
     forgotCredentials(){

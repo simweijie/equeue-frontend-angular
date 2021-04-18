@@ -9,6 +9,7 @@ import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {CommonService} from '../shared/services/common.service';
 import {GlobalConstants} from "../shared/global-constants";
+import { Login } from '../shared/modals/login.modal';
 
 @Component({
   selector: 'app-staff-info',
@@ -72,6 +73,7 @@ export class StaffInfoComponent implements OnInit {
   address: any;
   cNo: any;
   fName: any;
+  login: Login;
 
   sampleData: Array<object> = [
     {id: '3', email: 'branch2staff@hotmail.com', name: 'branch2staff', addr: 'WORKER STREET UPDATED', contactNo: '01234567', job: 'D', status: 'I', isAdmin: 'Y', branchId: '4', branchName: 'Tampines', clinicId: '4', clinicName: 'QM Dental'},
@@ -96,7 +98,7 @@ export class StaffInfoComponent implements OnInit {
     private staffInfoService: StaffInfoService,
     private modalService: BsModalService,
     private commonService: CommonService
-  ) { }
+  ) { this.login = new Login(); }
 
   ngOnInit(): void {
     this._staffInfo = new class implements IStaff {
@@ -123,7 +125,8 @@ export class StaffInfoComponent implements OnInit {
       branchId?: string;
       password?: string;
     };
-    this.getId();
+    // this.getId();
+    this.getInfo();
     this.staffInfoService.listOfStaffInClinic({staffId: this.id}).subscribe(
       data => {
         console.log(data);
@@ -196,6 +199,52 @@ export class StaffInfoComponent implements OnInit {
     ).subscribe(() => this.successMessage = '');
 
     this._error.subscribe((message) => this.errorMessage = message);
+  }
+
+
+  getInfo() {
+    // this.activatedRoute.queryParams.subscribe(params => {
+    //   GlobalConstants.login.id = params['id'];
+    //   console.log('GlobalConstants.login: ' + GlobalConstants.login.id);
+    // });
+    // this.activatedRoute.data.subscribe(v => {
+    //   console.log(v);
+    //   GlobalConstants.login = v.login;
+    // });
+    // GlobalConstants.login = this.activatedRoute.snapshot.paramMap.get('job');
+    // @ts-ignore
+    // GlobalConstants.login.id = this.activatedRoute.snapshot.paramMap.get('id');
+    // @ts-ignore
+    // GlobalConstants.login.job = this.activatedRoute.snapshot.paramMap.get('job');
+    // @ts-ignore
+    // GlobalConstants.login.name = this.activatedRoute.snapshot.paramMap.get('name');
+    console.log('getInfo - job:');
+    if (GlobalConstants.login === undefined) {
+      this.login = new Login();
+    } else {
+      this.login = GlobalConstants.login;
+    }
+    console.log('this.login: ');
+    console.log(this.login);
+    console.log('GlobalConstants.login: ');
+    console.log(GlobalConstants.login);
+  }
+
+  logout() {
+    if (this.login.id !== '') {
+      this.commonService.logout({username: this.login.id}).subscribe(
+        data => {
+          console.log('1' + data);
+          if (data === 'SUCCESS') {
+            console.log('2' + data);
+            this.router.navigate(['/']);
+          } else {
+            this.router.navigate(['/']);
+          }
+          GlobalConstants.login = new Login();
+          GlobalConstants.clinicId = '';
+        });
+    }
   }
 
   getId(): void {
@@ -348,7 +397,7 @@ export class StaffInfoComponent implements OnInit {
         console.log(data);
         if (data !== 'ERROR') {
           // @ts-ignore
-          this.branchListEdit = data.data;
+          this.branchListEdit = data.data[0];
           this.hide = true;
       }
     });
