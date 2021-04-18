@@ -219,11 +219,11 @@ export class StaffInfoComponent implements OnInit {
     // @ts-ignore
     // GlobalConstants.login.name = this.activatedRoute.snapshot.paramMap.get('name');
     console.log('getInfo - job:');
-    if (GlobalConstants.login === undefined) {
-      this.login = new Login();
-    } else {
+//     if (GlobalConstants.login === undefined) {
+//       this.login = new Login();
+//     } else {
       this.login = GlobalConstants.login;
-    }
+//     }
     console.log('this.login: ');
     console.log(this.login);
     console.log('GlobalConstants.login: ');
