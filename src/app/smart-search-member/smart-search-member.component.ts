@@ -44,7 +44,7 @@ export class SmartSearchMemberComponent implements OnInit {
   ];
   // private _filterResults: { clicicId?: string; clicicName?: string; currentOperation?: string; queueLength?: string };
   filterList: any;
-  clinicId: any;
+  branchId: any;
   patientId: any;
   private state: string | null;
   headerName: any;
@@ -151,12 +151,15 @@ export class SmartSearchMemberComponent implements OnInit {
             // @ts-ignore
             this.filterList = data.data;
             for (let entry of this.filterList) {
-              const latLong = [entry.lat, entry.long];
-              let listOfMarkers = L.marker(latLong).addTo(this.mymap);
-              if(this.state === 'C') {
-                listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="changeConfirmation(entry.clinicId)">Join Queue</button>');
-              } else if (this.state === 'N') {
-                listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="newConfirmation(entry.clinicId)">Join Queue</button>');
+              console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
+              if (entry.latt !== null  && entry.longt !== null) {
+                const latLong = [entry.latt, entry.longt];
+                let listOfMarkers = L.marker(latLong).addTo(this.mymap);
+                if (this.state === 'C') {
+                  listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.opens}} - {{entry.closes}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="changeConfirmation(entry.branchId)">Join Queue</button>');
+                } else if (this.state === 'N') {
+                  listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.opens}} - {{entry.closes}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="newConfirmation(entry.branchId)">Join Queue</button>');
+                }
               }
             }
           }
@@ -180,12 +183,15 @@ export class SmartSearchMemberComponent implements OnInit {
             // @ts-ignore
             this.filterList = data.data;
             for (let entry of this.filterList) {
-              const latLong = [entry.lat, entry.long];
-              let listOfMarkers = L.marker(latLong).addTo(this.mymap);
-              if(this.state === 'C') {
-                listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="changeConfirmation(entry.clinicId)">Join Queue</button>');
-              } else if (this.state === 'N') {
-                listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="newConfirmation(entry.clinicId)">Join Queue</button>');
+              console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
+              if (entry.latt !== null  && entry.longt !== null) {
+                const latLong = [entry.latt, entry.longt];
+                let listOfMarkers = L.marker(latLong).addTo(this.mymap);
+                if(this.state === 'C') {
+                  listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.opens}} - {{entry.closes}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="changeConfirmation(entry.branchId)">Join Queue</button>');
+                } else if (this.state === 'N') {
+                  listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.opens}} - {{entry.closes}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="newConfirmation(entry.branchId)">Join Queue</button>');
+                }
               }
             }
           }
@@ -197,7 +203,7 @@ export class SmartSearchMemberComponent implements OnInit {
     // this.activatedRoute.queryParams.subscribe(params => {
     //   this.adminId = params['adminId'];
     // });
-    // this.patientId = GlobalConstants.login.id;
+    this.patientId = GlobalConstants.login.id;
     this.state = GlobalConstants.serachType;
     console.log('getPatientId - patientId:');
     console.log(this.patientId);
@@ -209,24 +215,24 @@ export class SmartSearchMemberComponent implements OnInit {
     }
   }
 
-  changeConfirmation(clinicId: any) {
-    this.clinicId = clinicId;
+  changeConfirmation(branchId: any) {
+    this.branchId = branchId;
     this.modalChangeRef = this.modalService.show(this.modalChange);
   }
 
-  newConfirmation(clinicId: any) {
-    this.clinicId = clinicId;
+  newConfirmation(branchId: any) {
+    this.branchId = branchId;
     this.modalNewRef = this.modalService.show(this.modalNew);
   }
 
   changeQueue() {
-    console.log('addQueue - clinicId:');
-    console.log(this.clinicId);
-    if ((this.clinicId !== null || this.clinicId !== '') && (this.patientId !== null || this.patientId !== '')) {
-      this.smartSearchService.leaveQueue({branchId: this.clinicId, customerId: this.patientId}).subscribe(
+    console.log('addQueue - branchId:');
+    console.log(this.branchId);
+    if ((this.branchId !== null || this.branchId !== '') && (this.patientId !== null || this.patientId !== '')) {
+      this.smartSearchService.leaveQueue({branchId: this.branchId, customerId: this.patientId}).subscribe(
         data => {
           console.log(data);
-          if (data !== null || data !== 'ERROR') {
+          if (data === 'SUCCESS') {
             this.newQueue();
           } else {
             alert('Unable to join the queue. Please refresh page or try again later!');
@@ -237,13 +243,13 @@ export class SmartSearchMemberComponent implements OnInit {
   }
 
   newQueue() {
-    console.log('addQueue - clinicId:');
-    console.log(this.clinicId);
-    if ((this.clinicId !== null || this.clinicId !== '') && (this.patientId !== null || this.patientId !== '')) {
-      this.smartSearchService.joinQueue({branchId: this.clinicId, customerId: this.patientId}).subscribe(
+    console.log('addQueue - branchId:');
+    console.log(this.branchId);
+    if ((this.branchId !== null || this.branchId !== '') && (this.patientId !== null || this.patientId !== '')) {
+      this.smartSearchService.joinQueue({branchId: this.branchId, customerId: this.patientId}).subscribe(
         data => {
           console.log(data);
-          if (data !== null || data !== 'ERROR') {
+          if (data === 'SUCCESS') {
             console.log('Successfully Joined');
           } else {
             alert('Unable to join the queue. Please refresh page or try again later!');
@@ -256,6 +262,6 @@ export class SmartSearchMemberComponent implements OnInit {
   decline() {
     this.modalChangeRef.hide();
     this.modalNewRef.hide();
-    this.clinicId = '';
+    this.branchId = '';
   }
 }

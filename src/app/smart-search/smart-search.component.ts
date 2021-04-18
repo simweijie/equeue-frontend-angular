@@ -37,7 +37,7 @@ export class SmartSearchComponent implements OnInit {
   ];
   // private _filterResults: { clicicId?: string; clicicName?: string; currentOperation?: string; queueLength?: string };
   filterList: any;
-  clinicId: any;
+  branchId: any;
 
   constructor(
     private router: Router,
@@ -140,9 +140,12 @@ export class SmartSearchComponent implements OnInit {
             // @ts-ignore
             this.filterList = data.data;
             for (let entry of this.filterList) {
-              const latLong = [entry.lat, entry.long];
-              let listOfMarkers = L.marker(latLong).addTo(this.mymap);
-              listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="addQueue(entry.branchId)">Join Queue</button>');
+              console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
+              if (entry.latt !== null  && entry.longt !== null) {
+                const latLong = [entry.latt, entry.longt];
+                let listOfMarkers = L.marker(latLong).addTo(this.mymap);
+                listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.opens}} - {{entry.closes}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="addQueue(entry.branchId)">Join Queue</button>');
+              }
             }
           }
         });
@@ -165,21 +168,24 @@ export class SmartSearchComponent implements OnInit {
             // @ts-ignore
             this.filterList = data.data;
             for (let entry of this.filterList) {
-              const latLong = [entry.lat, entry.long];
-              let listOfMarkers = L.marker(latLong).addTo(this.mymap);
-              listOfMarkers.bindPopup('<b>Clinic Name: {{entry.clinicName}}} <br> Current Operation: {{entry.currentOperation}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="addQueue(entry.clinicId)">Join Queue</button>');
+              console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
+              if (entry.latt !== null  && entry.longt !== null) {
+                const latLong = [entry.latt, entry.longt];
+                let listOfMarkers = L.marker(latLong).addTo(this.mymap);
+                listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.opens}} - {{entry.closes}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="addQueue(entry.branchId)">Join Queue</button>');
+              }
             }
           }
         });
     }
   }
 
-  addQueue(clinicId: any) {
-    console.log('addQueue - clinicId:');
-    console.log(clinicId);
-    this.clinicId = clinicId;
-    if (this.clinicId !== null || this.clinicId !== '') {
-      GlobalConstants.clinicId = this.clinicId;
+  addQueue(branchId: any) {
+    console.log('addQueue - branchId:');
+    console.log(branchId);
+    this.branchId = branchId;
+    if (this.branchId !== null || this.branchId !== '') {
+      GlobalConstants.branchId = this.branchId;
       this.router.navigate(['/patient-login']);
     }
   }

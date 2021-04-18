@@ -49,14 +49,14 @@ export class RegistrationComponent implements OnInit {
       ).subscribe(() => this.successMessage = '');
   
       this._error.subscribe((message) => this.errorMessage = message);
-      this.getId();
+      // this.getId();
     }
 
-  getId() {
-    this.clinicId = GlobalConstants.clinicId;
-    console.log('clinicId');
-    console.log(this.clinicId);
-  }
+  // getId() {
+  //   this.clinicId = GlobalConstants.clinicId;
+  //   console.log('clinicId');
+  //   console.log(this.clinicId);
+  // }
 
 
     onSignUp(editForm: NgForm){
@@ -87,7 +87,7 @@ export class RegistrationComponent implements OnInit {
                     data => {
                     console.log(data);
                     this.signUpStatus = data;
-                    if (this.signUpStatus === 'Success') {
+                    if (data === 'SUCCESS') {
                         this._success.next(`You are successfully registered with eQueue ` + this.registration);
                         console.log(" sf 11");
                         // routed to login page to sign in

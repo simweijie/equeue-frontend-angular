@@ -58,8 +58,9 @@ export class MainComponent implements OnInit, AfterViewInit {
       if (this.login.job !== null || this.login.job !== undefined || this.login.job !== '')
         this.commonService.logout({username: this.login.id}).subscribe(
           data => {
-            console.log(data);
+            console.log('1' + data);
             if (data === 'SUCCESS') {
+              console.log('2' + data);
               this.router.navigate(['/']);
             } else {
               this.router.navigate(['/']);
@@ -70,8 +71,9 @@ export class MainComponent implements OnInit, AfterViewInit {
     } else {
       this.commonService.staffLogout({username: this.login.id}).subscribe(
         data => {
-          console.log(data);
+          console.log('1' + data);
           if (data === 'SUCCESS') {
+            console.log('2' + data);
             this.router.navigate(['/']);
           } else {
             this.router.navigate(['/']);
