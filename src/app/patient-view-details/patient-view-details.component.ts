@@ -88,6 +88,7 @@ export class PatientViewDetailsComponent implements OnInit {
     }
 
     getCurrentStatus(){
+      console.log('at getCurrentStatus');
       if(GlobalConstants.login.id !== null && GlobalConstants.login.id !== undefined && GlobalConstants.login.id !== '') {
         this.patientViewDetailsService.getJoinedQueueStatus({customerId: GlobalConstants.login.id}).subscribe(
           data => {
@@ -118,7 +119,7 @@ export class PatientViewDetailsComponent implements OnInit {
       this.patientViewDetailsService.rejoinQueue({branchId: this.joinedQueueStatus.branchId, customerId: this.joinedQueueStatus.customerId}).subscribe(
         data => {
           console.log(data);
-          if (data === '200') {
+          if (data === 'SUCCESS') {
             this._success.next(`Successfully rejoined queue with new Queue Number : ` + this.joinedQueueStatus.yourQueueNumber);
           } else {
             this._error.next(`Unable to rejoin queue:`);
