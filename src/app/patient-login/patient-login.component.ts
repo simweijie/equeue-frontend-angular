@@ -101,6 +101,7 @@ export class PatientLoginComponent implements OnInit {
             this.loginInfo = data.data;
             if (this.loginInfo.id !== null) {
               GlobalConstants.login = this.loginInfo;
+              console.log('GlobalConstants.login: ' + GlobalConstants.login);
               if (GlobalConstants.branchId !== null && GlobalConstants.branchId  !== '') {
                 // GlobalConstants.clinicId = this.clinicId;
                 this.joinQueue(GlobalConstants.branchId, GlobalConstants.login.id);

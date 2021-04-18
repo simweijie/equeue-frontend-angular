@@ -46,8 +46,8 @@ export class PatientViewDetailsComponent implements OnInit {
     loadAll() {}
 
     ngOnInit() {
-      console.log("here at staff login hello");
-      console.log('GlobalConstants.login.id' + GlobalConstants.login.id);    
+      console.log("here at patient login hello");
+      console.log('GlobalConstants.login.id' + GlobalConstants.login.id);
       this.getCurrentStatus();
 
       this._success.subscribe((message) => this.successMessage = message);

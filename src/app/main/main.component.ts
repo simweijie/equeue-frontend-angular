@@ -41,6 +41,8 @@ export class MainComponent implements OnInit, AfterViewInit {
     // GlobalConstants.job = this.activatedRoute.snapshot.paramMap.get('job');
     console.log('getInfo - job:');
     this.login = GlobalConstants.login;
+    console.log('this.login: ' + this.login);
+    console.log('GlobalConstants.login: ' + GlobalConstants.login);
   }
 
 
