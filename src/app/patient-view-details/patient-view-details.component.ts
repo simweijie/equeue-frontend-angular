@@ -1,12 +1,13 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { interval, Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { PatientViewDetailsService } from '../shared/services/patient-view-details.service';
 import {GlobalConstants} from "../shared/global-constants";
+import {Login} from "../shared/modals/login.modal";
 
 @Component({
     selector: 'ic-patient-view-details',
@@ -39,7 +40,8 @@ export class PatientViewDetailsComponent implements OnInit {
     
     constructor(
         private router: Router,
-        private  patientViewDetailsService: PatientViewDetailsService,
+        private activatedRoute: ActivatedRoute,
+        private patientViewDetailsService: PatientViewDetailsService,
         private modalService: BsModalService
         ) {}
 
@@ -47,7 +49,15 @@ export class PatientViewDetailsComponent implements OnInit {
 
     ngOnInit() {
       console.log("here at patient login hello");
-      console.log('GlobalConstants.login.id' + GlobalConstants.login.id);
+      // this.activatedRoute.queryParams.subscribe(params => {
+      //   console.log('params[\'id\']: ' + params['id']);
+      //   GlobalConstants.login = new Login(params['login']);
+      // });
+      // @ts-ignore
+      GlobalConstants.login.id = this.activatedRoute.snapshot.paramMap.get('id');
+      // this.activatedRoute.data.subscribe(v => console.log(v));
+      console.log('GlobalConstants.login.id: ');
+      console.log(GlobalConstants.login.id);
       this.getCurrentStatus();
 
       this._success.subscribe((message) => this.successMessage = message);

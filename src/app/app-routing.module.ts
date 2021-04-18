@@ -13,11 +13,13 @@ import { RegistrationStaffComponent } from './registration/registration-staff.co
 import { RegistrationClinicComponent } from './registration/registration-clinic.component';
 import { StaffLoginComponent } from './staff-login/staff-login.component';
 import { PatientViewDetailsComponent } from './patient-view-details/patient-view-details.component';
+import {GlobalConstants} from "./shared/global-constants";
 
 const routes: Routes = [
   // {path: '', component: AppComponent},
   {path: '', component: SmartSearchComponent},
   {path: 'test-mod', component: TestModComponent},
+  // {path: 'registration', component: RegistrationComponent},
   {path: 'registration', component: RegistrationComponent},
   {path: 'registration-staff', component: RegistrationStaffComponent},
   {path: 'registration-clinic', component: RegistrationClinicComponent},
@@ -25,6 +27,7 @@ const routes: Routes = [
   // {path: 'staff-info/:staffId', component: StaffInfoComponent},
   // {path: 'patient-login/:clinicId', component: PatientLoginComponent},
   {path: 'staff-info', component: StaffInfoComponent},
+  // {path: 'patient-login', component: PatientLoginComponent, data: {branchId: GlobalConstants.branchId}},
   {path: 'patient-login', component: PatientLoginComponent},
   {path: 'patient-queue', component: PatientQueueComponent},
   {path: 'smart-search-member', component: SmartSearchMemberComponent},
@@ -33,7 +36,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash : true})],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

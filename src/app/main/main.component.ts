@@ -36,13 +36,30 @@ export class MainComponent implements OnInit, AfterViewInit {
 
   getInfo() {
     // this.activatedRoute.queryParams.subscribe(params => {
-    //   this.adminId = params['adminId'];
+    //   GlobalConstants.login.id = params['id'];
+    //   console.log('GlobalConstants.login: ' + GlobalConstants.login.id);
     // });
-    // GlobalConstants.job = this.activatedRoute.snapshot.paramMap.get('job');
+    // this.activatedRoute.data.subscribe(v => {
+    //   console.log(v);
+    //   GlobalConstants.login = v.login;
+    // });
+    // GlobalConstants.login = this.activatedRoute.snapshot.paramMap.get('job');
+    // @ts-ignore
+    GlobalConstants.login.id = this.activatedRoute.snapshot.paramMap.get('id');
+    // @ts-ignore
+    GlobalConstants.login.job = this.activatedRoute.snapshot.paramMap.get('job');
+    // @ts-ignore
+    GlobalConstants.login.name = this.activatedRoute.snapshot.paramMap.get('name');
     console.log('getInfo - job:');
-    this.login = GlobalConstants.login;
-    console.log('this.login: ' + this.login);
-    console.log('GlobalConstants.login: ' + GlobalConstants.login);
+    if (GlobalConstants.login === undefined) {
+      this.login = new Login();
+    } else {
+      this.login = GlobalConstants.login;
+    }
+    console.log('this.login: ');
+    console.log(this.login);
+    console.log('GlobalConstants.login: ');
+    console.log(GlobalConstants.login);
   }
 
 
@@ -68,7 +85,7 @@ export class MainComponent implements OnInit, AfterViewInit {
               this.router.navigate(['/']);
             }
             GlobalConstants.login = new Login();
-            GlobalConstants.clinicId = null;
+            GlobalConstants.clinicId = '';
           });
     } else {
       this.commonService.staffLogout({username: this.login.id}).subscribe(
@@ -81,7 +98,7 @@ export class MainComponent implements OnInit, AfterViewInit {
             this.router.navigate(['/']);
           }
           GlobalConstants.login = new Login();
-          GlobalConstants.clinicId = null;
+          GlobalConstants.clinicId = '';
         });
     }
   }

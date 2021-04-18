@@ -25,7 +25,7 @@ export class PatientLoginComponent implements OnInit {
 
   username: any;
   password: any;
-  clinicId: string | null;
+  branchId: string | null;
   mobile: any;
 
   modalForgotRef: BsModalRef;
@@ -47,7 +47,7 @@ export class PatientLoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getId();
+    this.getId();
 
     this._success.subscribe((message) => this.successMessage = message);
     this._success.pipe(
@@ -57,15 +57,20 @@ export class PatientLoginComponent implements OnInit {
     this._error.subscribe((message) => this.errorMessage = message);
   }
 
-  // getId() {
-  //   // this.activatedRoute.queryParams.subscribe(params => {
-  //   //   this.clinicId = params['clinicId'];
-  //   // });
-  //   // this.clinicId = this.activatedRoute.snapshot.paramMap.get('clinicId');
-  //   this.clinicId = GlobalConstants.clinicId;
-  //   console.log('clinicId');
-  //   console.log(this.clinicId);
-  // }
+  getId() {
+    // this.activatedRoute.queryParams.subscribe(params => {
+    //   this.branchId = params['branchId'];
+    // });
+    // @ts-ignore
+    GlobalConstants.branchId = this.activatedRoute.snapshot.paramMap.get('branchId');
+    // this.activatedRoute.data.subscribe(v => {
+    //   console.log(v);
+    //   GlobalConstants.branchId = v.branchId;
+    // });
+    // this.clinicId = GlobalConstants.clinicId;
+    console.log('GlobalConstants.branchId');
+    console.log(GlobalConstants.branchId);
+  }
 
   forgot() {
     this.modalForgotRef = this.modalService.show(this.modalForgot);
@@ -101,12 +106,13 @@ export class PatientLoginComponent implements OnInit {
             this.loginInfo = data.data;
             if (this.loginInfo.id !== null) {
               GlobalConstants.login = this.loginInfo;
-              console.log('GlobalConstants.login: ' + GlobalConstants.login);
-              if (GlobalConstants.branchId !== null && GlobalConstants.branchId  !== '') {
+              console.log('GlobalConstants.login: ');
+              console.log(GlobalConstants.login);
+              if (GlobalConstants.branchId !== null && GlobalConstants.branchId !== '' && GlobalConstants.branchId !== undefined) {
                 // GlobalConstants.clinicId = this.clinicId;
                 this.joinQueue(GlobalConstants.branchId, GlobalConstants.login.id);
               } else {
-                this.router.navigate(['/patient-view-details']);
+                this.router.navigate(['/patient-view-details/', {id: GlobalConstants.login.id}]);
               }
             } else {
               this._error.next(`Incorrect Username or Password!`);
@@ -135,7 +141,7 @@ export class PatientLoginComponent implements OnInit {
 
   joinQueue(branch: string, customer: string | undefined) {
     console.log('joinQueue - branchId:');
-    if ((branch !== null || branch !== '') && (customer !== null || customer !== '' || customer !== undefined)) {
+    if (branch !== null && branch !== '' && branch !== undefined && customer !== null && customer !== '' && customer !== undefined) {
       this.smartSearchService.joinQueue({branchId: branch, customerId: customer}).subscribe(
         data => {
           console.log(data);
@@ -145,7 +151,7 @@ export class PatientLoginComponent implements OnInit {
             alert('Unable to join the queue. Please refresh page or try again later!');
           }
           this.decline();
-          this.router.navigate(['/patient-view-details']);
+          this.router.navigate(['/patient-view-details/', {id: GlobalConstants.login.id}]);
         });
     }
   }

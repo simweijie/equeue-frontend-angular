@@ -186,11 +186,12 @@ export class SmartSearchComponent implements OnInit {
     this.branchId = branchId;
     if (this.branchId !== null || this.branchId !== '') {
       GlobalConstants.branchId = this.branchId;
-      this.router.navigate(['/patient-login']);
+      this.router.navigate(['/patient-login/', {branchId: GlobalConstants.branchId}]);
     }
   }
 
   login() {
+    GlobalConstants.branchId = '1';
     this.router.navigate(['/patient-login']);
   }
 }
