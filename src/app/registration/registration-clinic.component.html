@@ -215,7 +215,7 @@
     </div>
       <div class="form-group row">
         <div class="col-sm">
-          <div style="width:98%" align="center" *ngIf="openingHourList">
+          <div style="padding-left: 20px; padding-right: 20px; width:100%" align="center" *ngIf="openingHourList.length > 0">
             <table class="record" id="table" style="width: 100%;">
           <thead>
           <tr>
@@ -241,7 +241,7 @@
       </div>
       <div class="form-group row">
         <div class="col-sm">
-          <div style="width:98%" align="center" *ngIf="branchInfoList">
+          <div style="padding-left: 20px; padding-right: 20px; width:100%" align="center" *ngIf="branchInfoList.length > 0">
             <table class="record" id="table" style="width: 100%;">
           <thead>
           <tr>
@@ -249,6 +249,7 @@
             <th>Telephone No</th>
             <th>Postal Code</th>
             <th>Address</th>
+            <th>Operating Hours</th>
             <th></th>
           </tr>
           </thead>
