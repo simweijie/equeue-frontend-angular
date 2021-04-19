@@ -109,9 +109,9 @@ export class RegistrationStaffComponent implements OnInit {
                 this.registrationStaff.postal = this.postalf;
                 this.registrationStaff.email = this.emailf;
                 this.registrationStaff.contactNo = this.contactNof;
-                this.registrationStaff.occupation = this.occupationf;
+                this.registrationStaff.job = this.occupationf;
                 this.registrationStaff.clinic = this.clinic;
-                this.registrationStaff.branch = this.branch;
+                this.registrationStaff.branchId = this.branch;
                 console.log(" sf 10");
                 console.log("this.registrationStaff is : " + this.registrationStaff);
                 this.RegistrationService.registerStaffToExistingClinic(this.registrationStaff).subscribe(
