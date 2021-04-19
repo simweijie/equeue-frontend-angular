@@ -43,7 +43,7 @@ export class StaffInfoComponent implements OnInit {
   occupationList: any = [
     {id: 'D', value: 'Doctor'},
     {id: 'N', value: 'Nurse'},
-    {id: 'C', value: 'Clerk'}
+    {id: 'A', value: 'Admin'}
   ];
 
   // clinicList: any = [
@@ -387,10 +387,10 @@ export class StaffInfoComponent implements OnInit {
   }
   
   updateAdmin(job: any) {
-    if(job === 'D') {
-      this.isAdmin = 'Y';
-    } else {
+    if(job === 'N') {
       this.isAdmin = 'N';
+    } else {
+      this.isAdmin = 'Y';
     }
   }
 
