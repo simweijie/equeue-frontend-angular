@@ -98,8 +98,10 @@ export class RegistrationStaffComponent implements OnInit {
             this.contactNof !== null && this.contactNof !== '' && this.contactNof !== undefined &&
             this.occupationf !== null && this.occupationf !== '' && this.occupationf !== undefined &&
             this.passwordf !== null && this.passwordf !== '' && this.passwordf !== undefined &&
-            this.confirmPasswordf !== null && this.confirmPasswordf !== '' && this.confirmPasswordf !== undefined 
-            && !this.checkIfClinicSelected() && !this.checkIfbranchSelected()
+            this.confirmPasswordf !== null && this.confirmPasswordf !== '' && this.confirmPasswordf !== undefined && 
+            this.clinicDisplay !== null && this.clinicDisplay !== '' && this.clinicDisplay !== undefined && 
+            this.branchDisplay !== null && this.branchDisplay !== '' && this.branchDisplay !== undefined 
+//             && !this.checkIfClinicSelected() && !this.checkIfbranchSelected()
         ) { 
             this.checkPassword();
             console.log(" sf 8");
@@ -110,8 +112,8 @@ export class RegistrationStaffComponent implements OnInit {
                 this.registrationStaff.email = this.emailf;
                 this.registrationStaff.contactNo = this.contactNof;
                 this.registrationStaff.job = this.occupationf;
-                this.registrationStaff.clinic = this.clinic;
-                this.registrationStaff.branchId = this.branch;
+                this.registrationStaff.clinic = this.clinicDisplay;
+                this.registrationStaff.branchId = this.branchDisplay;
                 console.log(" sf 10");
                 console.log("this.registrationStaff is : " + this.registrationStaff);
                 this.RegistrationService.registerStaffToExistingClinic(this.registrationStaff).subscribe(
@@ -190,7 +192,15 @@ export class RegistrationStaffComponent implements OnInit {
         }
         if (this.occupationf === null || this.occupationf === '' || this.occupationf === undefined) {
             this._error.next("Please enter all required fields marked with '*'.");
-            console.log(" sf 52");
+            console.log(" sf 53");
+        }
+        if (this.clinicDisplay === null || this.clinicDisplay === '' || this.clinicDisplay === undefined) {
+            this._error.next("Please enter all required fields marked with '*'.");
+            console.log(" sf 54");
+        }
+        if (this.branchDisplay === null || this.branchDisplay === '' || this.branchDisplay === undefined) {
+            this._error.next("Please enter all required fields marked with '*'.");
+            console.log(" sf 55");
         }
         console.log("end of checks");
     }
@@ -240,6 +250,8 @@ export class RegistrationStaffComponent implements OnInit {
         this.passwordf = null;
         this.confirmPasswordf = null;
         this.contactNof = null;
-        // this.occupationf = null;
+        this.clinicDisplay = '';
+        this.branchDisplay = '';
+        this.occupationf = '';
     }
 }
