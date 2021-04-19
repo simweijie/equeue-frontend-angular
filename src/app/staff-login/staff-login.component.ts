@@ -67,7 +67,11 @@ export class StaffLoginComponent implements OnInit {
                     // if (this.adminId !== null || this.adminId !== '') {
                     //     this.router.navigate(['/staff-info']);
                     // } else {
-                    this.router.navigate(['/staff-info']);
+                    if(GlobalConstants.login.status === 'A') {
+                      this.router.navigate(['/staff-info']);
+                    } else {
+                      this._error.next(`Account is not active yet!`);
+                    }
                     // }
                   } else {
                     this._error.next(`Incorrect Username or Password!`);
