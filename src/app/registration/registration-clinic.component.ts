@@ -231,9 +231,9 @@ export class RegistrationClinicComponent implements OnInit {
                 this.registrationClinic.postal = this.postalf;
                 this.registrationClinic.email = this.emailf;
                 this.registrationClinic.contactNo = this.contactNof;
-                this.registrationClinic.occupation = this.occupation;
+                this.registrationClinic.job = this.occupation;
                 this.registrationClinic.clinic = this.clinic;
-                this.registrationClinic.branch = this.branch;
+                this.registrationClinic.branchId = this.branch;
                 console.log(" sf 10");
                 console.log("this.registrationClinic is : " + this.registrationClinic);
                 this.RegistrationService.registerStaffToNewClinic(this.registrationClinic).subscribe(
