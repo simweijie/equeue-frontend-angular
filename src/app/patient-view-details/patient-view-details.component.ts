@@ -55,13 +55,7 @@ export class PatientViewDetailsComponent implements OnInit {
 
     ngOnInit() {
       console.log("here at patient login hello");
-      // this.activatedRoute.queryParams.subscribe(params => {
-      //   console.log('params[\'id\']: ' + params['id']);
-      //   GlobalConstants.login = new Login(params['login']);
-      // });
-      // @ts-ignore
       this.getInfo();
-      // this.activatedRoute.data.subscribe(v => console.log(v));
       console.log('GlobalConstants.login.id: ');
       console.log(GlobalConstants.login.id);
       this.getCurrentStatus();
@@ -105,21 +99,6 @@ export class PatientViewDetailsComponent implements OnInit {
     }
 
   getInfo() {
-    // this.activatedRoute.queryParams.subscribe(params => {
-    //   GlobalConstants.login.id = params['id'];
-    //   console.log('GlobalConstants.login: ' + GlobalConstants.login.id);
-    // });
-    // this.activatedRoute.data.subscribe(v => {
-    //   console.log(v);
-    //   GlobalConstants.login = v.login;
-    // });
-    // GlobalConstants.login = this.activatedRoute.snapshot.paramMap.get('job');
-    // @ts-ignore
-    // GlobalConstants.login.id = this.activatedRoute.snapshot.paramMap.get('id');
-    // @ts-ignore
-    // GlobalConstants.login.job = this.activatedRoute.snapshot.paramMap.get('job');
-    // @ts-ignore
-    // GlobalConstants.login.name = this.activatedRoute.snapshot.paramMap.get('name');
     console.log('getInfo - job:');
     if (GlobalConstants.login === undefined) {
       this.login = new Login();
@@ -144,7 +123,6 @@ export class PatientViewDetailsComponent implements OnInit {
             this.router.navigate(['/']);
           }
           GlobalConstants.login = new Login();
-          GlobalConstants.clinicId = '';
         });
     }
   }
@@ -202,7 +180,7 @@ export class PatientViewDetailsComponent implements OnInit {
             this.status = data;
             if (data === 'SUCCESS') {
                 console.log(" sf 11");
-                this.router.navigate(['/smart-search-member']);                  
+                this.router.navigate(['/smart-search-member']);
             } else {
                 this._error.next(`Unable to cancel Queue No. Kindly refresh or retry later!`);
                 console.log(" sf 12");
@@ -221,9 +199,9 @@ export class PatientViewDetailsComponent implements OnInit {
             data => {
                 console.log(data);
                 this.status = data;
-                if (this.status === 'Success') {
+                if (data === 'SUCCESS') {
                     console.log(" sf 11");            
-                    this.router.navigate(['/smart-search-member']);                  
+                    this.router.navigate(['/smart-search-member']);
                 } else {
                     this._error.next(`Unable to cancel Queue No. Kindly refresh or retry later!`);
                     console.log(" sf 12");

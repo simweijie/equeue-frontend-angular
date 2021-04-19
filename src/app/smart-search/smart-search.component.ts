@@ -48,12 +48,6 @@ export class SmartSearchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this._filterResults = new class {
-    //   clicicId?: string;
-    //   clinicName?: string;
-    //   currentOperation?: string;
-    //   queueLength?: string;
-    // };
     if (!navigator.geolocation) {
       console.log('Location is not supported!');
     }
@@ -136,9 +130,9 @@ export class SmartSearchComponent implements OnInit {
       this.smartSearchService.searchByGP({latt: this.curLat, longt: this.curLong}).subscribe(
         data => {
           console.log(data);
-          if (data !== null || data !== 'ERROR') {
+          if (data !== null && data !== 'ERROR') {
             // @ts-ignore
-            this.filterList = data.data[0];
+            this.filterList = data.data;
             for (let entry of this.filterList) {
               console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
               if (entry.latt !== null  && entry.longt !== null) {
@@ -147,6 +141,8 @@ export class SmartSearchComponent implements OnInit {
                 listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.opens}} - {{entry.closes}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="addQueue(entry.branchId)">Join Queue</button>');
               }
             }
+          } else {
+            console.log('No Search GP');
           }
         });
     }
@@ -154,19 +150,13 @@ export class SmartSearchComponent implements OnInit {
 
   searchFilter() {
     console.log('searchFilter');
-    // this._filterResults = new class {
-    //   clicicId?: string;
-    //   clinicName?: string;
-    //   currentOperation?: string;
-    //   queueLength?: string;
-    // };
     if (this.district !== undefined && this.mGroup !== undefined) {
       this.smartSearchService.searchByDistrictOrMGroup({clinicId: this.mGroup, district: this.district}).subscribe(
         data => {
           console.log(data);
-          if (data !== null || data !== 'ERROR') {
+          if (data !== null && data !== 'ERROR') {
             // @ts-ignore
-            this.filterList = data.data[0];
+            this.filterList = data.data;
             for (let entry of this.filterList) {
               console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
               if (entry.latt !== null  && entry.longt !== null) {
@@ -175,6 +165,8 @@ export class SmartSearchComponent implements OnInit {
                 listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.opens}} - {{entry.closes}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="addQueue(entry.branchId)">Join Queue</button>');
               }
             }
+          } else {
+            console.log('No Search Filter');
           }
         });
     }
@@ -184,7 +176,7 @@ export class SmartSearchComponent implements OnInit {
     console.log('addQueue - branchId:');
     console.log(branchId);
     this.branchId = branchId;
-    if (this.branchId !== null || this.branchId !== '') {
+    if (this.branchId !== null && this.branchId !== '' && this.branchId !== undefined) {
       GlobalConstants.branchId = this.branchId;
       this.router.navigate(['/patient-login']);
     }

@@ -104,7 +104,8 @@ export class PatientLoginComponent implements OnInit {
             console.log(data);
             // @ts-ignore
             this.loginInfo = data.data[0];
-            if (this.loginInfo.id !== null) {
+            console.log(this.loginInfo);
+            if (this.loginInfo !== null && this.loginInfo !== undefined) {
               GlobalConstants.login = this.loginInfo;
               console.log('GlobalConstants.login: ');
               console.log(GlobalConstants.login);

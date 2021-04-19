@@ -65,12 +65,6 @@ export class SmartSearchMemberComponent implements OnInit {
   ngOnInit(): void {
     this.getInfo();
     this.getState();
-    // this._filterResults = new class {
-    //   clicicId?: string;
-    //   clinicName?: string;
-    //   currentOperation?: string;
-    //   queueLength?: string;
-    // };
     if (!navigator.geolocation) {
       console.log('Location is not supported!');
     }
@@ -183,7 +177,7 @@ export class SmartSearchMemberComponent implements OnInit {
       this.smartSearchService.searchByGP({latt: this.curLat, longt: this.curLong}).subscribe(
         data => {
           console.log(data);
-          if (data !== null || data !== 'ERROR') {
+          if (data !== null && data !== 'ERROR') {
             // @ts-ignore
             this.filterList = data.data;
             for (let entry of this.filterList) {
@@ -199,7 +193,7 @@ export class SmartSearchMemberComponent implements OnInit {
               }
             }
           } else {
-
+            console.log('No Search GP');
           }
         });
     }
@@ -207,17 +201,11 @@ export class SmartSearchMemberComponent implements OnInit {
 
   searchFilter() {
     console.log('searchFilter');
-    // this._filterResults = new class {
-    //   clicicId?: string;
-    //   clinicName?: string;
-    //   currentOperation?: string;
-    //   queueLength?: string;
-    // };
     if (this.district !== undefined && this.mGroup !== undefined) {
       this.smartSearchService.searchByDistrictOrMGroup({clinicId: this.mGroup, district: this.district}).subscribe(
         data => {
           console.log(data);
-          if (data !== null || data !== 'ERROR') {
+          if (data !== null && data !== 'ERROR') {
             // @ts-ignore
             this.filterList = data.data;
             for (let entry of this.filterList) {
@@ -232,6 +220,8 @@ export class SmartSearchMemberComponent implements OnInit {
                 }
               }
             }
+          } else {
+            console.log('No Search Filter');
           }
         });
     }
@@ -260,7 +250,8 @@ export class SmartSearchMemberComponent implements OnInit {
   changeQueue() {
     console.log('addQueue - branchId:');
     console.log(this.branchId);
-    if ((this.branchId !== null || this.branchId !== '') && (this.patientId !== null || this.patientId !== '')) {
+    if (this.branchId !== null && this.branchId !== '' && this.branchId !== undefined
+      && this.patientId !== null && this.patientId !== '' && this.patientId !== undefined) {
       this.smartSearchService.leaveQueue({branchId: this.branchId, customerId: this.patientId}).subscribe(
         data => {
           console.log(data);
@@ -277,7 +268,8 @@ export class SmartSearchMemberComponent implements OnInit {
   newQueue() {
     console.log('addQueue - branchId:');
     console.log(this.branchId);
-    if ((this.branchId !== null || this.branchId !== '') && (this.patientId !== null || this.patientId !== '')) {
+    if (this.branchId !== null && this.branchId !== '' && this.branchId !== undefined
+      && this.patientId !== null && this.patientId !== '' && this.patientId !== undefined) {
       this.smartSearchService.joinQueue({branchId: this.branchId, customerId: this.patientId}).subscribe(
         data => {
           console.log(data);
