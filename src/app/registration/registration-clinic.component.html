@@ -6,7 +6,7 @@
         <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
         <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
     </div>
-    
+
     <div *ngIf="clinicNamef.invalid && (clinicNamef.dirty || clinicNamef.touched)"
     class="alert alert-danger">
 <!--      <div *ngIf="clinicNamef.errors.required">-->
@@ -139,12 +139,12 @@
         <div *ngIf="clinicOpeningHours.errors.required">
           clinic Opening Hours is required. gfdhfd
         </div>
-        
+
     </div>  -->
     <!-- <div *ngIf="branchName.invalid && (branchName.dirty || branchName.touched)" class="alert alert-danger">
       <div *ngIf="branchName.errors.required">
         branchName is required. gfdhfd
-      </div>      
+      </div>
   </div> -->
   <!-- <div *ngIf="clinicOpeningHours.errors?.required" class="alert alert-danger">
       branchName is required. gfdhfd
@@ -197,17 +197,17 @@
       <div class="col-sm">
         <label class="col-sm-3 form-control-label" style="text-align: left">Opening Hour:* </label>
         <select class="col-sm-2 form-control-label optionPlaceholder" id="day" name="day" style="min-width: 200px; min-height: 30px;" [(ngModel)]="day">
-          <option disabled>Please select</option>
+          <option value="" disabled>Please select</option>
           <option *ngFor="let day of dayOfWeek" [value]="day.id">{{day.value}}</option>
         </select>
         &nbsp;
-        <select class="col-sm-2 form-control-label optionPlaceholder" id="day" name="day" style="min-width: 200px; min-height: 30px;" [(ngModel)]="start">
-          <option disabled>Please select</option>
+        <select class="col-sm-2 form-control-label optionPlaceholder" id="start" name="start" style="min-width: 200px; min-height: 30px;" [(ngModel)]="start">
+          <option value="" disabled>Please select</option>
           <option *ngFor="let start of startTime" value={{start}}>{{start}}</option>
         </select>
         &nbsp;
-        <select class="col-sm-2 form-control-label optionPlaceholder" id="day" name="day" style="min-width: 200px; min-height: 30px;" [(ngModel)]="end">
-          <option disabled>Please select</option>
+        <select class="col-sm-2 form-control-label optionPlaceholder" id="end" name="end" style="min-width: 200px; min-height: 30px;" [(ngModel)]="end">
+          <option value="" disabled>Please select</option>
           <option *ngFor="let end of endTime" [value]="end">{{end}}</option>
         </select>
         <button class="btn-primary" style="height: 25px; width: 25px;background-color: transparent;border: transparent" (click)="addOpeningHour()"><fa-icon [icon]="faPlus" style="color: limegreen"></fa-icon></button>

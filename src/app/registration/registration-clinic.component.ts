@@ -97,7 +97,10 @@ export class RegistrationClinicComponent implements OnInit {
     constructor(private router: Router, private RegistrationService: RegistrationService, private commonService: CommonService, private fb: FormBuilder) {
         this.registrationClinic = new RegistrationClinic();
         this.errorFlag = false;
-        this.occupation ='';
+        this.occupation = '';
+        this.day = '';
+        this.start = '';
+        this.end = '';
     }
 
     loadAll() {}
