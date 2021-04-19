@@ -389,6 +389,8 @@ export class StaffInfoComponent implements OnInit {
   updateAdmin(job: any) {
     if(job === 'D') {
       this.isAdmin = 'Y';
+    } else {
+      this.isAdmin = 'N';
     }
   }
 
