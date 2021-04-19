@@ -65,39 +65,24 @@ export class RegistrationService {
         })).pipe(catchError(error => of('ERROR')));
     }
 
-
-
-  // acceptStaff(req?: any){
-  //   console.log('req: ');
-  //   console.log(req);
-
-  //   return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/query-customer-with-uin', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
-  //     response => {
-  //       if (response.status === 200) {
-  //         console.log('response is 200');
-  //         return response.body;
-  //       } else {
-  //         console.log('Error - ');
-  //         console.log(response.body);
-  //         return 'ERROR';
-  //       }
-  //     })).pipe(catchError(error => of('ERROR')));
-  // }
-
-  // updateStaff(req?: any){
-  //   console.log('req: ');
-  //   console.log(req);
-
-  //   return this.http.post('https://c3cwmli2ne.execute-api.us-east-1.amazonaws.com/equeue/api/update-staff', req, { headers: this.httpOptions, observe: 'response' }).pipe(map(
-  //     response => {
-  //       if (response.status === 200) {
-  //         console.log('response is 200');
-  //         return response.body;
-  //       } else {
-  //         console.log('Error - ');
-  //         console.log(response.body);
-  //         return 'ERROR';
-  //       }
-  //     })).pipe(catchError(error => of('ERROR')));
-  // }
+    testGeoCode(req?: any){
+      console.log('req: ');
+      console.log(req);
+      // var httpOptions1: HttpHeaders = new HttpHeaders({
+      //   // 'Content-Type': 'application/json'
+      // });
+  
+      return this.http.get('https://geocode.xyz/' + req + '?json=1&auth=610971777398867696537x51416').pipe(map(
+        response => {
+          return response;
+          // if (response.status === 200) {
+          //   console.log('response is 200');
+          //   return response.body;
+          // } else {
+          //   console.log('Error - ');
+          //   console.log(response.body);
+          //   return 'ERROR';
+          // }
+        })).pipe(catchError(error => of('ERROR')));
+    }
 }
