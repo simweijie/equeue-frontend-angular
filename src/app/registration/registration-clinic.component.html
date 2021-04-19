@@ -178,6 +178,15 @@
     </div>
     <div class="form-group row">
       <div class="col-sm">
+        <label for="district" class="col-sm-3 form-control-label" >District:* </label>
+          <select class="form-control-label" style="min-width: 150px; min-height: 30px;" [(ngModel)]="district" name="district" *ngIf="districtList">
+            <option value="" disabled>Please select</option>
+            <option [ngValue]="district.id" *ngFor="let district of districtList">{{district.value}}</option>
+          </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm">
         <label for="pCode" class="col-sm-3 form-control-label" style="text-align: left">Postal Code:* </label>
         <input type="text" class="col-sm-2 form-control-label" name="pCode" id="pCode" class="uppercase" pattern="^[0-9]*$" minlength="6"  [(ngModel)]="pCode" #pCodef = "ngModel"
                maxlength="6" autofocus autocomplete="off">
@@ -227,10 +236,10 @@
           </thead>
           <tbody>
           <ng-container *ngFor="let openHours of openingHourList; trackBy: trackId;">
-            <tr>
-              <td>{{dayOfWeekMap.get(openHours.day)}}</td>
-              <td>{{ openHours.startTime }}</td>
-              <td>{{ openHours.endTime }}</td>
+            <tr>           
+              <td>{{dayOfWeekMap.get(openHours.dayOfWeek)}}</td>
+              <td>{{ openHours.opens }}</td>
+              <td>{{ openHours.closes }}</td>
               <td><button class="btn-primary" style="height: 25px; width: 25px;background-color: transparent;border: transparent" (click)="deleteOpeningHour(openHours)"><fa-icon [icon]="faMinus" style="color: red"></fa-icon></button></td>
             </tr>
           </ng-container>
@@ -255,14 +264,14 @@
           </thead>
           <tbody>
           <ng-container *ngFor="let branchInfo of branchInfoList; trackBy: bTrackId;">
-            <tr>
+            <tr>             
               <td>{{ branchInfo.branchName }}</td>
-              <td>{{ branchInfo.branchTelNo }}</td>
-              <td>{{ branchInfo.postalCode }}</td>
-              <td>{{ branchInfo.address }}</td>
+              <td>{{ branchInfo.contactNo }}</td>
+              <td>{{ branchInfo.postal }}</td>
+              <td>{{ branchInfo.addr }}</td>
               <td>
-                <ng-container *ngFor="let openHours of branchInfo.openHours; trackBy: bTrackId;">
-                  <pre>{{dayOfWeekMap.get(openHours.day)}} - {{openHours.startTime}} - {{openHours.endTime}}</pre>
+                <ng-container *ngFor="let openHours of branchInfo.openingHours; trackBy: bTrackId;">
+                  <pre>{{dayOfWeekMap.get(openHours.dayOfWeek)}} - {{openHours.opens}} - {{openHours.closes}}</pre>
                 </ng-container>
               </td>
               <td><button class="btn-primary" style="height: 25px; width: 25px;background-color: transparent;border: transparent" (click)="deleteBranch(branchInfo)"><fa-icon [icon]="faMinus" style="color: red"></fa-icon></button></td>

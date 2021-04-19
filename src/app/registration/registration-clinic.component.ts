@@ -10,7 +10,7 @@ import { CommonService } from '../shared/services/common.service';
 import { RegistrationService } from '../shared/services/registration.service';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { faPlus, faMinus, faTimes } from '@fortawesome/free-solid-svg-icons';
-import {OpenHour} from "../shared/modals/open-hour.modal";
+import {OpeningHour} from "../shared/modals/open-hour.modal";
 import {BranchInfo} from "../shared/modals/branch.modal";
 
 @Component({
@@ -38,6 +38,10 @@ export class RegistrationClinicComponent implements OnInit {
     branchTelephone: any;
     clinicAddr: any;
     pCode: any;
+    latt: any;
+    longt: any;
+    outputD: any;
+    district: any;
 
     private signUpStatus: string | Object | null | string;
     private _success = new Subject<string>();
@@ -46,7 +50,7 @@ export class RegistrationClinicComponent implements OnInit {
     errorMessage: string;
     errorFlag: boolean;
     checked: boolean;
- 
+    
     // form = this.fb.group({
     //   clinicOpeningHours: this.fb.array([])
     // });
@@ -76,24 +80,35 @@ export class RegistrationClinicComponent implements OnInit {
         {id: "6", value: "Saturday"},
         {id: "7", value: "Sunday"}
     ];
-  dayOfWeekMap: Map<string, string>;
+    dayOfWeekMap: Map<string, string>;
 
-  occupationList: Array<object> = [
-    {id: 'D', value: 'Doctor'},
-    {id: 'N', value: 'Nurse'},
-    {id: 'A', value: 'Admin'}
-  ];
-  openingHourList: Array<OpenHour> = [];
-  day: any;
-  start: any;
-  end: any;
-  openHour: OpenHour;
-  openHourError: boolean = false;
+    occupationList: Array<object> = [
+      {id: 'D', value: 'Doctor'},
+      {id: 'N', value: 'Nurse'},
+      {id: 'A', value: 'Admin'}
+    ];
+    openingHourList: Array<OpeningHour> = [];
+    day: any;
+    start: any;
+    end: any;
+    openHour: OpeningHour;
+    openHourError: boolean = false;
 
-  branchInfoList: Array<BranchInfo> = [];
-  branchInfo: BranchInfo;
-  branchInfoError: boolean = false;
-    
+    branchInfoList: Array<BranchInfo> = [];
+    branchInfo: BranchInfo;
+    branchInfoError: boolean = false;
+
+    districtList: Array<object> = [
+      {id: 'N', value: 'North'},
+      {id: 'NE', value: 'North-East'},
+      {id: 'E', value: 'East'},
+      {id: 'SE', value: 'South-East'},
+      {id: 'S', value: 'South'},
+      {id: 'SW', value: 'South-West'},
+      {id: 'W', value: 'West'},
+      {id: 'NW', value: 'North-West'}
+    ];
+        
     constructor(private router: Router, private RegistrationService: RegistrationService, private commonService: CommonService, private fb: FormBuilder) {
         this.registrationClinic = new RegistrationClinic();
         this.errorFlag = false;
@@ -101,6 +116,8 @@ export class RegistrationClinicComponent implements OnInit {
         this.day = '';
         this.start = '';
         this.end = '';
+        this.latt= '';
+        this.longt = '';
     }
 
     loadAll() {}
@@ -138,13 +155,13 @@ export class RegistrationClinicComponent implements OnInit {
       // this.clinicOpeningHours.push(openingHourForm);
       if (this.openingHourList === undefined) {
         console.log('this.openingHourList: undefined');
-        this.openingHourList = Array<OpenHour>();
+        this.openingHourList = Array<OpeningHour>();
       }
 
       if (this.day !== '' && this.start !== '' && this.end !== '' && this.day !== undefined && this.start !== undefined && this.end !== undefined) {
         this.openHour = {
-          day: this.day , startTime: this.start,
-          endTime: this.end
+          dayOfWeek: this.day , opens: this.start,
+          closes: this.end
         };
         console.log('this.openHour: ');
         console.log(this.openHour);
@@ -166,7 +183,7 @@ export class RegistrationClinicComponent implements OnInit {
     this.end = '';
     this.openHourError = false;
   }
-    deleteOpeningHour(openHour: OpenHour) {
+    deleteOpeningHour(openHour: OpeningHour) {
       // this.clinicOpeningHours.removeAt(openingHourIndex);
       // this.openingHourList.filter(obj => obj !== openHour);
       this.openingHourList.forEach( (item, index) => {
@@ -177,32 +194,7 @@ export class RegistrationClinicComponent implements OnInit {
     // get branchInfo(){
     //   return this.branchForm.controls["branchInfo"] as FormArray;
     // }
-
-    addBranch(){
-      if (this.branchInfoList === undefined) {
-        console.log('this.branchInfoList: undefined');
-        this.branchInfoList = Array<BranchInfo>();
-      }
-
-      if (this.branchName !== '' && this.branchTelephone !== '' && this.pCode !== '' &&
-        this.branchName !== undefined && this.branchTelephone !== undefined && this.pCode !== undefined) {
-        this.branchInfo = {
-          branchName: this.branchName , branchTelNo: this.branchTelephone,
-          postalCode: this.pCode, address: this.clinicAddr, openHours: this.openingHourList
-        };
-        console.log('this.branchInfo: ');
-        console.log(this.branchInfo);
-        console.log('Before this.branchInfoList: ');
-        console.log(this.branchInfoList);
-        this.branchInfoList.push(this.branchInfo);
-        console.log('After this.branchInfoList: ');
-        console.log(this.branchInfoList);
-        this.clearBranch();
-      } else {
-        this.branchInfoError = true;
-      }
-      console.log('addBranch' + this.branchInfoList);
-    }
+  
 
     deleteBranch(branchInfo: BranchInfo) {
       // this.branchInfo.removeAt(branchIndex);
@@ -212,8 +204,62 @@ export class RegistrationClinicComponent implements OnInit {
       });
     }
 
+    addBranch(){
+      if (this.branchInfoList === undefined) {
+        console.log('this.branchInfoList: undefined');
+        this.branchInfoList = Array<BranchInfo>();
+      }
+
+      if (this.branchName !== '' && this.branchTelephone !== '' && this.pCode !== '' && this.district !== '' &&
+        this.branchName !== undefined && this.branchTelephone !== undefined && this.pCode !== undefined && this.district !== undefined) {
+        this.getPostalGeocode(this.pCode);          
+      } else {
+        this.branchInfoError = true;
+      }
+      console.log('addBranch' + this.branchInfoList);
+    }
+
+    getPostalGeocode(code: any) {
+      console.log('Inside getPostalGeocode');
+
+      this.RegistrationService.testGeoCode(code).subscribe(data => {
+        console.log("return data at getpostalgeocode is :");
+        console.log(data);
+        // @ts-ignore
+        console.log(data.latt);
+        // @ts-ignore
+        console.log(data.longt);
+        if (data === 'ERROR') {
+          this.outputD = 'GEOCODE FAILS';
+        } else {
+          this.outputD = data;
+          console.log('output latt and output longt is :');
+          // @ts-ignore
+          console.log(this.outputD);
+          console.log(this.outputD.latt);
+          console.log(this.outputD.longt);
+        this.branchInfo = {
+          branchName: this.branchName , contactNo: this.branchTelephone,
+          postal: this.pCode, addr: this.clinicAddr, openingHours: this.openingHourList, 
+          district: this.district,  latt: this.outputD.latt, longt: this.outputD.longt
+        };
+        console.log('this.branchInfo: ');
+        console.log(this.branchInfo);
+        console.log('Before this.branchInfoList: ');
+        console.log(this.branchInfoList);
+        // this.getPostalGeocode(this.pCode);
+        this.branchInfoList.push(this.branchInfo);
+        console.log('After this.branchInfoList: ');
+        console.log(this.branchInfoList);       
+        this.clearBranch();
+        }
+        return this.outputD;
+      });
+    }
+
     onSignUp(editForm: NgForm){
         console.log("here at registrationClinic, start");
+        console.log("branchInfoList.length is : " + this.branchInfoList.length);
         if (this.name !== null && this.name !== '' && this.name !== undefined &&
             this.addrf !== null && this.addrf !== '' && this.addrf !== undefined &&
             this.postalf !== null && this.postalf !== '' && this.postalf !== undefined &&
@@ -221,7 +267,8 @@ export class RegistrationClinicComponent implements OnInit {
             this.contactNof !== null && this.contactNof !== '' && this.contactNof !== undefined &&
             this.occupation !== null && this.occupation !== '' && this.occupation !== undefined &&
             this.passwordf !== null && this.passwordf !== '' && this.passwordf !== undefined &&
-            this.confirmPasswordf !== null && this.confirmPasswordf !== '' && this.confirmPasswordf !== undefined
+            this.confirmPasswordf !== null && this.confirmPasswordf !== '' && this.confirmPasswordf !== undefined &&
+            this.branchInfoList !== null && this.branchInfoList.length !== 0
         ) {
             this.checkPassword();
             console.log(" sf 8");
@@ -234,6 +281,8 @@ export class RegistrationClinicComponent implements OnInit {
                 this.registrationClinic.job = this.occupation;
                 this.registrationClinic.clinic = this.clinic;
                 this.registrationClinic.branchId = this.branch;
+                this.registrationClinic.branches = this.branchInfoList;
+                this.registrationClinic.clinicName = this.clinicName;
                 console.log(" sf 10");
                 console.log("this.registrationClinic is : " + this.registrationClinic);
                 this.RegistrationService.registerStaffToNewClinic(this.registrationClinic).subscribe(
@@ -350,7 +399,7 @@ export class RegistrationClinicComponent implements OnInit {
     this.branchTelephone = null;
     this.pCode = null;
     this.clinicAddr = null;
-    this.openingHourList = Array<OpenHour>();
+    this.openingHourList = Array<OpeningHour>();
     this.branchInfoError = false;
   }
 }

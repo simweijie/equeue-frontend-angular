@@ -1,17 +1,17 @@
-export interface IOpenHour {
-  day?: string;
-  startTime?: string;
-  endTime?: string;
+export interface IOpeningHour {
+  dayOfWeek?: string;
+  opens?: string;
+  closes?: string;
 }
 
-export class OpenHour implements IOpenHour {
+  export class OpeningHour implements IOpeningHour {
   constructor(
-    public day?: string,
-    public startTime?: string,
-    public endTime?: string
+    public dayOfWeek?: string,
+    public opens?: string,
+    public closes?: string
   ) {
-    this.day = this.day || '';
-    this.startTime = this.startTime || '';
-    this.endTime = this.endTime || '';
+    this.dayOfWeek = this.dayOfWeek || '';
+    this.opens = this.opens || '';
+    this.closes = this.closes || '';
   }
 }
