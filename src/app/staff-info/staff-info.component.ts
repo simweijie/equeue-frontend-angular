@@ -127,42 +127,6 @@ export class StaffInfoComponent implements OnInit {
     };
     // this.getId();
     this.getInfo();
-    this.staffInfoService.listOfStaffInClinic({staffId: this.id}).subscribe(
-      data => {
-        console.log(data);
-        // this.dataSource = new MatTableDataSource<any>(this.sampleData);
-        if (data !== 'ERROR') {
-          // @ts-ignore
-          this.sampleData = data.data;
-          this.dataSource = new MatTableDataSource<any>(this.sampleData);
-          this.dataSource.paginator = this.paginator;
-        }
-
-        // if (data === null) {
-        //   this._error.next(this.error500);
-        // } else {
-        //   console.log('Inside the lm-rule-admin.component.ts - data');
-        //   this.lmRuleAdminDto = data;
-        //   console.log('this.lmRuleAdminDto: ' + this.lmRuleAdminDto.toString());
-        //   console.log('this.lmRuleAdminDto.ruleAdminList: ' + this.lmRuleAdminDto.ruleAdminList);
-        //   console.log(this.lmRuleAdminDto.ruleAdminList);
-        //   console.log('Status: ' + this.lmRuleAdminDto.status);
-        //   if (this.lmRuleAdminDto.status === 'S000') {
-        //     if (this.lmRuleAdminDto.ruleAdminList !== null) {
-        //       this.resultsTable = this.lmRuleAdminDto.ruleAdminList;
-        //       this.dataSource = new MatTableDataSource<LmRuleAdmin>(this.lmRuleAdminDto.ruleAdminList);
-        //       this.dataSource.paginator = this.paginator;
-        //       this.isExpanded = true;
-        //       this.isExpanded = true;
-        //     } else {
-        //       this._error.next(`Error : The List is null`);
-        //     }
-        //   } else {
-        //     this._error.next(`Error Status: ` + this.lmRuleAdminDto.status);
-        //   }
-        // }
-      });
-
     this.occupationMap = new Map<string, string>();
     for (let entry of this.occupationList) {
       this.occupationMap.set(entry.id, entry.value);
@@ -170,28 +134,34 @@ export class StaffInfoComponent implements OnInit {
 
     this.commonService.retrieveBranchList().subscribe(
       data => {
+        console.log('retrieveBranchList');
         console.log(data);
         if (data !== 'ERROR') {
+          console.log('inside retrieveBranchList');
           // @ts-ignore
           this.branchList = data.data;
           this.branchMap = new Map<string, string>();
           for (let entry of this.branchList) {
-            this.branchMap.set(entry.id, entry.value);
+            this.branchMap.set(entry.id, entry.name);
           }
         }
       });
     this.commonService.retrieveClinicList().subscribe(
       data => {
+        console.log('retrieveClinicList');
         console.log(data);
         if (data !== 'ERROR') {
+          console.log('inside retrieveClinicList');
           // @ts-ignore
           this.clinicList = data.data;
           this.clinicMap = new Map<string, string>();
           for (let entry of this.clinicList) {
-            this.clinicMap.set(entry.id, entry.value);
+            this.clinicMap.set(entry.id, entry.name);
           }
         }
       });
+
+    this.getListOfStaff();
 
     this._success.subscribe((message) => this.successMessage = message);
     this._success.pipe(
@@ -199,6 +169,9 @@ export class StaffInfoComponent implements OnInit {
     ).subscribe(() => this.successMessage = '');
 
     this._error.subscribe((message) => this.errorMessage = message);
+    this._error.pipe(
+      debounceTime(40000)
+    ).subscribe(() => this.errorMessage = '');
   }
 
 
@@ -222,12 +195,15 @@ export class StaffInfoComponent implements OnInit {
 //     if (GlobalConstants.login === undefined) {
 //       this.login = new Login();
 //     } else {
-      this.login = GlobalConstants.login;
+    this.login = GlobalConstants.login;
 //     }
     console.log('this.login: ');
     console.log(this.login);
     console.log('GlobalConstants.login: ');
     console.log(GlobalConstants.login);
+    if (GlobalConstants.login.id === null || GlobalConstants.login.id === undefined || GlobalConstants.login.id === '') {
+      this.router.navigate(['/staff-login']);
+    }
   }
 
   logout() {
@@ -256,6 +232,51 @@ export class StaffInfoComponent implements OnInit {
     console.log(this.id);
   }
 
+  getListOfStaff() {
+    this.staffInfoService.listOfStaffInClinic({staffId: GlobalConstants.login.id}).subscribe(
+      data => {
+        console.log(data);
+        // this.dataSource = new MatTableDataSource<any>(this.sampleData);
+        if (data !== 'ERROR') {
+          // @ts-ignore
+          // this.sampleData = data.data;
+          this.sampleData = [];
+          // @ts-ignore
+          for (let entry of data.data) {
+            if (entry.id !== GlobalConstants.login.id) {
+              this.sampleData.push(entry);
+            }
+          }
+          this.dataSource = new MatTableDataSource<any>(this.sampleData);
+          this.dataSource.paginator = this.paginator;
+        }
+
+        // if (data === null) {
+        //   this._error.next(this.error500);
+        // } else {
+        //   console.log('Inside the lm-rule-admin.component.ts - data');
+        //   this.lmRuleAdminDto = data;
+        //   console.log('this.lmRuleAdminDto: ' + this.lmRuleAdminDto.toString());
+        //   console.log('this.lmRuleAdminDto.ruleAdminList: ' + this.lmRuleAdminDto.ruleAdminList);
+        //   console.log(this.lmRuleAdminDto.ruleAdminList);
+        //   console.log('Status: ' + this.lmRuleAdminDto.status);
+        //   if (this.lmRuleAdminDto.status === 'S000') {
+        //     if (this.lmRuleAdminDto.ruleAdminList !== null) {
+        //       this.resultsTable = this.lmRuleAdminDto.ruleAdminList;
+        //       this.dataSource = new MatTableDataSource<LmRuleAdmin>(this.lmRuleAdminDto.ruleAdminList);
+        //       this.dataSource.paginator = this.paginator;
+        //       this.isExpanded = true;
+        //       this.isExpanded = true;
+        //     } else {
+        //       this._error.next(`Error : The List is null`);
+        //     }
+        //   } else {
+        //     this._error.next(`Error Status: ` + this.lmRuleAdminDto.status);
+        //   }
+        // }
+      });
+  }
+
   removeConfirmation(staffId: any, staffName: any) {
     this.staffId = staffId;
     this.staffName = staffName;
@@ -270,6 +291,7 @@ export class StaffInfoComponent implements OnInit {
         this.statusD = data;
         if (data === 'SUCCESS') {
           this._success.next(`Successfully removed staff: ` + this.staffName);
+          this.getListOfStaff();
         } else {
           this._error.next(`Unable to remove staff!`);
         }
@@ -299,6 +321,7 @@ export class StaffInfoComponent implements OnInit {
         this.statusA = data;
         if (data === 'SUCCESS') {
           this._success.next(`Successfully accepted staff: ` + this.staffName);
+          this.getListOfStaff();
         } else {
           this._error.next(`Unable to accept staff!`);
         }
@@ -333,16 +356,16 @@ export class StaffInfoComponent implements OnInit {
 
   update() {
     console.log('this.staffId: ' + this._staffInfoEdit.id);
-    // this._staffInfo.id = this.staffId;
-    // this._staffInfo.name = this.fName;
-    // this._staffInfo.contactNo = this.cNo;
-    // this._staffInfo.addr = this.address;
-    // this._staffInfo.email = this.email;
-    // this._staffInfo.job = this.occupation;
-    // this._staffInfo.clinicId = this.clinic;
-    // this._staffInfo.branchId = this.branch;
-    // this._staffInfo.status = this.statusEdit;
-    // this._staffInfo.isAdmin = this.isAdmin;
+    this._staffInfoEdit.id = this.staffId;
+    this._staffInfoEdit.name = this.fName;
+    this._staffInfoEdit.contactNo = this.cNo;
+    this._staffInfoEdit.addr = this.address;
+    this._staffInfoEdit.email = this.email;
+    this._staffInfoEdit.job = this.occupation;
+    this._staffInfoEdit.clinicId = this.clinic;
+    this._staffInfoEdit.branchId = this.branch;
+    this._staffInfoEdit.status = this.statusEdit;
+    this._staffInfoEdit.isAdmin = this.isAdmin;
     if (this._staffInfoEdit.id !== null || this._staffInfoEdit.id !== '') {
       this.staffInfoService.updateStaff(this._staffInfoEdit).subscribe(
         data => {
@@ -350,6 +373,7 @@ export class StaffInfoComponent implements OnInit {
           this.statusU = data;
           if (data === 'SUCCESS') {
             this._success.next(`Successfully updated staff: ` + this.staffId);
+            this.getListOfStaff();
           } else {
             this._error.next(`Unable to update staff!`);
           }
@@ -397,7 +421,7 @@ export class StaffInfoComponent implements OnInit {
         console.log(data);
         if (data !== 'ERROR') {
           // @ts-ignore
-          this.branchListEdit = data.data[0];
+          this.branchListEdit = data.data;
           this.hide = true;
       }
     });

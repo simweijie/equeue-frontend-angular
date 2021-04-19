@@ -15,10 +15,12 @@
   <div class="example-sidenav-content">
     <button type="button" mat-button class="btn-primary" style="height: 25px; width: 25px" (click)="drawer.toggle()" *ngIf="login.id!==null && login.id!==undefined && login.id!==''"><i class="pi pi-bars"></i></button>
     <!--    <button type="button" mat-button class="btn-primary" style="height: 25px; width: 25px" (click)="drawer.toggle()"><i class="pi pi-bars"></i></button>-->
-    <div class="container">
+    <div class="container" style="padding-bottom: 50px">
       <button type="button" class="btn-primary refresh" style="min-width: 20px; min-height: 20px;" (click)="logout()" *ngIf="login.id!==null && login.id!==undefined && login.id!==''">Logout</button>&nbsp;
       <h3 class="font-bold pl-0 my-4" ><strong>Current Patient Queue</strong></h3>
-      <button type="button" class="btn-primary refresh" style="min-width: 25px; min-height: 25px;" (click)="getBranchQueue()"><i class="pi pi-refresh"></i></button>&nbsp;
+      <div align="right">
+        <button type="button" class="btn-primary" style="min-width: 25px; min-height: 25px;" (click)="getBranchQueue()"><i class="pi pi-refresh"></i></button>&nbsp;
+      </div>
       <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
       <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
       <mat-accordion [multi]="true">

@@ -32,7 +32,8 @@
 <!--      </mat-expansion-panel>-->
       <h3 class="font-bold pl-0 my-4" ><strong>Staff Information</strong></h3>
       <div align="right">
-        <button type="button" class="btn-primary" style="min-width: 25px; min-height: 25px;" [routerLink]="['/registration-staff']"><i class="pi pi-user-plus"></i></button>
+<!--        <button type="button" class="btn-primary" style="min-width: 25px; min-height: 25px;" [routerLink]="['/registration-staff']"><i class="pi pi-user-plus"></i></button>-->
+        <button type="button" class="btn-primary" style="min-width: 25px; min-height: 25px;" (click)="getListOfStaff()"><i class="pi pi-refresh"></i></button>&nbsp;
       </div>
       <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
       <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
@@ -194,7 +195,7 @@
             <select class="col-sm-4 form-control-label optionPlaceholder" style="min-width: 150px; max-width: 150px; min-height: 30px;" id="field_clinic" name="clinic" [(ngModel)]="clinic" (change)="listOfBranchesWithClinicId(clinic)">
               <option [ngValue]="undefined" hidden>Please Select</option>
               <!--                    <option [ngValue]="null"></option>-->
-              <option [ngValue]="rows.id" *ngFor="let rows of clinicList">{{rows.value}}</option>
+              <option [ngValue]="rows.id" *ngFor="let rows of clinicList">{{rows.name}}</option>
             </select>
             <div *ngIf="clinicError">
               <span class="red-error">Required field!</span>
@@ -208,7 +209,7 @@
                 <select class="col-sm-4 form-control-label optionPlaceholder" style="min-width: 150px; max-width: 150px; min-height: 30px;" id="field_branch" name="branch" [(ngModel)]="branch">
                   <option [ngValue]="undefined" hidden>Please Select</option>
                   <!--                    <option [ngValue]="null"></option>-->
-                  <option [ngValue]="rows.id" *ngFor="let rows of branchListEdit">{{rows.value}}</option>
+                  <option [ngValue]="rows.id" *ngFor="let rows of branchListEdit">{{rows.name}}</option>
                 </select>
                 <div *ngIf="branchError">
                   <span class="red-error">Required field!</span>

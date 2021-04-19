@@ -125,6 +125,9 @@ export class SmartSearchMemberComponent implements OnInit {
     console.log(this.login);
     console.log('GlobalConstants.login: ');
     console.log(GlobalConstants.login);
+    if (GlobalConstants.login.id === null || GlobalConstants.login.id === undefined || GlobalConstants.login.id === '') {
+      this.router.navigate(['/patient-login']);
+    }
   }
 
   logout() {

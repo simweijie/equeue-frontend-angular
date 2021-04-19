@@ -10,6 +10,7 @@ import {interval, Subject, Subscription} from 'rxjs';
 import {IPatientQueue, PatientQueue} from '../shared/modals/patient-queue.model';
 import {GlobalConstants} from '../shared/global-constants';
 import {Login} from "../shared/modals/login.modal";
+import {CommonService} from "../shared/services/common.service";
 
 @Component({
   selector: 'app-patient-queue',
@@ -71,7 +72,8 @@ export class PatientQueueComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private patientQueueService: PatientQueueService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private commonService: CommonService
   ) {this.login = new Login();  }
 
   ngOnInit(): void {
@@ -96,10 +98,6 @@ export class PatientQueueComponent implements OnInit {
       console.log('Refreshing table every 30 sec');
       this.getBranchQueue();
     });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   getInfo() {
@@ -128,6 +126,26 @@ export class PatientQueueComponent implements OnInit {
     console.log(this.login);
     console.log('GlobalConstants.login: ');
     console.log(GlobalConstants.login);
+    if (GlobalConstants.login.id === null || GlobalConstants.login.id === undefined || GlobalConstants.login.id === '') {
+      this.router.navigate(['/staff-login']);
+    }
+  }
+
+  logout() {
+    if (this.login.id !== '') {
+      this.commonService.logout({username: this.login.id}).subscribe(
+        data => {
+          console.log('1' + data);
+          if (data === 'SUCCESS') {
+            console.log('2' + data);
+            this.router.navigate(['/']);
+          } else {
+            this.router.navigate(['/']);
+          }
+          GlobalConstants.login = new Login();
+          GlobalConstants.clinicId = '';
+        });
+    }
   }
 
   getBranchQueue() {
@@ -212,6 +230,7 @@ export class PatientQueueComponent implements OnInit {
       data => {
         console.log(data);
         if (data === 'SUCCESS') {
+          this.getBranchQueue();
           this._success.next(`Successfully changed patient: ` + patientName + ' status.');
         } else {
           this._error.next(`Unable to change patient:` + patientName + ' status!');
@@ -224,6 +243,7 @@ export class PatientQueueComponent implements OnInit {
       data => {
         console.log(data);
         if (data === 'SUCCESS') {
+          this.getBranchQueue();
           this._success.next(`Successfully changed patient: ` + patientName + ' status.');
         } else {
           this._error.next(`Unable to change patient:` + patientName + ' status!');
@@ -236,6 +256,7 @@ export class PatientQueueComponent implements OnInit {
       data => {
         console.log(data);
         if (data === 'SUCCESS') {
+          this.getBranchQueue();
           this._success.next(`Successfully changed patient: ` + patientName + ' status.');
         } else {
           this._error.next(`Unable to change patient:` + patientName + ' status!');
@@ -248,6 +269,7 @@ export class PatientQueueComponent implements OnInit {
       data => {
         console.log(data);
         if (data === 'SUCCESS') {
+          this.getBranchQueue();
           this._success.next(`Successfully changed patient: ` + patientName + ' status.');
         } else {
           this._error.next(`Unable to change patient:` + patientName + ' status!');
@@ -260,6 +282,7 @@ export class PatientQueueComponent implements OnInit {
       data => {
         console.log(data);
         if (data === 'SUCCESS') {
+          this.getBranchQueue();
           this._success.next(`Successfully changed patient: ` + patientName + ' status.');
         } else {
           this._error.next(`Unable to change patient:` + patientName + ' status!');
