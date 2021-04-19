@@ -6,9 +6,9 @@ export interface IRegistrationStaff {
     email?: string;
     password?: string;
     contactNo?: string;
-    occupation?: string; 
+    job?: string; 
     clinic?: string; 
-    branch?: string;       
+    branchId?: string;       
 }
 
 export class RegistrationStaff implements IRegistrationStaff {
@@ -20,8 +20,8 @@ export class RegistrationStaff implements IRegistrationStaff {
         public email?: string,
         public password?: string,
         public contactNo?: string,
-        public occupation?: string,  
+        public job?: string,  
         public clinic?: string,
-        public branch?: string     
+        public branchId?: string     
     ) {}
 }
