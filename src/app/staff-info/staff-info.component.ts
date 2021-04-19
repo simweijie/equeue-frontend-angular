@@ -365,6 +365,7 @@ export class StaffInfoComponent implements OnInit {
     this._staffInfoEdit.clinicId = this.clinic;
     this._staffInfoEdit.branchId = this.branch;
     this._staffInfoEdit.status = this.statusEdit;
+    this.updateAdmin(this.occupation);
     this._staffInfoEdit.isAdmin = this.isAdmin;
     if (this._staffInfoEdit.id !== null || this._staffInfoEdit.id !== '') {
       this.staffInfoService.updateStaff(this._staffInfoEdit).subscribe(
@@ -382,6 +383,12 @@ export class StaffInfoComponent implements OnInit {
     } else {
       this.modalEditRef.hide();
       this._error.next(`Staff Id is not detected!`);
+    }
+  }
+  
+  updateAdmin(job: any) {
+    if(job === 'D') {
+      this.isAdmin = 'Y';
     }
   }
 
@@ -413,6 +420,7 @@ export class StaffInfoComponent implements OnInit {
     this.occupation = null;
     this.clinic = null;
     this.branch = null;
+    this.isAdmin = null;
   }
   listOfBranchesWithClinicId(id: any) {
     console.log('listOfBranchesWithClinicId: ' + id);
