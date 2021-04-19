@@ -80,7 +80,7 @@ export class RegistrationClinicComponent implements OnInit {
 
   occupationList: Array<object> = [
     {id: 'D', value: 'Doctor'},
-    {id: 'S', value: 'Nurse'},
+    {id: 'N', value: 'Nurse'},
     {id: 'A', value: 'Admin'}
   ];
   openingHourList: Array<OpenHour> = [];
