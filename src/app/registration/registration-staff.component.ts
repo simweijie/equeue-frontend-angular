@@ -33,7 +33,7 @@ export class RegistrationStaffComponent implements OnInit {
     occupationDisplay: string;
     occupationList: Array<object> = [
       {id: 'D', value: 'Doctor'},
-      {id: 'S', value: 'Nurse'},
+      {id: 'N', value: 'Nurse'},
       {id: 'A', value: 'Admin'}
     ];
 
