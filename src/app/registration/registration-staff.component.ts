@@ -59,18 +59,24 @@ export class RegistrationStaffComponent implements OnInit {
       console.log("here at registrationStaff hello");
       this.commonService.retrieveBranchList().subscribe(
         data => {
+          console.log('retrieveBranchList');
           console.log(data);
           if (data !== 'ERROR') {
             // @ts-ignore
             this.branchList = data.data;
+            console.log('this.branchList');
+            console.log(this.branchList);
           }
         });
       this.commonService.retrieveClinicList().subscribe(
         data => {
+          console.log('retrieveClinicList');
           console.log(data);
           if (data !== 'ERROR') {
             // @ts-ignore
             this.clinicList = data.data;
+            console.log('this.clinicList');
+            console.log(this.clinicList);
           }
         });
 

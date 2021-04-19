@@ -58,16 +58,6 @@ export class PatientLoginComponent implements OnInit {
   }
 
   getId() {
-    // this.activatedRoute.queryParams.subscribe(params => {
-    //   this.branchId = params['branchId'];
-    // });
-    // @ts-ignore
-    // GlobalConstants.branchId = this.activatedRoute.snapshot.paramMap.get('branchId');
-    // this.activatedRoute.data.subscribe(v => {
-    //   console.log(v);
-    //   GlobalConstants.branchId = v.branchId;
-    // });
-    // this.clinicId = GlobalConstants.clinicId;
     console.log('GlobalConstants.branchId');
     console.log(GlobalConstants.branchId);
   }
@@ -125,7 +115,22 @@ export class PatientLoginComponent implements OnInit {
           }
           this.clear();
         });
+    } else {
+      this.checkRequiredFields();
     }
+  }
+
+  checkRequiredFields() {
+    console.log('checking if required fields are filled up');
+    if (this.username === null || this.username === '' || this.username === undefined) {
+      this._error.next("Please enter all required fields marked with '*'.");
+      console.log(' sf 1');
+    }
+    if (this.password === null || this.password === '' || this.password === undefined) {
+      this._error.next("Please enter all required fields marked with '*'.");
+      console.log(' sf 4');
+    }
+    console.log('end of checks');
   }
 
   cancel() {

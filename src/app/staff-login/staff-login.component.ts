@@ -58,9 +58,12 @@ export class StaffLoginComponent implements OnInit {
                 if (data !== 'ERROR') {
                   // @ts-ignore
                   this.loginInfo = data.data[0];
-                  if (this.loginInfo.id !== null) {
+                  console.log(this.loginInfo);
+                  if (this.loginInfo !== null && this.loginInfo !== undefined) {
                     console.log(" sf 11");
                     GlobalConstants.login = this.loginInfo;
+                    console.log('this is GlobalConstants.login: ');
+                    console.log(GlobalConstants.login);
                     // if (this.adminId !== null || this.adminId !== '') {
                     //     this.router.navigate(['/staff-info']);
                     // } else {
@@ -70,7 +73,10 @@ export class StaffLoginComponent implements OnInit {
                     this._error.next(`Incorrect Username or Password!`);
                     console.log(" sf 12");
                   }
+                } else {
+                  this._error.next(`Unable to login!`);
                 }
+                this.onClear();
                 });
         } else {
             this.checkRequiredFields();
@@ -93,8 +99,8 @@ export class StaffLoginComponent implements OnInit {
 
     onClear(){
         console.log("stafflogin on clearing");
-        this.username = null;
-        this.password = null;
+        this.username = '';
+        this.password = '';
     }
 
     registerNewClinic() {

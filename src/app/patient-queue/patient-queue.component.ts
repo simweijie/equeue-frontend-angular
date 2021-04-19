@@ -9,6 +9,7 @@ import {debounceTime, takeWhile} from 'rxjs/operators';
 import {interval, Subject, Subscription} from 'rxjs';
 import {IPatientQueue, PatientQueue} from '../shared/modals/patient-queue.model';
 import {GlobalConstants} from '../shared/global-constants';
+import {Login} from "../shared/modals/login.modal";
 
 @Component({
   selector: 'app-patient-queue',
@@ -64,20 +65,22 @@ export class PatientQueueComponent implements OnInit {
   // s = 0;
   staffId: any;
   subscription: Subscription;
+  login: Login;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private patientQueueService: PatientQueueService,
     private modalService: BsModalService
-  ) { }
+  ) {this.login = new Login();  }
 
   ngOnInit(): void {
     // this.i = 0;
     // this.j = 0;
     // this.k = 0;
     // this.s = 0;
-    this.getStaffId();
+    this.getInfo();
+    // this.getStaffId();
     this.getBranchQueue();
 
     this._success.subscribe((message) => this.successMessage = message);
@@ -99,17 +102,36 @@ export class PatientQueueComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  getStaffId() {
+  getInfo() {
     // this.activatedRoute.queryParams.subscribe(params => {
-    //   this.adminId = params['adminId'];
+    //   GlobalConstants.login.id = params['id'];
+    //   console.log('GlobalConstants.login: ' + GlobalConstants.login.id);
     // });
-    this.staffId = GlobalConstants.login.id;
-    console.log('getStaffId - staffId:');
-    console.log(this.staffId);
+    // this.activatedRoute.data.subscribe(v => {
+    //   console.log(v);
+    //   GlobalConstants.login = v.login;
+    // });
+    // GlobalConstants.login = this.activatedRoute.snapshot.paramMap.get('job');
+    // @ts-ignore
+    // GlobalConstants.login.id = this.activatedRoute.snapshot.paramMap.get('id');
+    // @ts-ignore
+    // GlobalConstants.login.job = this.activatedRoute.snapshot.paramMap.get('job');
+    // @ts-ignore
+    // GlobalConstants.login.name = this.activatedRoute.snapshot.paramMap.get('name');
+    console.log('getInfo - job:');
+//     if (GlobalConstants.login === undefined) {
+//       this.login = new Login();
+//     } else {
+    this.login = GlobalConstants.login;
+//     }
+    console.log('this.login: ');
+    console.log(this.login);
+    console.log('GlobalConstants.login: ');
+    console.log(GlobalConstants.login);
   }
 
   getBranchQueue() {
-    this.patientQueueService.getBranchQueue({staffId: this.staffId}).subscribe(
+    this.patientQueueService.getBranchQueue({staffId: this.login.id}).subscribe(
       data => {
         console.log(data);
         this.queueData = [];
