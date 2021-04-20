@@ -133,7 +133,7 @@ export class PatientQueueComponent implements OnInit {
 
   logout() {
     if (this.login.id !== '') {
-      this.commonService.logout({username: this.login.id}).subscribe(
+      this.commonService.logout({id: this.login.id}).subscribe(
         data => {
           console.log('1' + data);
           if (data === 'SUCCESS') {
