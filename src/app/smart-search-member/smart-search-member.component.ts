@@ -189,9 +189,9 @@ export class SmartSearchMemberComponent implements OnInit {
                 const latLong = [entry.latt, entry.longt];
                 let listOfMarkers = L.marker(latLong).addTo(this.mymap);
                 if (this.state === 'C') {
-                  listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.opens}} - {{entry.closes}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="changeConfirmation(entry.branchId)">Join Queue</button>');
+                  listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="changeConfirmation(' + entry.id + ')">Join Queue</button>');
                 } else if (this.state === 'N') {
-                  listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.opens}} - {{entry.closes}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="newConfirmation(entry.branchId)">Join Queue</button>');
+                  listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="newConfirmation(' + entry.id + ')">Join Queue</button>');
                 }
               }
             }
@@ -217,9 +217,9 @@ export class SmartSearchMemberComponent implements OnInit {
                 const latLong = [entry.latt, entry.longt];
                 let listOfMarkers = L.marker(latLong).addTo(this.mymap);
                 if(this.state === 'C') {
-                  listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.opens}} - {{entry.closes}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="changeConfirmation(entry.branchId)">Join Queue</button>');
+                  listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="changeConfirmation(' + entry.id + ')">Join Queue</button>');
                 } else if (this.state === 'N') {
-                  listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.opens}} - {{entry.closes}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="newConfirmation(entry.branchId)">Join Queue</button>');
+                  listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="newConfirmation(' + entry.id + ')">Join Queue</button>');
                 }
               }
             }

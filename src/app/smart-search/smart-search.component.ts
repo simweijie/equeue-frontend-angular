@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {CommonService} from '../shared/services/common.service';
 import {GlobalConstants} from '../shared/global-constants';
+import {bindCallback} from "rxjs";
 
 declare  const L: any;
 
@@ -138,7 +139,7 @@ export class SmartSearchComponent implements OnInit {
               if (entry.latt !== null  && entry.longt !== null) {
                 const latLong = [entry.latt, entry.longt];
                 let listOfMarkers = L.marker(latLong).addTo(this.mymap);
-                listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.opens}} - {{entry.closes}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="addQueue(entry.branchId)">Join Queue</button>');
+                listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="addQueue(' + entry.id + ')">Join Queue</button>');
               }
             }
           } else {
@@ -162,7 +163,7 @@ export class SmartSearchComponent implements OnInit {
               if (entry.latt !== null  && entry.longt !== null) {
                 const latLong = [entry.latt, entry.longt];
                 let listOfMarkers = L.marker(latLong).addTo(this.mymap);
-                listOfMarkers.bindPopup('<b>Branch Name: {{entry.branchName}}} <br> Current Operation: {{entry.opens}} - {{entry.closes}} <br> Queue Length: {{entry.queueLength}}</b><br><button class="btn-primary col-sm-1" (click)="addQueue(entry.branchId)">Join Queue</button>');
+                listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="addQueue(' + entry.id + ')">Join Queue</button>');
               }
             }
           } else {
