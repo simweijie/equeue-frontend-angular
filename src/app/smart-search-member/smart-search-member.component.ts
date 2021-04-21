@@ -188,11 +188,22 @@ export class SmartSearchMemberComponent implements OnInit {
               if (entry.latt !== null  && entry.longt !== null) {
                 const latLong = [entry.latt, entry.longt];
                 let listOfMarkers = L.marker(latLong).addTo(this.mymap);
-                if (this.state === 'C') {
-                  listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="changeConfirmation(' + entry.id + ')">Join Queue</button>');
-                } else if (this.state === 'N') {
-                  listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="newConfirmation(' + entry.id + ')">Join Queue</button>');
-                }
+                // if (this.state === 'C') {
+                //   listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="changeConfirmation(' + entry.id + ')">Join Queue</button>');
+                // } else if (this.state === 'N') {
+                //   listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="newConfirmation(' + entry.id + ')">Join Queue</button>');
+                // }
+                const popup = L.popup().setContent('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px"">Join Queue</button>').setLatLng(latLong);
+                this.mymap.closePopup(popup);
+                const buttonSubmit = L.DomUtil.get('btn-' + entry.id);
+                L.DomEvent.addListener(buttonSubmit, 'click', (ee: any) => {
+                  if(this.state === 'C') {
+                    this.changeConfirmation(entry.id);
+                  } else if (this.state === 'N') {
+                    this.newConfirmation(entry.id);
+                  }
+                });
+                listOfMarkers.bindPopup(popup);
               }
             }
           } else {
@@ -216,11 +227,22 @@ export class SmartSearchMemberComponent implements OnInit {
               if (entry.latt !== null  && entry.longt !== null) {
                 const latLong = [entry.latt, entry.longt];
                 let listOfMarkers = L.marker(latLong).addTo(this.mymap);
-                if(this.state === 'C') {
-                  listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="changeConfirmation(' + entry.id + ')">Join Queue</button>');
-                } else if (this.state === 'N') {
-                  listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="newConfirmation(' + entry.id + ')">Join Queue</button>');
-                }
+                // if(this.state === 'C') {
+                //   listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="changeConfirmation(' + entry.id + ')">Join Queue</button>');
+                // } else if (this.state === 'N') {
+                //   listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="newConfirmation(' + entry.id + ')">Join Queue</button>');
+                // }
+                const popup = L.popup().setContent('<b>Branch Name: ' + entry.branchName + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.branchId + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px"">Join Queue</button>').setLatLng(latLong);
+                this.mymap.closePopup(popup);
+                const buttonSubmit = L.DomUtil.get('btn-' + entry.branchId);
+                L.DomEvent.addListener(buttonSubmit, 'click', (ee: any) => {
+                  if(this.state === 'C') {
+                    this.changeConfirmation(entry.branchId);
+                  } else if (this.state === 'N') {
+                    this.newConfirmation(entry.branchId);
+                  }
+                });
+                listOfMarkers.bindPopup(popup);
               }
             }
           } else {
