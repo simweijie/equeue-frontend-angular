@@ -127,6 +127,8 @@ export class SmartSearchMemberComponent implements OnInit {
     console.log(GlobalConstants.login);
     if (GlobalConstants.login.id === null || GlobalConstants.login.id === undefined || GlobalConstants.login.id === '') {
       this.router.navigate(['/patient-login']);
+    } else {
+      this.patientId = GlobalConstants.login.id;
     }
   }
 
@@ -169,7 +171,7 @@ export class SmartSearchMemberComponent implements OnInit {
       console.log(err);
     }, {
       enableHighAccuracy: true, // High accuracy (true)
-      timeout: 5000, // 5 sec
+      timeout: 30000, // 5 sec
       maximumAge: 0 // no cache
     });
   }
@@ -194,7 +196,7 @@ export class SmartSearchMemberComponent implements OnInit {
                 //   listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="newConfirmation(' + entry.id + ')">Join Queue</button>');
                 // }
                 const popup = L.popup().setContent('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px"">Join Queue</button>').setLatLng(latLong);
-                this.mymap.closePopup(popup);
+                this.mymap.openPopup(popup);
                 const buttonSubmit = L.DomUtil.get('btn-' + entry.id);
                 L.DomEvent.addListener(buttonSubmit, 'click', (ee: any) => {
                   if(this.state === 'C') {
@@ -233,7 +235,7 @@ export class SmartSearchMemberComponent implements OnInit {
                 //   listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="newConfirmation(' + entry.id + ')">Join Queue</button>');
                 // }
                 const popup = L.popup().setContent('<b>Branch Name: ' + entry.branchName + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.branchId + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px"">Join Queue</button>').setLatLng(latLong);
-                this.mymap.closePopup(popup);
+                this.mymap.openPopup(popup);
                 const buttonSubmit = L.DomUtil.get('btn-' + entry.branchId);
                 L.DomEvent.addListener(buttonSubmit, 'click', (ee: any) => {
                   if(this.state === 'C') {
@@ -273,47 +275,60 @@ export class SmartSearchMemberComponent implements OnInit {
   }
 
   changeQueue() {
-    console.log('addQueue - branchId:');
+    console.log('changeQueue - branchId:');
     console.log(this.branchId);
     if (this.branchId !== null && this.branchId !== '' && this.branchId !== undefined
       && this.patientId !== null && this.patientId !== '' && this.patientId !== undefined) {
+      console.log('changeQueue - inside:');
       this.smartSearchService.leaveQueue({branchId: this.branchId, customerId: this.patientId}).subscribe(
         data => {
           console.log(data);
           if (data === 'SUCCESS') {
-            this.newQueue();
+            console.log('SUCCESS');
+            this.newQueue('C');
           } else {
             alert('Unable to join the queue. Please refresh page or try again later!');
+            this.declineChange();
+          }
+        });
+    }
+  }
+
+  newQueue(type: any) {
+    console.log('addQueue - branchId:');
+    console.log(this.branchId);
+    console.log(this.patientId);
+    if (this.branchId !== null && this.branchId !== '' && this.branchId !== undefined
+      && this.patientId !== null && this.patientId !== '' && this.patientId !== undefined) {
+      console.log('addQueue - inside:');
+      this.smartSearchService.joinQueue({branchId: this.branchId, customerId: this.patientId}).subscribe(
+        data => {
+          console.log(data);
+          this.output = data;
+          console.log('this.output: ' + this.output);
+          if (this.output === '') {
+            console.log('Successfully Joined');
+            window.history.back();
+          } else if (this.output.data.error !== '') {
+            alert(this.output.data.error);
+          } else {
+            alert('Unable to join the queue. Please refresh page or try again later!');
+          }
+          if (type === 'C') {
+            this.declineChange();
+          } else {
             this.decline();
           }
         });
     }
   }
 
-  newQueue() {
-    console.log('addQueue - branchId:');
-    console.log(this.branchId);
-    if (this.branchId !== null && this.branchId !== '' && this.branchId !== undefined
-      && this.patientId !== null && this.patientId !== '' && this.patientId !== undefined) {
-      this.smartSearchService.joinQueue({branchId: this.branchId, customerId: this.patientId}).subscribe(
-        data => {
-          console.log(data);
-          this.output = data;
-          if (this.output === '') {
-            console.log('Successfully Joined');
-            window.history.back();
-          } else if (this.output.error !== '') {
-            alert(this.output.error);
-          } else {
-            alert('Unable to join the queue. Please refresh page or try again later!');
-          }
-          this.decline();
-        });
-    }
+  declineChange() {
+    this.modalChangeRef.hide();
+    this.branchId = '';
   }
 
   decline() {
-    this.modalChangeRef.hide();
     this.modalNewRef.hide();
     this.branchId = '';
   }

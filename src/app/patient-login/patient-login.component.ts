@@ -32,6 +32,7 @@ export class PatientLoginComponent implements OnInit {
   @ViewChild('forgotModal') modalForgot: TemplateRef<any>;
   // private status: string | Object | null | string;
   private loginInfo: Login;
+  output: any;
 
   constructor(
     private router: Router,
@@ -153,12 +154,17 @@ export class PatientLoginComponent implements OnInit {
       this.smartSearchService.joinQueue({branchId: branch, customerId: customer}).subscribe(
         data => {
           console.log(data);
-          if (data === 'SUCCESS') {
+          this.output = data;
+          if (this.output === '') {
             console.log('Successfully Joined');
             this.router.navigate(['/patient-view-details']);
+          } else if (this.output.data.error !== '') {
+            console.log('this.output.error' + this.output.data.error);
+            alert(this.output.data.error);
+            this.router.navigate(['/patient-view-details']);
           } else {
-            alert('Unable to join the queue. Please try again later!');
-            this.router.navigate(['/smart-search-member']);
+            alert('Unable to join the queue. Please refresh page or try again later!');
+            this.router.navigate(['/patient-view-details']);
           }
           this.decline();
         });

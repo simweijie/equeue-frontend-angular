@@ -139,8 +139,9 @@ export class PatientViewDetailsComponent implements OnInit {
             if (data !== 'ERROR') {
               // @ts-ignore
               this.joinedQueueStatus = data.data[0];
+              console.log("this.joinedQueueStatus : " + this.joinedQueueStatus);
               console.log("this.joinedQueueStatus.currentQueueNumber : " + this.joinedQueueStatus.currentQueueNumber);
-              if(this.joinedQueueStatus.currentQueueNumber !== undefined) {
+              if (this.joinedQueueStatus.currentQueueNumber !== null && this.joinedQueueStatus.currentQueueNumber !== undefined && this.joinedQueueStatus.currentQueueNumber !== '') {
                 console.log("this.joinedQueueStatus : " + this.joinedQueueStatus);
                 this.branchIdDisplay = this.joinedQueueStatus.branchId;
                 this.clinicNameDisplay = this.joinedQueueStatus.clinicName;
@@ -153,6 +154,9 @@ export class PatientViewDetailsComponent implements OnInit {
                 this.hide = false;
                 console.log("No pending queues");
               }
+            } else {
+              this.hide = false;
+              console.log("ERROR OCCURED");
             }
           });
       }
@@ -167,8 +171,8 @@ export class PatientViewDetailsComponent implements OnInit {
           this.output = data;
           if (this.output === '') {
             this._success.next(`Successfully rejoined queue with new Queue Number : ` + this.joinedQueueStatus.yourQueueNumber);
-          } else if (this.output.error !== '') {
-            this._error.next(this.output.error);
+          } else if (this.output.data.error !== '') {
+            this._error.next(this.output.data.error);
           } else {
             this._error.next(`Unable to rejoin queue:`);
           }
@@ -219,6 +223,7 @@ export class PatientViewDetailsComponent implements OnInit {
 
     onChangeClinic(){
         console.log("here at onChangeClinic");
+        GlobalConstants.serachType = 'C';
         this.router.navigate(['/smart-search-member']);
     }
 }
