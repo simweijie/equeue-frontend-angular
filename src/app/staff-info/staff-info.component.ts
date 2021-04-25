@@ -213,9 +213,9 @@ export class StaffInfoComponent implements OnInit {
           console.log('1' + data);
           if (data === 'SUCCESS') {
             console.log('2' + data);
-            this.router.navigate(['/']);
+            this.router.navigate(['/staff-login']);
           } else {
-            this.router.navigate(['/']);
+            this.router.navigate(['/staff-login']);
           }
           GlobalConstants.login = new Login();
           GlobalConstants.clinicId = '';

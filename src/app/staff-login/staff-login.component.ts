@@ -67,8 +67,14 @@ export class StaffLoginComponent implements OnInit {
                     // if (this.adminId !== null || this.adminId !== '') {
                     //     this.router.navigate(['/staff-info']);
                     // } else {
-                    if(GlobalConstants.login.status === 'A') {
-                      this.router.navigate(['/staff-info']);
+                    if (GlobalConstants.login.status === 'A') {
+                      if (GlobalConstants.login.job === 'N' || GlobalConstants.login.job === 'D') {
+                        this.router.navigate(['/patient-queue']);
+                      } else {
+                        if (GlobalConstants.login.isAdmin) {
+                          this.router.navigate(['/staff-info']);
+                        }
+                      }
                     } else {
                       this._error.next(`Account is not active yet!`);
                     }
@@ -81,6 +87,7 @@ export class StaffLoginComponent implements OnInit {
                   this._error.next(`Unable to login!`);
                 }
                 this.onClear();
+                this._error.next(`You do not have rights assigned!`);
                 });
         } else {
             this.checkRequiredFields();
