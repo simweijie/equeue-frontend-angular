@@ -163,37 +163,37 @@ export class PatientViewDetailsComponent implements OnInit {
     }
 
 
-    rejoinQueue() {
-      console.log("on rejoin queue");
-      this.patientViewDetailsService.rejoinQueue({branchId: this.joinedQueueStatus.branchId, customerId: this.joinedQueueStatus.customerId}).subscribe(
-        data => {
-          console.log(data);
-          this.output = data;
-          if (this.output === '') {
-            this._success.next(`Successfully rejoined queue with new Queue Number : ` + this.joinedQueueStatus.yourQueueNumber);
-          } else if (this.output.data.error !== '') {
-            this._error.next(this.output.data.error);
-          } else {
-            this._error.next(`Unable to rejoin queue:`);
-          }
-        });
-    }
-
-    leaveQueue(){
-      console.log("on leave queue");
-      this.patientViewDetailsService.leaveQueue({branchId: this.joinedQueueStatus.branchId, customerId:this.joinedQueueStatus.customerId}).subscribe(
-        data => {
-            console.log(data);
-            this.status = data;
-            if (data === 'SUCCESS') {
-                console.log(" sf 11");
-                this.router.navigate(['/smart-search-member']);
-            } else {
-                this._error.next(`Unable to cancel Queue No. Kindly refresh or retry later!`);
-                console.log(" sf 12");
-            }
-        });
-     }
+    // rejoinQueue() {
+    //   console.log("on rejoin queue");
+    //   this.patientViewDetailsService.rejoinQueue({branchId: this.joinedQueueStatus.branchId, customerId: this.joinedQueueStatus.customerId}).subscribe(
+    //     data => {
+    //       console.log(data);
+    //       this.output = data;
+    //       if (this.output === '') {
+    //         this._success.next(`Successfully rejoined queue with new Queue Number : ` + this.joinedQueueStatus.yourQueueNumber);
+    //       } else if (this.output.data.error !== '') {
+    //         this._error.next(this.output.data.error);
+    //       } else {
+    //         this._error.next(`Unable to rejoin queue:`);
+    //       }
+    //     });
+    // }
+    //
+    // leaveQueue(){
+    //   console.log("on leave queue");
+    //   this.patientViewDetailsService.leaveQueue({branchId: this.joinedQueueStatus.branchId, customerId:this.joinedQueueStatus.customerId}).subscribe(
+    //     data => {
+    //         console.log(data);
+    //         this.status = data;
+    //         if (data === 'SUCCESS') {
+    //             console.log(" sf 11");
+    //             this.router.navigate(['/smart-search-member']);
+    //         } else {
+    //             this._error.next(`Unable to cancel Queue No. Kindly refresh or retry later!`);
+    //             console.log(" sf 12");
+    //         }
+    //     });
+    //  }
 
     onCancelQueuePopUp(){
         console.log("here at onCancelQueuePopUp");
@@ -207,9 +207,11 @@ export class PatientViewDetailsComponent implements OnInit {
                 console.log(data);
                 this.status = data;
                 if (data === 'SUCCESS') {
-                    console.log(" sf 11");            
+                    console.log(" sf 11");
+                    this.onCancelQueueNo();
                     this.router.navigate(['/smart-search-member']);
                 } else {
+                    this.onCancelQueueNo();
                     this._error.next(`Unable to cancel Queue No. Kindly refresh or retry later!`);
                     console.log(" sf 12");
                 }
