@@ -164,19 +164,24 @@ export class SmartSearchComponent implements OnInit {
           if (data !== null && data !== 'ERROR') {
             // @ts-ignore
             this.filterList = data.data;
-            for (let entry of this.filterList) {
-              console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
-              if (entry.latt !== null  && entry.longt !== null) {
-                const latLong = [entry.latt, entry.longt];
-                let listOfMarkers = L.marker(latLong).addTo(this.mymap);
-                // listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="addQueue(' + entry.id + ')">Join Queue</button>');
-                const popup = L.popup().setContent('<b>Branch Name: ' + entry.branchName + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.branchId + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px"">Join Queue</button>').setLatLng(latLong);
-                this.mymap.openPopup(popup);
-                const buttonSubmit = L.DomUtil.get('btn-' + entry.branchId);
-                L.DomEvent.addListener(buttonSubmit, 'click', (ee: any) => {
-                  this.addQueue(entry.branchId);
-                });
-                listOfMarkers.bindPopup(popup);
+            // @ts-ignore
+            if (data.error !== undefined && data.error !== null && data.error !== '') {
+              alert('No Clinic Available');
+            } else {
+              for (let entry of this.filterList) {
+                console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
+                if (entry.latt !== null  && entry.longt !== null) {
+                  const latLong = [entry.latt, entry.longt];
+                  let listOfMarkers = L.marker(latLong).addTo(this.mymap);
+                  // listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="addQueue(' + entry.id + ')">Join Queue</button>');
+                  const popup = L.popup().setContent('<b>Branch Name: ' + entry.branchName + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.branchId + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px"">Join Queue</button>').setLatLng(latLong);
+                  this.mymap.openPopup(popup);
+                  const buttonSubmit = L.DomUtil.get('btn-' + entry.branchId);
+                  L.DomEvent.addListener(buttonSubmit, 'click', (ee: any) => {
+                    this.addQueue(entry.branchId);
+                  });
+                  listOfMarkers.bindPopup(popup);
+                }
               }
             }
           } else {

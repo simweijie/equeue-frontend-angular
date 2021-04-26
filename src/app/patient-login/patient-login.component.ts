@@ -154,13 +154,14 @@ export class PatientLoginComponent implements OnInit {
       this.smartSearchService.joinQueue({branchId: branch, customerId: customer}).subscribe(
         data => {
           console.log(data);
-          this.output = data;
-          if (this.output === '') {
+          // @ts-ignore
+          this.output = data.data;
+          if (this.output === '{}') {
             console.log('Successfully Joined');
             this.router.navigate(['/patient-view-details']);
-          } else if (this.output.data.error !== '') {
-            console.log('this.output.error' + this.output.data.error);
-            alert(this.output.data.error);
+          } else if (this.output.error !== '') {
+            console.log('this.output.error' + this.output.error);
+            alert(this.output.error);
             this.router.navigate(['/patient-view-details']);
           } else {
             alert('Unable to join the queue. Please refresh page or try again later!');
