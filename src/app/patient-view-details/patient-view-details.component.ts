@@ -140,16 +140,21 @@ export class PatientViewDetailsComponent implements OnInit {
               // @ts-ignore
               this.joinedQueueStatus = data.data[0];
               console.log("this.joinedQueueStatus : " + this.joinedQueueStatus);
-              console.log("this.joinedQueueStatus.currentQueueNumber : " + this.joinedQueueStatus.currentQueueNumber);
-              if (this.joinedQueueStatus.currentQueueNumber !== null && this.joinedQueueStatus.currentQueueNumber !== undefined && this.joinedQueueStatus.currentQueueNumber !== '') {
-                console.log("this.joinedQueueStatus : " + this.joinedQueueStatus);
-                this.branchIdDisplay = this.joinedQueueStatus.branchId;
-                this.clinicNameDisplay = this.joinedQueueStatus.clinicName;
-                this.branchAddressDisplay = this.joinedQueueStatus.branchAddr;
-                this.patientQueueNoDisplay = this.joinedQueueStatus.yourQueueNumber;
-                this.currentQueueNoDisplay = this.joinedQueueStatus.currentQueueNumber;
-                this.statusValue = this.joinedQueueStatus.status;
-                this.hide = true;
+              if (this.joinedQueueStatus !== null && this.joinedQueueStatus !== undefined && this.joinedQueueStatus !== '') {
+                console.log("this.joinedQueueStatus.currentQueueNumber : " + this.joinedQueueStatus.currentQueueNumber);
+                if (this.joinedQueueStatus.currentQueueNumber !== null && this.joinedQueueStatus.currentQueueNumber !== undefined && this.joinedQueueStatus.currentQueueNumber !== '') {
+                  console.log("this.joinedQueueStatus : " + this.joinedQueueStatus);
+                  this.branchIdDisplay = this.joinedQueueStatus.branchId;
+                  this.clinicNameDisplay = this.joinedQueueStatus.clinicName;
+                  this.branchAddressDisplay = this.joinedQueueStatus.branchAddr;
+                  this.patientQueueNoDisplay = this.joinedQueueStatus.yourQueueNumber;
+                  this.currentQueueNoDisplay = this.joinedQueueStatus.currentQueueNumber;
+                  this.statusValue = this.joinedQueueStatus.status;
+                  this.hide = true;
+                } else {
+                  this.hide = false;
+                  console.log("Error occured");
+                }
               } else {
                 this.hide = false;
                 console.log("No pending queues");
