@@ -308,7 +308,7 @@ export class SmartSearchMemberComponent implements OnInit {
           console.log('this.output: ' + this.output);
           if (this.output === '') {
             console.log('Successfully Joined');
-            window.history.back();
+            this.router.navigate(['/patient-view-details']);
           } else if (this.output.data.error !== '') {
             alert(this.output.data.error);
           } else {
