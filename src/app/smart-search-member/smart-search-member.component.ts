@@ -171,7 +171,7 @@ export class SmartSearchMemberComponent implements OnInit {
       console.log(err);
     }, {
       enableHighAccuracy: true, // High accuracy (true)
-      timeout: 30000, // 5 sec
+      timeout: 30000, // 30 sec
       maximumAge: 0 // no cache
     });
   }

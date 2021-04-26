@@ -62,7 +62,7 @@ export class PatientViewDetailsComponent implements OnInit {
 
       this._success.subscribe((message) => this.successMessage = message);
       this._success.pipe(
-        debounceTime(40000)
+        debounceTime(30000)
       ).subscribe(() => this.successMessage = '');
   
       this._error.subscribe((message) => this.errorMessage = message);
