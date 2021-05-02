@@ -116,17 +116,19 @@ export class PatientViewDetailsComponent implements OnInit {
 
   logout() {
     if (this.login.id !== '') {
-      this.commonService.staffLogout({id: this.login.id}).subscribe(
-        data => {
-          console.log('1' + data);
-          if (data === 'SUCCESS') {
-            console.log('2' + data);
-            this.router.navigate(['/']);
-          } else {
-            this.router.navigate(['/']);
-          }
-          GlobalConstants.login = new Login();
-        });
+      // this.commonService.staffLogout({id: this.login.id}).subscribe(
+      //   data => {
+      //     console.log('1' + data);
+      //     if (data === 'SUCCESS') {
+      //       console.log('2' + data);
+      //       this.router.navigate(['/']);
+      //     } else {
+      //       this.router.navigate(['/']);
+      //     }
+      //     GlobalConstants.login = new Login();
+      //   });
+      this.router.navigate(['/']);
+      GlobalConstants.login = new Login();
     }
   }
 

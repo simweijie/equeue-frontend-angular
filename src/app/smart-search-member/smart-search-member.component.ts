@@ -136,18 +136,21 @@ export class SmartSearchMemberComponent implements OnInit {
 
   logout() {
     if (this.login.id !== '') {
-      this.commonService.logout({id: this.login.id}).subscribe(
-        data => {
-          console.log('1' + data);
-          if (data === 'SUCCESS') {
-            console.log('2' + data);
-            this.router.navigate(['/']);
-          } else {
-            this.router.navigate(['/']);
-          }
-          GlobalConstants.login = new Login();
-          GlobalConstants.clinicId = '';
-        });
+      // this.commonService.logout({id: this.login.id}).subscribe(
+      //   data => {
+      //     console.log('1' + data);
+      //     if (data === 'SUCCESS') {
+      //       console.log('2' + data);
+      //       this.router.navigate(['/']);
+      //     } else {
+      //       this.router.navigate(['/']);
+      //     }
+      //     GlobalConstants.login = new Login();
+      //     GlobalConstants.clinicId = '';
+      //   });
+      this.router.navigate(['/']);
+      GlobalConstants.login = new Login();
+      GlobalConstants.clinicId = '';
     }
   }
 
@@ -180,7 +183,7 @@ export class SmartSearchMemberComponent implements OnInit {
 
   listOfBranches() {
     console.log('listOfBranches');
-    this.smartSearchService.listOfBranches({latt: this.curLat, longt: this.curLong}).subscribe(
+    this.smartSearchService.listOfBranches().subscribe(
       data => {
         console.log(data);
         if (data !== null && data !== 'ERROR') {
