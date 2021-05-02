@@ -25,7 +25,7 @@ export class SmartSearchComponent implements OnInit {
   mGroupList: any;
   curLat = 0;
   curLong = 0;
-  listOfMarkers: any;
+  markerList: any;
 
   districtList: Array<object> = [
     {id: 'N', value: 'North'},
@@ -47,7 +47,7 @@ export class SmartSearchComponent implements OnInit {
     private smartSearchService: SmartSearchService,
     private commonService: CommonService,
     private modalService: BsModalService
-  ) { }
+  ) { this.markerList = []; }
 
   ngOnInit(): void {
     if (!navigator.geolocation) {
@@ -139,8 +139,8 @@ export class SmartSearchComponent implements OnInit {
             console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
             if (entry.latt !== null  && entry.longt !== null) {
               const latLong = [entry.latt, entry.longt];
-              this.listOfMarkers = L.marker(latLong).addTo(this.mymap);
-              this.listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="addQueue(' + entry.id + ')">Join Queue</button>');
+              let listOfMarkers = L.marker(latLong).addTo(this.mymap);
+              listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="addQueue(' + entry.id + ')">Join Queue</button>');
               // const popup = L.popup().setContent('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px"">Join Queue</button>').setLatLng(latLong);
               // this.mymap.openPopup(popup);
               // const buttonSubmit = L.DomUtil.get('btn-' + entry.id);
@@ -148,6 +148,7 @@ export class SmartSearchComponent implements OnInit {
               //   this.addQueue(entry.id);
               // });
               // listOfMarkers.bindPopup(popup);
+              this.markerList.push(listOfMarkers);
             }
           }
         } else {
@@ -162,6 +163,7 @@ export class SmartSearchComponent implements OnInit {
       this.smartSearchService.searchByGP({latt: this.curLat, longt: this.curLong}).subscribe(
         data => {
           console.log(data);
+          this.removeMarker();
           if (data !== null && data !== 'ERROR') {
             // @ts-ignore
             this.filterList = data.data;
@@ -169,17 +171,19 @@ export class SmartSearchComponent implements OnInit {
               console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
               if (entry.latt !== null  && entry.longt !== null) {
                 const latLong = [entry.latt, entry.longt];
-                this.listOfMarkers = L.marker(latLong).addTo(this.mymap);
+                let listOfMarkers = L.marker(latLong).addTo(this.mymap);
                 const popup = L.popup().setContent('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px"">Join Queue</button>').setLatLng(latLong);
                 this.mymap.openPopup(popup);
                 const buttonSubmit = L.DomUtil.get('btn-' + entry.id);
                 L.DomEvent.addListener(buttonSubmit, 'click', (ee: any) => {
                   this.addQueue(entry.id);
                 });
-                this.listOfMarkers.bindPopup(popup);
+                listOfMarkers.bindPopup(popup);
+                this.markerList.push(listOfMarkers);
               }
             }
           } else {
+            this.listOfBranches();
             console.log('No Search GP');
           }
         });
@@ -192,18 +196,20 @@ export class SmartSearchComponent implements OnInit {
       this.smartSearchService.searchByDistrictOrMGroup({clinicId: this.mGroup, district: this.district}).subscribe(
         data => {
           console.log(data);
+          this.removeMarker();
           if (data !== null && data !== 'ERROR') {
             // @ts-ignore
             this.filterList = data.data;
             // @ts-ignore
             if (data.error !== undefined && data.error !== null && data.error !== '') {
               alert('No Clinic Available');
+              this.listOfBranches();
             } else {
               for (let entry of this.filterList) {
                 console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
                 if (entry.latt !== null  && entry.longt !== null) {
                   const latLong = [entry.latt, entry.longt];
-                  this.listOfMarkers = L.marker(latLong).addTo(this.mymap);
+                  let listOfMarkers = L.marker(latLong).addTo(this.mymap);
                   // listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="addQueue(' + entry.id + ')">Join Queue</button>');
                   const popup = L.popup().setContent('<b>Branch Name: ' + entry.branchName + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.branchId + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px"">Join Queue</button>').setLatLng(latLong);
                   this.mymap.openPopup(popup);
@@ -211,11 +217,13 @@ export class SmartSearchComponent implements OnInit {
                   L.DomEvent.addListener(buttonSubmit, 'click', (ee: any) => {
                     this.addQueue(entry.branchId);
                   });
-                  this.listOfMarkers.bindPopup(popup);
+                  listOfMarkers.bindPopup(popup);
+                  this.markerList.push(listOfMarkers);
                 }
               }
             }
           } else {
+            this.listOfBranches();
             console.log('No Search Filter');
           }
         });
@@ -234,5 +242,11 @@ export class SmartSearchComponent implements OnInit {
 
   login() {
     this.router.navigate(['/patient-login']);
+  }
+
+  removeMarker() {
+    for(let entry of this.markerList) {
+      this.mymap.removeLayer(entry);
+    }
   }
 }
