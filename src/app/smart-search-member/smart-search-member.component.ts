@@ -210,7 +210,7 @@ export class SmartSearchMemberComponent implements OnInit {
             }
           }
         } else {
-          console.log('No Search GP');
+          console.log('No listOfBranches');
         }
       });
   }
