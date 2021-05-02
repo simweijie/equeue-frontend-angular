@@ -96,6 +96,7 @@ export class SmartSearchComponent implements OnInit {
           this.mGroupList = data.data;
         }
       });
+    this.listOfBranches();
   }
 
   watchPosition() {
@@ -123,6 +124,34 @@ export class SmartSearchComponent implements OnInit {
       timeout: 30000, // 30 sec
       maximumAge: 0 // no cache
     });
+  }
+
+  listOfBranches() {
+    console.log('listOfBranches');
+    this.smartSearchService.listOfBranches().subscribe(
+      data => {
+        console.log(data);
+        if (data !== null && data !== 'ERROR') {
+          // @ts-ignore
+          this.filterList = data.data;
+          for (let entry of this.filterList) {
+            console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
+            if (entry.latt !== null  && entry.longt !== null) {
+              const latLong = [entry.latt, entry.longt];
+              let listOfMarkers = L.marker(latLong).addTo(this.mymap);
+              const popup = L.popup().setContent('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px"">Join Queue</button>').setLatLng(latLong);
+              this.mymap.openPopup(popup);
+              const buttonSubmit = L.DomUtil.get('btn-' + entry.id);
+              L.DomEvent.addListener(buttonSubmit, 'click', (ee: any) => {
+                this.addQueue(entry.id);
+              });
+              listOfMarkers.bindPopup(popup);
+            }
+          }
+        } else {
+          console.log('No Search GP');
+        }
+      });
   }
 
   searchGP() {
