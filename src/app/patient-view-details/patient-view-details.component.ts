@@ -144,7 +144,7 @@ export class PatientViewDetailsComponent implements OnInit {
                 console.log("this.joinedQueueStatus.currentQueueNumber : " + this.joinedQueueStatus.currentQueueNumber);
                 if (this.joinedQueueStatus.currentQueueNumber !== null && this.joinedQueueStatus.currentQueueNumber !== undefined && this.joinedQueueStatus.currentQueueNumber !== '') {
                   console.log("this.joinedQueueStatus : " + this.joinedQueueStatus);
-                  this.branchIdDisplay = this.joinedQueueStatus.branchId;
+                  this.branchIdDisplay = this.joinedQueueStatus.branchName;
                   this.clinicNameDisplay = this.joinedQueueStatus.clinicName;
                   this.branchAddressDisplay = this.joinedQueueStatus.branchAddr;
                   this.patientQueueNoDisplay = this.joinedQueueStatus.yourQueueNumber;
