@@ -51,6 +51,7 @@ export class SmartSearchMemberComponent implements OnInit {
   headerName: any;
   output: any;
   login: Login;
+  listOfMarkers: any;
 
   constructor(
     private router: Router,
@@ -193,23 +194,23 @@ export class SmartSearchMemberComponent implements OnInit {
             console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
             if (entry.latt !== null  && entry.longt !== null) {
               const latLong = [entry.latt, entry.longt];
-              let listOfMarkers = L.marker(latLong).addTo(this.mymap);
-              // if (this.state === 'C') {
-              //   listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="changeConfirmation(' + entry.id + ')">Join Queue</button>');
-              // } else if (this.state === 'N') {
-              //   listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="newConfirmation(' + entry.id + ')">Join Queue</button>');
-              // }
-              const popup = L.popup().setContent('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px"">Join Queue</button>').setLatLng(latLong);
-              this.mymap.openPopup(popup);
-              const buttonSubmit = L.DomUtil.get('btn-' + entry.id);
-              L.DomEvent.addListener(buttonSubmit, 'click', (ee: any) => {
-                if(this.state === 'C') {
-                  this.changeConfirmation(entry.id);
-                } else if (this.state === 'N') {
-                  this.newConfirmation(entry.id);
-                }
-              });
-              listOfMarkers.bindPopup(popup);
+              this.listOfMarkers = L.marker(latLong).addTo(this.mymap);
+              if (this.state === 'C') {
+                this.listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="changeConfirmation(' + entry.id + ')">Join Queue</button>');
+              } else if (this.state === 'N') {
+                this.listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="newConfirmation(' + entry.id + ')">Join Queue</button>');
+              }
+              // const popup = L.popup().setContent('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px"">Join Queue</button>').setLatLng(latLong);
+              // this.mymap.openPopup(popup);
+              // const buttonSubmit = L.DomUtil.get('btn-' + entry.id);
+              // L.DomEvent.addListener(buttonSubmit, 'click', (ee: any) => {
+              //   if(this.state === 'C') {
+              //     this.changeConfirmation(entry.id);
+              //   } else if (this.state === 'N') {
+              //     this.newConfirmation(entry.id);
+              //   }
+              // });
+              // listOfMarkers.bindPopup(popup);
             }
           }
         } else {
@@ -231,7 +232,7 @@ export class SmartSearchMemberComponent implements OnInit {
               console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
               if (entry.latt !== null  && entry.longt !== null) {
                 const latLong = [entry.latt, entry.longt];
-                let listOfMarkers = L.marker(latLong).addTo(this.mymap);
+                this.listOfMarkers = L.marker(latLong).addTo(this.mymap);
                 // if (this.state === 'C') {
                 //   listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="changeConfirmation(' + entry.id + ')">Join Queue</button>');
                 // } else if (this.state === 'N') {
@@ -247,7 +248,7 @@ export class SmartSearchMemberComponent implements OnInit {
                     this.newConfirmation(entry.id);
                   }
                 });
-                listOfMarkers.bindPopup(popup);
+                this.listOfMarkers.bindPopup(popup);
               }
             }
           } else {
@@ -274,7 +275,7 @@ export class SmartSearchMemberComponent implements OnInit {
                 console.log('latt: ' + entry.latt + ', longt: ' + entry.longt);
                 if (entry.latt !== null  && entry.longt !== null) {
                   const latLong = [entry.latt, entry.longt];
-                  let listOfMarkers = L.marker(latLong).addTo(this.mymap);
+                  this.listOfMarkers = L.marker(latLong).addTo(this.mymap);
                   // if(this.state === 'C') {
                   //   listOfMarkers.bindPopup('<b>Branch Name: ' + entry.name + '<br>Current Operation: ' + entry.opens + '-' + entry.closes + '<br>Queue Length: ' + entry.queueLength + '</b><br><button id="btn-' + entry.id + '" type="button" class="btn-primary col-sm" style="min-width: 100px; max-width: 100px" (click)="changeConfirmation(' + entry.id + ')">Join Queue</button>');
                   // } else if (this.state === 'N') {
@@ -290,7 +291,7 @@ export class SmartSearchMemberComponent implements OnInit {
                       this.newConfirmation(entry.branchId);
                     }
                   });
-                  listOfMarkers.bindPopup(popup);
+                  this.listOfMarkers.bindPopup(popup);
                 }
               }
             }
