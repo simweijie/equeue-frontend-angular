@@ -40,6 +40,7 @@ export class SmartSearchComponent implements OnInit {
   // private _filterResults: { clicicId?: string; clicicName?: string; currentOperation?: string; queueLength?: string };
   filterList: any;
   branchId: any;
+  greenIcon: any;
 
   constructor(
     private router: Router,
@@ -67,8 +68,15 @@ export class SmartSearchComponent implements OnInit {
         zoomOffset: -1,
         accessToken: 'your.mapbox.access.token'
       }).addTo(this.mymap);
-
-      this.curMarker = L.marker(latLong).addTo(this.mymap);
+      this.greenIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+      });
+      this.curMarker = L.marker(latLong, {icon: this.greenIcon}).addTo(this.mymap);
 
       this.curMarker.bindPopup('<b>Current Location</b>').openPopup();
       // let listOfMarkers = L.marker(['1.3857469999999998', '103.837870']).addTo(this.mymap);
@@ -115,7 +123,15 @@ export class SmartSearchComponent implements OnInit {
         // desLon = position.coords.longitude;
         this.curLat = coord.latitude;
         this.curLong = coord.longitude;
-        this.curMarker = L.marker(latLong).addTo(this.mymap);
+        this.greenIcon = new L.Icon({
+          iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+          shadowSize: [41, 41]
+        });
+        this.curMarker = L.marker(latLong, {icon: this.greenIcon}).addTo(this.mymap);
         this.curMarker.bindPopup('<b>Current Location</b>').openPopup();
       }
     }, (err) => {
