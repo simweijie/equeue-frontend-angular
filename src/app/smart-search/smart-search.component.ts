@@ -18,7 +18,7 @@ export class SmartSearchComponent implements OnInit {
   active = 1;
   curMarker: any;
   mymap: any;
-  zoomLvl = 30;
+  zoomLvl = 11;
   mGroup: any;
   district: any;
   // pCode: any;
